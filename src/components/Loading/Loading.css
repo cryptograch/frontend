@@ -1,0 +1,93 @@
+.loadcontainer {
+    position: fixed;
+    width: 4%;
+    height: 4%;
+    left: 48%;
+    top: 48%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loadcontainerlocal {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loadmain {
+    position: relative;
+}
+
+.loadshape {
+    position: absolute;
+    width: 2.2vh;
+    height: 2.2vh;
+    background: white;
+    border-radius: 50%;
+    z-index: 10;
+    top: -2.2vh;
+}
+
+.shapeone {
+    left: -4.4vh;
+    animation: loadanimone 2.5s linear infinite;
+}
+
+.shapetwo {
+    left: 0;
+    animation: loadanimtwo 2.5s linear infinite;
+}
+
+.shapethree {
+    left: 4.4vh;
+    animation: loadanimthree 2.5s linear infinite;
+}
+
+@keyframes loadanimone {
+    0% {
+        background: #faa71a;
+    }
+    33% {
+        background: gray;
+    }
+    66% {
+        background: gray;
+    }
+    100% {
+        background: gray;
+    }
+}
+
+@keyframes loadanimtwo {
+    0% {
+        background: gray;
+    }
+    33% {
+        background: #faa71a;
+    }
+    66% {
+        background: gray;
+    }
+    100% {
+        background: gray;
+    }
+}
+
+@keyframes loadanimthree {
+    0% {
+        background: gray;
+    }
+    33% {
+        background: gray;
+    }
+    66% {
+        background: #faa71a;
+    }
+    100% {
+        background: gray;
+    }
+}

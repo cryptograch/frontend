@@ -1,0 +1,20 @@
+.orangeBackground {
+  background-color: #8f1afa;
+}
+.inner {
+  padding: 0 15%;
+}
+.title__h1 {
+  font-size: 3rem;
+  text-align: center;
+}
+.title__h1 span {
+  font-weight: 300;
+}
+.title__h2 {
+  text-align: center;
+}
+.policy__p {
+  text-align: justify;
+  line-height: 1.7;
+}

@@ -1,0 +1,369 @@
+.active {
+  border-bottom: 5px solid #faa71a;
+}
+.showForm h1, .docForm h1, .changePhoto h1 {
+  margin: 0;
+  padding: 0;
+}
+
+.showForm h1 {
+  font-size: 1.5rem;
+}
+
+.SettingsToolbar{
+    flex: 1 0 25%;
+    padding: 20px 20px 0px 20px;
+    margin: 0 20px;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+.SettingsToolItem{
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 1.5rem;
+    text-align: center;
+}
+.pfotoinput {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+.pfotoinput + label {
+    margin-left: 20px;
+    color: black;
+    font-size: 1.4rem;
+    font-family: 'ProximaNovaThin';
+    background: none;
+    border: 3px solid #2b2929;
+    cursor: pointer;
+    padding: 5px 10px;
+}
+.button {
+  border: none;
+  background: none;
+  background-color: #2b2929;
+  color: #fff;
+  font-size: 1.4rem;
+  padding: 8px 20px;
+  text-decoration: none;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  box-sizing: border-box;
+}
+.button:hover {
+  background-color: #928e8e;
+  transition: 0.3s;
+  cursor: pointer;
+}
+.changePhoto {
+  display: flex;
+  justify-content: flex-start;
+  align-content: stretch;
+  align-items: center;
+  margin-bottom: 30px;
+}
+.showForm, .changeDoc, .vehForm {
+  max-width: 80%;
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
+.signInInput {
+   display: block;
+   border: 1px solid #2b2929;
+   font: 16px 'ProximaNovaRegular';
+   color: #2b2929;
+   padding: 5px 20px;
+   padding-left: 10px;
+   margin-top: 5px;
+   outline: none;
+   box-sizing: border-box;
+}
+.signInInput::placeholder {
+  font-family: 'ProximaNovaThin';
+  color: #2b2929;
+}
+.marginRight {
+  margin-right: 10px;
+}
+/* .signInInputSubmit {
+   width: 100%;
+   margin-bottom: 30px;
+   padding: 15px 10px;
+   font: 1.5rem 'ProximaNovaThin';
+   background: none;
+   border: none;
+   background-color: #2b2929;
+   color: #f4f4f4;
+   outline: none;
+   -webkit-appearance: none;
+   -moz-appearance: none;
+   appearance: none;
+}
+.signInInputSubmit:hover {
+  background-color: #928e8e;
+  transition: 0.3s;
+  cursor: pointer;
+} */
+.docForm input {
+  width: 65px;
+}
+.docForm input::placeholder {
+  text-align: center;
+}
+.date {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 30px;
+}
+.vehForm .signInInput {
+  margin-bottom: 10px;
+}
+.vehForm .signInInputSubmit {
+  margin-top: 20px;
+}
+
+.docContainer {
+  display: flex;
+  flex-flow: column nowrap;
+  align-content: center;
+  margin: 0 20px;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.docPhoto {
+  flex-grow: 1;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+
+.docPhoto > button {
+  margin-top: 15px;
+}
+
+.docPhotoPreload {
+  width: 300px;
+  height: 200px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  border-radius: 5px;
+  margin: 10px 0;
+}
+
+.docPhotoPreload > img {
+  position: absolute;
+  margin: auto;
+  min-height: 200px;
+  min-width: 300px;
+  width: 300px;
+  height: auto;
+}
+
+.profilePhotoPreload {
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  border-radius: 5px;
+  margin: 10px 0;
+}
+
+.profilePhotoPreload > img {
+  position: absolute;
+  margin: auto;
+  min-height: 200px;
+  min-width: 200px;
+  width: 200px;
+  height: auto;
+}
+
+.docPhotoInput {
+  position: relative;
+  display: flex;
+  overflow: hidden;
+}
+
+.docPhotoInput > input[type=file] {
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  left: 0;
+  width: 400px;
+  height: 400px;
+  z-index: 2;
+}
+
+.docPhotoInput > label {
+  margin: 0;
+  padding: 5px;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  background: #2b2929;
+  transition: opacity .3s ease-out;
+}
+.docPhotoInput > input[type=text] {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  padding: 5px;
+  font-size: 1rem;
+  color: #2b2929;
+  max-width: 100px;
+  overflow: hidden;
+}
+
+.docPhotoInput:hover > label {
+  opacity: 0.8;
+} 
+
+.docMain {
+  margin: auto;
+  max-width: 310px;
+  display: flex;
+  flex-flow: row nowrap;
+  border-radius: 10px;
+  padding: 5px;
+  box-shadow: 0 0 3px 5px rgba(0, 0, 0, 0.1);
+  background: #eee9e9;
+}
+
+.docMainPhoto {
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  border-radius: 5px;
+  margin: 10px 0;
+}
+
+.docMainPhoto > img {
+  position: absolute;
+  margin: auto;
+  min-height: 100px;
+  min-width: 100px;
+  width: 100px;
+  height: auto;
+}
+
+.docMainSide {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+
+.docMainTitle {
+  font-size: 1rem;
+  color: #2b2929;
+  font-weight: bold;
+}
+
+.docInfo {
+  display: flex;
+  flex-flow: column nowrap;
+  align-content: center;
+}
+
+.docInfoRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+}
+.docInfoRow > label {
+  margin-top: 10px;
+  font-size: 0.8rem;
+  color: #2b2929;
+}
+
+.docInfoRow > input {
+  margin: 0 5px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  padding: 5px;
+  font-size: 1rem;
+  color: #2b2929;
+  max-width: 50px;
+  overflow: hidden;
+}
+
+.docTitle {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #2b2929;
+}
+
+.docSubmit {
+  
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.docSubmit > button {
+  max-width: 150px;
+}
+
+.vehMain {
+  display: flex;
+  flex-flow: column nowrap;
+  align-self: center;
+}
+
+@media only screen and (max-width: 700px) {
+  .SettingsToolItem{
+      padding: 5px;
+      font-size: 1.1rem;
+  }
+  .changePhoto {
+    display: block;
+  }
+  .pfotoinput + label {
+    margin-left: 0;
+  }
+  .docForm h1:first-child, .changePhoto h1:first-child {
+    margin-bottom: 10px;
+  }
+}
+@media only screen and (max-width: 500px) {
+    .SettingsToolbar {
+        flex-flow: column nowrap;
+        align-items: stretch;
+    }
+    .SettingsToolItem{
+        padding: 5px 10px;
+        font-size: 1.8rem;
+    }
+    .active {
+      border: 5px solid #faa71a;
+    }
+    .docMainPhoto {
+      width: 70px;
+      height: 70px;
+    }
+    .docMainPhoto > img {
+      width: 70px;
+      min-height: 70px;
+      min-width: 70px;
+    }
+}

@@ -1,0 +1,210 @@
+.adminUserContainer {
+}
+
+.adminUserMain {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.adminUserText {
+    cursor: pointer;
+    flex-grow: 1;
+    padding: 20px 10px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+    transition: background-color .3s ease-out;
+}
+
+.adminUserText:hover {
+    background: rgba(0,0,0,0.2);
+}
+
+.adminUserText > span {
+    font-size: inherit;
+    font-weight: bold;
+    margin-right: 5px;
+    color: #faa71a;
+}
+
+.adminSettingsBtn {
+    cursor: pointer;
+    padding: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    width: 48px;
+    position: relative;
+    transition: background-color .3s ease-out;
+}
+
+
+.adminSettingsBtn > img {
+    width: inherit;
+    max-width: 64px;
+    max-height: 64px;
+    height: inherit;
+}
+
+.adminSettingsBtn:hover {
+    background: rgba(0,0,0,0.2);
+}
+
+.settingsContainer {
+    position: absolute;
+    top: 30px;
+    right: 10px;
+    z-index: 5;
+}
+
+.settingsMain {
+    background: white;
+    min-width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 3px;
+}
+
+.settingsMainItem {
+    background: white;
+    cursor: pointer;
+    border: none;
+    padding: 5px;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.settingsMainItem:hover {
+    background: #faa71a;
+}
+
+.adminUserContent {
+    border-top: 2px solid rgba(0,0,0,0.2);
+}
+
+.adminUserProfile {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: stretch;
+   /*  overflow: hidden;
+    animation: profileanim .3s ease-out;
+    transition: height .3s ease-out; */
+}
+
+.adminUserProfilePhoto {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    padding: 10px;
+}
+
+.adminUserProfileInfo {
+    flex-grow: 5;
+    padding: 10px;
+}
+
+.adminUserProfileText {
+    margin-top: 5px;
+    font-size: 1.2rem;
+    display: flex;
+    overflow: hidden;
+}
+
+.adminUserProfileText > span {
+    display: flex;
+    margin-right: 5px;
+    align-items: center;
+    font-weight: bold;
+    color: #faa71a;
+}
+
+.adminUserProfileText > p {
+    display: flex;
+    align-items: center;
+    flex: 1 1 100%;
+    margin: 0;
+    flex-grow: 5;
+    overflow: hidden;
+}
+.adminUserProfileText > button {
+    flex-grow: 1;
+}
+
+.adminUserLicensePhoto {
+    border-radius: 5px;
+}
+
+.adminUserBtn {
+    cursor: pointer;
+    padding: 10px;
+    border: none;
+    border-radius: 3px;
+    background: #2b2929;
+    color: white;
+    font-size: 1rem;
+    transition: background-color, color .3s ease-out;
+}
+
+.adminUserBtn:hover{
+    background: #1a1a1a;
+    color: #faa71a;
+}
+
+.adminUserResForm {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: stretch;
+    padding: 20px 10px;
+}
+
+.adminUserResForm > h3 {
+    margin: 0 10px;
+    font-weight: bold;
+}
+
+.adminUserResForm > textarea {
+    border: 1px solid rgba(0,0,0,0.2);
+    font-size: 1rem;
+    border-radius: 5px;
+    padding: 10px;
+    height: 100px;
+    margin-bottom: 10px;
+    resize: none;
+}
+
+.adminUserResForm > input[type=submit] {
+    cursor: pointer;
+    padding: 10px;
+    border: none;
+    border-radius: 3px;
+    background: #2b2929;
+    width: auto;
+    margin: auto;
+    color: white;
+    font-size: 1rem;
+    transition: background-color, color .3s ease-out;
+}
+
+.adminUserResForm > input[type=submit]:hover {
+    background: #1a1a1a;
+    color: #faa71a;
+}
+
+.approveImg {
+    width: 24px;
+    height: 24px;
+}
+
+@media only screen and (max-width: 500px) {
+    .adminUserProfileText {
+        flex-flow: column nowrap;
+        align-items: stretch;
+    }
+    .adminUserProfileText > button {
+        margin-top: 5px;
+    }
+}

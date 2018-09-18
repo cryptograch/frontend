@@ -1,0 +1,159 @@
+.searchContainer {
+    display: flex;
+    padding: 20px 5px;
+    justify-content: center;
+}
+.searchInput,
+.users form>input[type=text],
+.refundList input[type=text],
+.refundList input[type=number] {
+    margin: 0;
+    border: 1px solid #2b2929;
+    border-radius: 0%;
+    padding: 5px;
+    font-size: 1rem;
+    color: #2b2929;
+}
+.searchInput::placeholder {
+  font-family: 'ProximaNovaThin';
+  color: #2b2929;
+}
+.searchButton,
+.users button,
+.users form>input[type=submit],
+.refundList button,
+.refundList input[type=submit] {
+    margin: 0;
+    padding: 6px 10px;
+    background-color: #2b2929;
+    font: 16px 'ProximaNovaThin';
+    border: none;
+    color: #f4f4f4;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+.searchButton:hover,
+.users button:hover,
+.users form>input[type=submit]:hover,
+.refundList button:hover,
+.refundList input[type=submit]:hover {
+  background-color: #928e8e;
+  transition: 0.2s;
+  cursor: pointer;
+}
+.youAdmin {
+    font-size: 3rem;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    padding: 30px 0;
+}
+.users>li>div>div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-right: 40px;
+}
+.users>li>div>div:last-child>div {
+  margin: 0 auto;
+}
+.users>li {
+  margin-bottom: 30px;
+}
+.users p {
+  margin: 0;
+  padding: 0;
+  font: 1.2rem 'ProximaNovaRegular';
+}
+.users button {
+  margin: 3px;
+  display: block;
+}
+.users img {
+  min-width: 150px;
+  min-height: 150px;
+  width: 100%;
+  height: 100%;
+  padding: 20px 0;
+}
+.users form {
+  padding-right: 40px;
+  text-align: center;
+}
+.refresh {
+  text-align: center;
+  margin: 0 auto;
+  padding-bottom: 30px;
+  font: 1.8rem 'ProximaNovaRegular';
+}
+.refresh h3 {
+  margin-bottom: 10px;
+}
+.refresh>div {
+  margin-top: 30px;
+  text-align: left;
+  font: 1.5rem 'ProximaNovaRegular';
+}
+.refundList p {
+  margin: 0;
+  padding: 3px;
+  font: 1rem 'ProximaNovaThin';
+}
+.refundList li {
+  padding-bottom: 40px;
+}
+.comission {
+  text-align: center;
+}
+
+.searchButton:hover {
+    color: #faa71a;
+}
+
+.checkboxContainer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+}
+
+.checkboxContainer > input[type=checkbox] {
+    width: 16px;
+    height: 16px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    background: #fa3c1a;
+    border-radius: 3px;
+    transition: background .3s ease-out;
+}
+
+.checkboxContainer > input[type=checkbox]:checked {
+    background: #1afa3f;
+}
+
+.checkboxContainer > label {
+    background: white;
+    position: absolute;
+    top: -50px;
+    right: -10px;
+    opacity: 0;
+    font-size: 1rem;
+    font-weight: bold;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    z-index: 2;
+    padding: 5px;
+    transition: opacity .3s ease-out;
+}
+
+.checkboxContainer:hover > label {
+    opacity: 1;
+}
+
+@media only screen and (max-width: 500px) {
+    .searchInput {
+        width: 75%;
+    }
+}

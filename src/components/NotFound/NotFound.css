@@ -1,0 +1,51 @@
+.notFoundContainer {
+    min-width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url(../../../public/Home/home_bg.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.notFoundMain {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    font-family: 'ProximaNovaBold';
+    color: white;
+    transition: color .3s ease-out;
+}
+
+.notFoundMain > h1 {
+    cursor: default;
+    margin: 0;
+    font-size: 3.4rem;
+    margin-bottom: 20px;
+    transition: inherit;
+}
+
+.notFoundMain > h2 {
+    cursor: default;
+    margin: 0;
+    font-size: 3rem;
+}
+
+.notFoundMain > h1 > span {
+    color: #faa71a;
+    transition: inherit;
+}
+
+.notFoundMain > h2 > span {
+    color: #faa71a;
+}
+
+.notFoundMain:hover > h1 > span {
+    color: white;
+}
+
+.notFoundMain:hover > h1 {
+    color: #faa71a;
+}

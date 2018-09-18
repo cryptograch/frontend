@@ -1,0 +1,49 @@
+.margin100 {
+  padding-top: 100px;
+}
+.inner {
+  padding: 0 8.5%;
+}
+.title__h1 {
+  font-size: 4rem;
+  text-align: inherit;
+}
+.flex {
+  display: flex;
+  justify-content: flex-start;
+}
+.flexItem:first-child {
+  margin-right: 100px;
+}
+.flexItem {
+  width: 100%;
+}
+.marginBottom {
+  margin-bottom: 30px;
+}
+.signInBtn {
+  background-color: #2b2929;
+  color: #f4f4f4;
+  font-size: 2rem;
+  padding: 5px 20px;
+  text-decoration: none;
+}
+.signInBtn:hover {
+  background-color: #928e8e;
+  transition: 0.3s;
+}
+
+@media only screen and (max-width: 800px) {
+  .flex {
+    display: block;
+  }
+  .signInBtn {
+    padding: 5px 12px;
+  }
+  .flexItem:first-child {
+    margin-bottom: 30px;
+  }
+  .title__h1 {
+    margin-bottom: 0;
+  }
+}

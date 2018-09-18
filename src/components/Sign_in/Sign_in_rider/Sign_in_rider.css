@@ -1,0 +1,72 @@
+.orangeBackground {
+   background-color: #faa71a;
+   min-height: 70px;
+   margin-bottom: 70px;
+}
+.signInLogo {
+   position: absolute;
+   top: 30px;
+   background-color: #2b2929;
+   padding: 0 30px;
+}
+.headerLogo__h1 {
+   font-size: 2.3rem;
+}
+.inputSpan {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+.signInInner {
+   margin: 0 auto;
+   padding: 0 30px;
+   max-width: 400px;
+}
+.signInTitle {
+   font-size: 2rem;
+   margin-bottom: 21px;
+}
+.signInInner form {
+   margin-top: 5px;
+   margin-bottom: 30px;
+}
+.signInInput {
+   display: block;
+   width: 100%;
+   border: 1px solid #2b2929;
+   font: 16px 'ProximaNovaRegular';
+   color: #2b2929;
+   padding: 15px 0;
+   padding-left: 10px;
+   outline: none;
+   margin-bottom: 10px;
+   box-sizing: border-box;
+}
+.signInInput::placeholder {
+  font-family: 'ProximaNovaThin';
+  color: #2b2929;
+}
+.signInInputSubmit {
+   width: 100%;
+   margin-top: 30px;
+   padding: 15px 10px;
+   font: 1.3rem 'ProximaNovaThin';
+   background: none;
+   border: none;
+   background-color: #2b2929;
+   color: #f4f4f4;
+}
+.signInInputSubmit:hover {
+  background-color: #928e8e;
+  transition: 0.3s;
+  cursor: pointer;
+}
+.signUpSmallBtn {
+  color: #2b2929;
+  font-family: 'ProximaNovaRegular';
+}
+.forgotPass {
+  float: right;
+  padding: 5px 0 0 0;
+  font-family: 'ProximaNovaRegular';
+  color: #2b2929;
+}

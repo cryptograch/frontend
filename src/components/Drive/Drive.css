@@ -1,0 +1,88 @@
+.background {
+  background-image: url(../../../public/Driver/driver_main.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 0 -50px;
+  min-height: 600px;
+  width: 100%;
+}
+.inner {
+  position: relative;
+  padding: 0 9%;
+  min-height: 600px;
+}
+.signUpBigBtn {
+  position: absolute;
+  right: 20%;
+  bottom: -50px;
+  width: 200px;
+  min-height: 200px;
+  background-color: #000;
+  color: #f4f4f4;
+  font-size: 1.8rem;
+  padding: 30px;
+}
+.signUpBigBtn:hover {
+  background-color: #928e8e;
+  transition: 0.3s;
+}
+.signUpBigBtnBlock {
+  position: relative;
+  min-height: 200px;
+}
+.blockStart {
+  font-size: 1.9rem;
+}
+.blockEnd {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+.driveBg {
+  text-align: right;
+  background-image: url(../../../public/Driver/drive_bg.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position:center;
+  min-height: 350px;
+  width: 100%;
+  background-color: rgba(0,0,0,0.8);
+  background-blend-mode: darken;
+  padding-bottom: 30px;
+  display: flex;
+  align-items: center;
+  margin: 50px 0;
+}
+.signUpToRideSpan2 {
+  margin-top: 0;
+}
+.driveBg__p {
+  color: #fff;
+  font-family: 'ProximaNovaThin';
+  line-height: 1.5;
+  width: 50%;
+  float: right;
+}
+.rideBg {
+  background-image: url(../../../public/Driver/drive_bg2.jpg);
+  padding-bottom: 0;
+  margin-top: 0;
+}
+
+@media only screen and (max-width: 980px) {
+  .background {
+    background-position: 0 -20px;
+  }
+  .driveBg__p {
+    float: none;
+    width: 100%;
+  }
+}
+@media only screen and (max-width: 400px) {
+  .signUpBigBtn {
+    bottom: 100px;
+    width: 150px;
+    min-height: 150px;
+    font-size: 1.3rem;
+  }
+}

@@ -1,0 +1,217 @@
+.profileContainer {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding-top: 70px;
+    display: flex;
+    background-color: #fff;
+    min-height: 100vh;
+}
+.profileMain {
+    flex: 1 1 60%;
+    display: flex;
+    box-shadow: -3px 2px 5px 0px rgba(222,222,222,1);
+    align-content: center;
+    position: relative;
+    flex-flow: column nowrap;
+}
+.profileToolbar {
+    flex: 1 0 41%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: stretch;
+    border-right: 2px solid #dedede;
+    height: 100%;
+}
+.profileToolItem {
+    color: #2b2929;
+    font-size: 1.3rem;
+    padding: 15px 20px;
+    cursor: pointer;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    transition: all .3s ease-in;
+}
+.profileToolItem:hover{
+    background-color: #f7be5d;
+
+}
+.profileToolItem > img{
+    width: 30px;
+    height: 30px;
+    margin-right: 5px;
+}
+.active {
+    background-color: #faa71a;
+}
+.photoName {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    border-bottom: 2px solid #dedede;
+    margin-top: 30px;
+    padding: 0 20px;
+}
+.profilePhoto {
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    border-radius: 50%;
+}
+.profilePhoto > img {
+    position: absolute;
+    margin: auto;
+    min-height: 150px;
+    min-width: 150px;
+    width: 150px;
+    height: auto;
+}
+.profileName {
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.contentList {
+    margin: 20px;
+    display: flex;
+    flex-flow: column nowrap;
+    align-content: stretch;
+}
+
+.contentListItem {
+    width: 100%;
+    border-bottom: 2px solid rgba(0,0,0,0.2);
+}
+
+.refreshBtn {
+    cursor: pointer;
+    padding: auto;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    padding: 0 5px;
+    width: 32px;
+    position: relative;
+    transition: background-color .3s ease-out;
+}
+
+.refreshBtn > img {
+    width: inherit;
+    max-width: 64px;
+    max-height: 64px;
+    height: inherit;
+}
+
+.refreshBtn > img:hover {
+    animation: refreshanim .3s ease-out;
+}
+.balanceInput{
+    height: 40px;
+    border: none;
+    border-bottom: 4px solid #2b2929;
+    transition: border .3s ease-out;
+}
+
+.balanceInput:hover {
+    border-bottom: 4px solid #faa71a;
+}
+
+.balanceInput:focus {
+    border-bottom: 4px solid #faa71a;
+}
+.ethericon{
+    height: 40px;
+    width: 40px;
+    margin-right: 10px;
+}
+.balanseshop{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: left;
+    align-items: center;
+    margin: 15px 0px;
+    
+}
+.balanseshop> span{
+    margin-right: 10px;
+    width: 50%;
+}
+.balanseHead{
+    border-bottom: 2px solid #dedede;
+    width: 100%;
+}
+.balanseshopform{
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+}
+.balanceButton {
+    border: none;
+    background: none;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    border: 2px solid #2b2929;
+    box-shadow: 0 3px 3px 2px rgba(0,0,0,0.2);
+    border-radius: 10px;
+    font-size: 1.5rem;
+    padding: 8px 56px;
+    text-decoration: none;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    box-sizing: border-box;
+    margin: 15px;
+    letter-spacing: 10%;
+    transition: background .5s ease-out, color .5s ease-out;
+  }
+  .balanceButton:hover {
+    background-color: #2b2929;
+    color: #fff;
+    cursor: pointer;
+  }
+  .balanseform{
+    font-family: 'ProximaNovaThin';
+    font-size: 130%;
+    display: flex;
+    flex-flow: column nowrap;
+  }
+@media only screen and (max-width: 1140px) {
+    .profileToolbar {
+        border-left: none;
+        margin-left: 0;
+    }
+    .profileMain {
+        border-right: none;
+    }
+}
+@media only screen and (max-width: 500px) {
+    .profileContainer {
+        display: block;
+    }
+    .profileToolItem {
+        text-align: center;
+    }
+    .profileToolbar {
+        border-bottom: 2px solid #dedede;
+        border-right: none;
+    }
+    .profileMain {
+        box-shadow: none;
+        display: block;
+    }
+}
+
+@keyframes refreshanim {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

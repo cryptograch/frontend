@@ -1,0 +1,145 @@
+.alertcontainer {
+    position: fixed;
+    top: 15%;
+    left: 20%;
+    right: 20%;
+    max-width: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all .3s ease-out;
+    animation: anim-container 1s ease-out;
+    z-index: 11;
+}
+
+.alertmain {
+    z-index: 11;
+    position: relative;
+    width: 100%;
+    background: #2b2929;
+    display: flex;
+    flex-flow: row wrap;
+    padding: 40px 20px;
+}
+
+.alerttext {
+    flex-grow: 1;
+    color: white;
+    font-weight: bold;
+    font-size: 18pt;
+}
+
+.alertclose {
+    cursor: pointer;
+    position: absolute;
+    z-index: 12;
+    top: 0;
+    right: 0;
+    padding: 5px;
+    width: 32px;
+    height: 32px;
+}
+
+.alertclose:hover {
+    opacity: 0.7;
+}
+
+.alertclose > img {
+    width: 32px;
+    height: 32px;
+}
+
+.alertlocalcontainer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.alertlocalmain {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+}
+
+.alertlocaltext {
+    color: #2b2929;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px;
+    margin: 5px 0;
+}
+
+.alertlabel {
+    color: #faa71a;
+}
+
+.resendBtn {
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    background: #2b2929;
+    border: 2px solid white;
+    padding: 5px;
+    margin: 5px 5px;
+    transition: all .3s ease-out;
+}
+
+.resendBtn:hover {
+    color: #2b2929;
+    background: white;
+}
+
+.refreshBtn {
+    cursor: pointer;
+    padding: auto;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    padding: 0 5px;
+    width: 32px;
+    position: relative;
+    transition: background-color .3s ease-out;
+
+}
+
+.refreshBtn > img {
+    width: inherit;
+    max-width: 64px;
+    max-height: 64px;
+    height: inherit;
+}
+
+.refreshBtn > img:hover {
+    animation: refreshanim .3s ease-out;
+}
+
+@keyframes anim-container {
+    0% {
+        top: 10%;
+    }
+    100% {
+        top: 15%;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .alertcontainer {
+        max-width: 90%;
+        left: 5%;
+        right: 5%;
+    }
+}
+
+
+@keyframes refreshanim {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

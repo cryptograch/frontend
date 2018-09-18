@@ -1,0 +1,120 @@
+.background {
+  background-image: url(../../../public/Rider/rider_main.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  min-height: 600px;
+  width: 100%;
+}
+.inner {
+  position: relative;
+  padding: 0 9%;
+  min-height: 600px;
+}
+.signUpBigBtn {
+  position: absolute;
+  bottom: -50px;
+  width: 200px;
+  min-height: 200px;
+  background-color: #000;
+  color: #f4f4f4;
+  font-size: 1.8rem;
+  padding: 30px;
+}
+.signUpBigBtn:hover {
+  background-color: #928e8e;
+  transition: 0.3s;
+}
+.signUpBigBtnBlock {
+  position: relative;
+  min-height: 200px;
+}
+.blockStart {
+  font-size: 1.9rem;
+}
+.blockEnd {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+.inner2 {
+  padding: 0 9%;
+}
+.payWithTitle {
+  text-align: left;
+  margin: 0;
+  padding: 0;
+  margin-top: 80px;
+}
+.payWithTitle2 {
+  margin-top: 0;
+  font-weight: 300;
+}
+.payWithP {
+  width: 60%;
+  line-height: 1.4;
+}
+.rideBg {
+  margin-top: 50px;
+  background-image: url(../../../public/Rider/ride_bg.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  min-height: 400px;
+  width: 100%;
+  background-color: rgba(0,0,0,0.8);
+  background-blend-mode: darken;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding-bottom: 50px;
+}
+.signUpToRide {
+  background: none;
+  color: #f4f4f4;
+  border: 1px solid #f4f4f4;
+  font-size: 2.5rem;
+  font-family: 'ProximaNovaThin';
+  cursor: pointer;
+}
+.signUpToRide:hover {
+  border: 1px solid transparent;
+  transition: 0.2s;
+}
+.signUpToRideSpan {
+  display: block;
+  font-size: 3rem;
+  color: #fff;
+  margin: 40px 10px;
+}
+.trust {
+  padding-top: 30px;
+}
+.trust .payWithTitle {
+  margin-top: 0;
+}
+.payWithTitle3 {
+  font-size: 2rem;
+  font-weight: 300;
+}
+
+@media only screen and (max-width: 800px) {
+  .payWithP {
+    width: 100%;
+  }
+}
+@media only screen and (max-width: 400px) {
+  .signUpBigBtn {
+    bottom: 100px;
+    width: 150px;
+    min-height: 150px;
+    font-size: 1.3rem;
+  }
+  .signUpToRide {
+    font-size: 1.9rem;
+  }
+  .payWithTitle {
+    margin-top: 30px;
+  }
+}

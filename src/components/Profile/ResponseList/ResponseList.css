@@ -1,0 +1,77 @@
+
+.resHeading {
+  padding: 0;
+  padding-left: 72px;
+  display: flex;
+  border-bottom: 2px solid #dedede;
+  align-self:  stretch;
+}
+
+.resHeading > h1 {
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  flex-grow: 1;
+  color: #2b2929;
+  margin: 0;
+  padding: 15px 0;
+  letter-spacing: 4px;
+}
+
+.refreshContainer > div {
+  margin: 15px;
+}
+
+.resItem {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: stretch;
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 1px solid rgba(0,0,0,0.2);
+}
+
+.resItemInfo {
+  padding-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+.resListMain {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: stretch;
+  padding: 20px;
+}
+
+.resItemInfoEmail {
+  overflow: hidden;
+  text-align: left;
+  margin-right: 10px;
+  font-size: 1rem;
+  font-family: 'ProximaNovaBold';
+  color: #2b2929;
+}
+
+.resItemInfoTime {
+  color: #746f6f;
+  font-size: 0.8rem;
+}
+
+.resItemMessage {
+  font-family: 'ProximaNovaRegular';
+  text-align: left;
+  color: #2b2929;
+  font-size: 1rem;
+}
+
+@media only screen and (max-width: 500px) {
+  .resHeading {
+    padding-left: 0;
+    flex-flow: column nowrap;
+  }
+  .refreshContainer {
+    align-self: flex-end;
+  }
+}
+

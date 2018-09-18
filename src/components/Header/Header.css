@@ -1,0 +1,118 @@
+.header {
+  background-color: #2b2929;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 10;
+  color: #fff;
+}
+.headerInner {
+  padding: 0 100px;
+  /* max-width: 1140px;
+  margin: auto; */
+}
+.readMore__h2 {
+  color: #fff;
+  font-size: 2rem;
+}
+.yellow_span {
+  color: #faa71a;
+}
+.headerFlex {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+.logo, .sign_in {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-basis: 30%;
+}
+.logo {
+  z-index: 10;
+}
+.sign_in {
+  flex-basis: 55%;
+  justify-content: flex-end;
+}
+.rideDrive {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.rideDriveItem {
+  margin: 0 20px;
+  border-bottom: 4px solid transparent;
+}
+.rideDriveItem__a {
+  padding: 22px 0;
+  border-bottom: 4px solid transparent;
+}
+.rideDriveItem__a:hover {
+  border-bottom: 4px solid #fff;
+}
+.active {
+  border-bottom: 4px solid #fff;
+}
+.yellow_span {
+  color: #faa71a;
+}
+.headerLogo__a:hover .toggle_span {
+  color: #faa71a;
+  transition: 0.2s;
+}
+.headerLogo__a:hover .yellow_span {
+  color: #fff;
+  transition: 0.3s;
+}
+.logo a {
+  text-decoration: none;
+  color: #fff;
+}
+.homeBtn, .bannerBtn {
+  background: none;
+  border: none;
+  color: #fff;
+  font-family: 'ProximaNovaThin';
+  outline: none;
+  cursor: pointer;
+}
+.bannerBtn {
+  font-size: 1.2rem;
+}
+.sign_in__block__a {
+  padding: 22px 0;
+}
+.sign_in__block__a:hover {
+  border-bottom: 4px solid #fff;
+}
+.becomeDriverBtn {
+  background-color: #f4f4f4;
+  color: #474747;
+  font-family: "ProximaNovaRegular";
+  font-size: 1rem;
+  padding: 4px 14px;
+}
+.becomeDriverBtn:hover {
+  background-color: #e2e0e0;
+  transition: 0.3s;
+}
+
+@media only screen and (max-width: 800px) {
+  .sign_in__block, .rideDrive {
+    display: none;
+  }
+  .becomeDriverBtn {
+    padding: 4px 5px;
+  }
+  .headerInner {
+    padding: 0 20px;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .becomeDriverBtn {
+    display: none;
+  }
+}

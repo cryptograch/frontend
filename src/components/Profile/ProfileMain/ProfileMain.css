@@ -1,0 +1,26 @@
+.main {
+  width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+.main h3 {
+  font-size: 1.3rem;
+}
+.heading {
+  color: #2b2929;
+  border-bottom: 2px solid #dedede;
+  margin: 0;
+  width: 100%;
+  padding: 15px 0;
+  letter-spacing: 4px;
+  text-align: center;
+}
+.main span {
+  font-family: 'ProximaNovaRegular';
+}
+@media only screen and (max-width: 500px) {
+  .heading {
+    position: static;
+  }
+}

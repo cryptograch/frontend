@@ -1,0 +1,114 @@
+.globalContainer {
+    position: fixed;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0,0,0,0.5);
+    /* opacity: 0.5; */
+    z-index: 15;
+}
+
+.globalContent {
+    max-width: 80vw;
+    max-height: 80vh;
+    position: relative;
+}
+
+.globalContentMap {
+    width: 80vw;
+    height: 80vh;
+}
+
+.globalContent > img {
+    max-width: 80vw;
+    width: auto;
+    height: auto;
+}
+
+.globalClose {
+    cursor: pointer;
+    border-radius: 50%;
+    background: rgba(255,255,255, 0.6);
+    width: 32px;
+    height: 32px;
+    padding: 5px;
+    position: absolute;
+    top: -45px;
+    right: -40px;
+}
+
+.globalClose > img {
+    width: 32px;
+    height: 32px;
+}
+
+.globalClose:hover {
+    opacity: 0.8;
+}
+
+.labelContainer {
+    cursor: pointer;
+    position: relative;
+    top: -64px;
+    left: -32px;
+    width: 64px;
+    height: 64px;
+    z-index: 2;
+}
+
+.labelContainer:hover > div {
+    opacity: 1;
+} 
+
+.labelContainer > img {
+    width: 64px;
+    height: 64px;
+}
+
+.labelText {
+    top: -30px;
+    right: -40px;
+    position: absolute;
+    font-size: 1.2rem;
+    background: rgba(255,255,255, 0.8);
+    border-radius: 5px;
+    border: 1px solid rgba(0,0,0,0.1);
+    opacity: 0;
+    padding: 10px;
+    margin-bottom: 40px;
+    margin-left: 40px;
+    transition: opacity .3s ease-out;
+}
+
+.routelabelContainer {
+    position: relative;
+    top: -8px;
+    left: -8px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1px solid #333333;
+    background: #5e6fca;
+    z-index: 2;
+}
+
+@media only screen and (max-width: 500px) {
+    .globalContent {
+        margin-top: 40px;
+        max-width: 90vw;
+        max-height: 85vh;
+    }
+    .globalContent > img {
+        max-width: 90vw;
+    }
+    .globalContentMap {
+        width: 90vw;
+        height: 85vh;
+    }
+    .globalClose {
+        right: -10px;
+    }
+}
