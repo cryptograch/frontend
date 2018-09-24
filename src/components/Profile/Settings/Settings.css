@@ -350,6 +350,11 @@
         flex-flow: column nowrap;
         align-items: stretch;
     }
+    .showForm {
+      display: flex;
+      flex-flow: column nowrap;
+      align-items: center;
+    }
     .SettingsToolItem{
         padding: 5px 10px;
         font-size: 1.8rem;

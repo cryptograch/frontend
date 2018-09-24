@@ -23,4 +23,7 @@
   .heading {
     position: static;
   }
+  .main {
+    padding: 0px 10px; 
+  }
 }

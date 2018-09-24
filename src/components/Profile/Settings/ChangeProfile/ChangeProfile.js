@@ -7,7 +7,7 @@ import Alert from '../../../Alert/Alert';
 
 import { connect } from 'react-redux';
 import { uploadPhoto } from '../../../../actions/authaction';
-import { changeProfile } from '../../../../actions/chengeaction';
+import { changeProfile, changeKey } from '../../../../actions/chengeaction';
 import userdefault from '../../../../assets/default-user.png';
 
 class ChangeProfile extends Component {
@@ -24,7 +24,8 @@ class ChangeProfile extends Component {
             newphoto: null,
             newphotoname: null,
             lock: "",
-            fileName: "Choose file"
+            fileName: "Choose file",
+            PrivateKey: ""
 
         }
     }
@@ -70,6 +71,12 @@ class ChangeProfile extends Component {
         if (this.state.city) {
             this.props.changeProfile({
                 city: this.state.city,
+            });
+
+        }
+        if (this.state.privateKey) {
+            this.props.changeKey({
+                privateKey: this.state.privateKey,
             });
 
         }
@@ -121,6 +128,10 @@ class ChangeProfile extends Component {
                         <div className={style.changePhoto}>
                             <input className={style.signInInput} type='text' placeholder="Enter new city" required onChange={(e) => { this.setState({ city: e.target.value }) }} />
                         </div>
+                        <h1 className={style.Label}>Private Key</h1>
+                        <div  className={style.changePhoto}s>
+                        <input className={style.signInInput} type='text' placeholder="New Private Key" required onChange={(e) => { this.setState({ privateKey: e.target.value }) }} />
+                        </div>
                         <h1 className={style.Label}>Password</h1>
                         <div className={style.changePhoto}>
                             <div className={style.marginRight}>
@@ -155,6 +166,7 @@ const mapStateToProps = state => ({
 })
 const mapDispatchtoProps = dispatch => ({
     changeProfile: (data) => { dispatch(changeProfile(data)) },
+    changeKey: (data) => {dispatch(changeKey(data)) },
     uploadPhoto: (file) => { dispatch(uploadPhoto(file)) },
 })
 export default connect(mapStateToProps, mapDispatchtoProps)(ChangeProfile);

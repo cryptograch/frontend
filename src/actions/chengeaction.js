@@ -54,14 +54,53 @@ export const changeProfile = (data) => (dispatch, getState) => {
                         dispatch(getUser());
                     } else if (res.status === 401) {
                         dispatch(refreshToken(token, changeProfile, data));
+                    } else if (res.status === 400) {
+                        return res.json();
                     } else {
                         throw new Error(res.statusText);
                     }
+                })
+                .then(data => {
+                    if (Array.isArray(data[Object.keys(data)[0]])) {
+                        dispatch(updatefailed(data[Object.keys(data)[0]][0]));
+                    }
+
                 })
                 .catch(error => dispatch(updatefailed(error.message)));
 
         }
         else {
+            dispatch(logout());
+        }
+    }
+};
+
+export const changeKey = (data) => (dispatch, getState) => {
+    const token = checkAndGetToken(dispatch, getState);
+    if (data) {
+        if (token) {
+            dispatch(updatestart());
+            fetch(`${apiurl}/api/balance/changekey`, {
+                method: 'PUT',
+                headers: new Headers({
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token.auth_token}`
+                }),
+                body: JSON.stringify(data)
+            })
+                .then(res => {
+                    if (res.status === 204) {
+                        dispatch(updatesuccess('Private Key was updated'));
+                        dispatch(getUser());
+                        console.log('key update ok');
+                    } else if (res.status === 401) {
+                        dispatch(refreshToken(token, changeProfile, data));
+                    } else {
+                        throw new Error(res.statusText);
+                    }
+                })
+                .catch(error => dispatch(updatefailed(error.message)));
+        } else {
             dispatch(logout());
         }
     }
