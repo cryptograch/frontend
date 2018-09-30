@@ -8,6 +8,7 @@ export const USERPHOTO_FETCH_SUCCESS = 'USERPHOTO_FETCH_SUCCESS';
 export const USERPHOTO_FETCH_FAILED = 'USERPHOTO_FETCH_FAILED';
 
 export const TOKEN_SUCCESS = 'TOKEN_SUCCESS';
+export const TOKEN_START = 'TOKEN_START';
 // export const TOKEN_FAILED = 'TOKEN_FAILED';
 export const TOKEN_DELETE = 'TOKEN_DELETE';
 
@@ -18,44 +19,48 @@ import { apiurl } from '../appconfig';
 
 import { updatestart, updatesuccess, updatefailed } from './chengeaction';
 
-const userStart = () => ({
+export const userStart = () => ({
     type: USER_FETCH_START
 });
 
-const userSuccess = (user) => ({
+export const userSuccess = (user) => ({
     type: USER_FETCH_SUCCESS,
     user
 });
 
-const userFailed = (error) => ({
+export const userFailed = (error) => ({
     type: USER_FETCH_FAILED,
     error
 });
 
-const userDelete = () => ({
+export const userDelete = () => ({
     type: USER_DELETE
 });
 
-const tokenSuccess = (token) => ({
+export const tokenStart = () => ({
+    type: TOKEN_START
+});
+
+export const tokenSuccess = (token) => ({
     type: TOKEN_SUCCESS,
     token
 });
 
-const tokenDelete = () => ({
+export const tokenDelete = () => ({
     type: TOKEN_DELETE
 })
 
-const photoStart = () => ({
+export const photoStart = () => ({
     type: USERPHOTO_FETCH_START
 });
 
-const photoSuccess = (blob, url) => ({
+export const photoSuccess = (blob, url) => ({
     type: USERPHOTO_FETCH_SUCCESS,
     blob,
     url,
 });
 
-const photoFailed = (error) => ({
+export const photoFailed = (error) => ({
     type: USERPHOTO_FETCH_FAILED,
     error
 });
@@ -64,7 +69,7 @@ export const clearErrors = () => ({
     type: CLEAR_ERRORS
 })
 
-const clearAll = () => ({
+export const clearAll = () => ({
     type: CLEAR_ALL
 })
 
@@ -92,38 +97,69 @@ export const checkAndGetToken = (dispatch, getState) => {
 
 // TODO: ActionCreator refresh token
 export const refreshToken = (tok, action, ...actionparams) => (dispatch, getState) => {
-    const token = (tok) ? tok : checkAndGetToken(dispatch, getState);
-    if (token && token.refresh_token) {
-        const refresh = token.refresh_token
-        fetch(`${apiurl}/api/Auth/refreshtoken?refreshToken=${refresh}`, {
-            method: 'POST',
-        })
-            .then(res => {
-                if (res.status === 200) {
-                    return res.json()
-                } else {
-                    throw new Error(res.statusText);
-                }
+    if (!getState().tokenData.loading) {
+        const token = (tok) ? tok : checkAndGetToken(dispatch, getState);
+        if (token && token.refresh_token) {
+            const refresh = token.refresh_token
+            return fetch(`${apiurl}/api/Auth/refreshtoken?refreshToken=${refresh}`, {
+                method: 'POST',
             })
-            .then(newtoken => {
-                newtoken.role = token.role;
-                newtoken.id = token.id;
-                dispatch(tokenSuccess(newtoken));
-                if (action) {
-                    dispatch(action(...actionparams));
-                }
-            })
-            .catch(error => dispatch(logout()));
-    } else {
-        dispatch(logout());
+                .then(res => {
+                    if (res.status === 200) {
+                        return res.json()
+                    } else {
+                        throw new Error(res.statusText);
+                    }
+                })
+                .then(newtoken => {
+                    newtoken.role = token.role;
+                    newtoken.id = token.id;
+                    dispatch(tokenSuccess(newtoken));
+                    if (action) {
+                        dispatch(action(...actionparams));
+                    }
+                })
+                .catch(error => dispatch(logout()));
+        } else {
+            dispatch(logout());
+        }
     }
+}
+
+export const registerUser = (role, regdata, file) => (dispatch, getState) => {
+    dispatch(userStart());
+    const url = `${apiurl}/api/accounts/${role}s`;
+    return fetch(url, {
+        method: 'POST',
+        headers: new Headers({
+            'Content-Type': 'application/json',
+        }),
+        body: JSON.stringify(regdata)
+    })
+        .then(res => {
+            if (res.status === 200 || res.status === 204 || res.status === 201) {
+                return res.json();
+            } else if (res.status === 400) {
+                return res.json();
+            } else {
+                throw new Error(res.statusText);
+            }
+        })
+        .then(data => {
+            if (Array.isArray(data[Object.keys(data)[0]])) {
+                dispatch(userFailed(data[Object.keys(data)[0]][0]));
+            } else {
+                dispatch(loginUser({ userName: regdata.email, password: regdata.password }, role));
+            }
+        })
+        .catch(error => { dispatch(userFailed(error.message)) });
 }
 
 // actionCreator register driver
 export const registerDriver = (regdata, file) => (dispatch, getState) => {
     dispatch(userStart());
     // console.log(regdata);
-    fetch(`${apiurl}/api/accounts/drivers`, {
+    return fetch(`${apiurl}/api/accounts/drivers`, {
         method: 'POST',
         headers: new Headers({
             'Content-Type': 'application/json',
@@ -151,7 +187,7 @@ export const registerDriver = (regdata, file) => (dispatch, getState) => {
 
 export const loginUser = (logdata, role) => (dispatch, getState) => {
     dispatch(userStart());
-    fetch(`${apiurl}/api/Auth/${role}`, {
+    return fetch(`${apiurl}/api/Auth/${role}`, {
         method: 'POST',
         headers: new Headers({
             'Content-Type': 'application/json'
@@ -188,7 +224,7 @@ export const getUser = (tok) => (dispatch, getState) => {
     if (token) {
         dispatch(userStart());
         const url = (token.role === 'admin') ? `${apiurl}/api/admins/${token.id}` : `${apiurl}/api/accounts/${token.role}s/${token.id}`;
-        fetch(url, {
+        return fetch(url, {
             method: 'GET',
             headers: new Headers({
                 'Authorization': `Bearer ${token.auth_token}`
@@ -307,7 +343,7 @@ export const getPhoto = (tok, id) => (dispatch, getState) => {
     if (photoid) {
         if (token) {
             dispatch(photoStart());
-            fetch(`${apiurl}/api/images/${photoid}`, {
+            return fetch(`${apiurl}/api/images/${photoid}`, {
                 method: 'GET',
                 headers: new Headers({
                     'Authorization': `Bearer ${token.auth_token}`
@@ -336,16 +372,15 @@ export const getPhoto = (tok, id) => (dispatch, getState) => {
 }
 
 // actionCreator upload user photo
-export const uploadPhoto = (file) => (dispatch, getState) => {
-    const token = checkAndGetToken(dispatch, getState);
+export const uploadPhoto = (file, tok) => (dispatch, getState) => {
+    const token = (tok) ? tok : checkAndGetToken(dispatch, getState);
     if (file) {
         dispatch(updatestart());
         if (token) {
             dispatch(photoStart());
             const data = new FormData();
             data.append('files', file);
-
-            fetch(`${apiurl}/api/profilepicture`, {
+            return fetch(`${apiurl}/api/profilepicture`, {
                 method: 'POST',
                 headers: new Headers({
                     'Authorization': `Bearer ${token.auth_token}`,

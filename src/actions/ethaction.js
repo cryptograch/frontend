@@ -131,13 +131,11 @@ export const getTaxiBalance = () => (dispatch, getState) => {
                 }
             })
             .then(data => {
-                if (data) {
                     if (Array.isArray(data[Object.keys(data)[0]])) {
                         dispatch(taxiFailed(data[Object.keys(data)[0]][0]));
                     } else {
                         dispatch(taxiSuccess(data));
                     }
-                }
             })
             .catch(error => dispatch(taxiFailed(error.message)));
     } else {

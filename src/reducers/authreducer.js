@@ -3,6 +3,7 @@ import {
     USER_FETCH_SUCCESS,
     USER_FETCH_FAILED,
     USER_DELETE,
+    TOKEN_START,
     TOKEN_SUCCESS,
     TOKEN_DELETE,
     USERPHOTO_FETCH_START,
@@ -12,43 +13,45 @@ import {
     CLEAR_ALL,
 } from '../actions/authaction';
 
-const initUserData = {
+export const initUserState = {
     user: null,
     loading: false,
     error: null,
 }
 
-const userData = (state = initUserData, action) => {
+const userData = (state = initUserState, action) => {
     switch (action.type) {
         case USER_FETCH_START: return Object.assign({}, state, { loading: true });
         case USER_FETCH_SUCCESS: return Object.assign({}, state, { user: action.user, loading: false });
         case USER_FETCH_FAILED: return Object.assign({}, state, { error: action.error, loading: false });
-        case USER_DELETE: return Object.assign({}, initUserData);
+        case USER_DELETE: return Object.assign({}, initUserState);
         case CLEAR_ERRORS: return Object.assign({}, state, { error: null });
-        case CLEAR_ALL: return Object.assign({}, initUserData);
+        case CLEAR_ALL: return Object.assign({}, initUserState);
         default: return state;
     }
 }
 
-const initTokenData = {
-    token: null
+export const initTokenState = {
+    token: null,
+    loading: false,
 }
 
-const tokenData = (state = initTokenData, action) => {
+const tokenData = (state = initTokenState, action) => {
     switch (action.type) {
+        case TOKEN_START: return Object.assign({}, state, { loading: true });
         case TOKEN_SUCCESS: {
             localStorage.setItem('Taxi_Token', JSON.stringify(action.token));
-            return { token: action.token };
+            return { token: action.token, loading: false };
         }
         case TOKEN_DELETE: {
             localStorage.removeItem('Taxi_Token');
-            return initTokenData;
+            return initTokenState;
         }
         default: return state;
     }
 }
 
-const initPhotoState = {
+export const initPhotoState = {
     blob: null,
     url: null,
     loading: false,
