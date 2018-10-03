@@ -6,6 +6,7 @@ import {
     TOKEN_START,
     TOKEN_SUCCESS,
     TOKEN_DELETE,
+    TOKEN_FAILED,
     USERPHOTO_FETCH_START,
     USERPHOTO_FETCH_SUCCESS,
     USERPHOTO_FETCH_FAILED,
@@ -47,6 +48,7 @@ const tokenData = (state = initTokenState, action) => {
             localStorage.removeItem('Taxi_Token');
             return initTokenState;
         }
+        case TOKEN_FAILED: return Object.assign({}, state, { loading: false });
         default: return state;
     }
 }

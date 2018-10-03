@@ -39,7 +39,7 @@ class App extends Component {
     }
   }
   renderLoading() {
-    if (this.props.userData.loading || this.props.changeData.loading) {
+    if (this.props.userData.loading || this.props.changeData.loading || this.props.tokenData.loading) {
       return (<Loading global={true} />)
     }
     return null;
@@ -89,7 +89,8 @@ App.propTypes = {
   history: PropTypes.object,
   getDriver: PropTypes.func,
   userData: PropTypes.object,
-  changeData: PropTypes.object
+  changeData: PropTypes.object,
+  tokenData: PropTypes.object
 }
 
 // Func which map State to props
@@ -97,6 +98,7 @@ const mapStateToProps = state => ({
   testData: state.testData,
   history: state.historyData.history,
   userData: state.userData,
+  tokenData: state.tokenData,
   changeData: state.chengeddata
 })
 

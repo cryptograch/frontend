@@ -5,10 +5,12 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const DefinePlugin = require('webpack').DefinePlugin;
 
 console.log("SERVER_PORT env variable set as", process.env.SERVER_PORT);
-console.log("PORT env variable set as", process.env.PORT);
+console.log("PORT env variable set as", process.env.PORT, typeof process.env.SERVER_PORT);
+console.log("HOST_NAME env varibale set as", process.env.HOST_NAME, typeof process.env.HOST_NAME)
 // Need to bind a global variables to code
 const definePlugin = new DefinePlugin({
   SERVER_PORT: (process.env.SERVER_PORT) ? JSON.stringify(process.env.SERVER_PORT) : undefined,
+  HOST_NAME: (process.env.HOST_NAME) ? JSON.stringify(process.env.HOST_NAME) : undefined,
 });
 // Need to build HTML file
 const htmlWebpackPlugin = new HtmlWebPackPlugin({

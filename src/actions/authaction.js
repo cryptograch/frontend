@@ -9,7 +9,7 @@ export const USERPHOTO_FETCH_FAILED = 'USERPHOTO_FETCH_FAILED';
 
 export const TOKEN_SUCCESS = 'TOKEN_SUCCESS';
 export const TOKEN_START = 'TOKEN_START';
-// export const TOKEN_FAILED = 'TOKEN_FAILED';
+export const TOKEN_FAILED = 'TOKEN_FAILED';
 export const TOKEN_DELETE = 'TOKEN_DELETE';
 
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';
@@ -44,6 +44,10 @@ export const tokenStart = () => ({
 export const tokenSuccess = (token) => ({
     type: TOKEN_SUCCESS,
     token
+});
+
+export const tokenFailed = () => ({
+    type: TOKEN_FAILED
 });
 
 export const tokenDelete = () => ({
@@ -98,6 +102,7 @@ export const checkAndGetToken = (dispatch, getState) => {
 // TODO: ActionCreator refresh token
 export const refreshToken = (tok, action, ...actionparams) => (dispatch, getState) => {
     if (!getState().tokenData.loading) {
+        dispatch(tokenStart());
         const token = (tok) ? tok : checkAndGetToken(dispatch, getState);
         if (token && token.refresh_token) {
             const refresh = token.refresh_token
@@ -186,7 +191,7 @@ export const registerDriver = (regdata, file) => (dispatch, getState) => {
 }
 
 export const loginUser = (logdata, role) => (dispatch, getState) => {
-    dispatch(userStart());
+    dispatch(tokenStart());
     return fetch(`${apiurl}/api/Auth/${role}`, {
         method: 'POST',
         headers: new Headers({
@@ -209,11 +214,13 @@ export const loginUser = (logdata, role) => (dispatch, getState) => {
                 dispatch(tokenSuccess(token));
                 dispatch(getUser(token));
             } else {
+                dispatch(tokenFailed());
                 // console.log(token[Object.keys(token)[0]][0]);
                 dispatch(userFailed(token[Object.keys(token)[0]][0]));
             }
         })
         .catch(error => {
+            dispatch(tokenFailed());
             dispatch(userFailed(error.message));
             // dispatch(logout());
         });

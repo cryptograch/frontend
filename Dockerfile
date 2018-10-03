@@ -6,6 +6,7 @@ ENV PORT=8081
 # set Server default port
 # need in building image to bind server port
 ARG SERVER_PORT=8080
+ARG HOST_NAME
 
 WORKDIR /
 
@@ -14,7 +15,7 @@ WORKDIR /
 COPY . .
 RUN npm install
 # bind SERVER_PORT to build config
-RUN SERVER_PORT=$SERVER_PORT npm run build
+RUN SERVER_PORT=$SERVER_PORT HOST_NAME=${HOST_NAME} npm run build
 # COPY /dist /app
 
 # install serve
