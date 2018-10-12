@@ -10,9 +10,29 @@ import {
     USERPHOTO_FETCH_START,
     USERPHOTO_FETCH_SUCCESS,
     USERPHOTO_FETCH_FAILED,
+    USER_REGISTER_START,
+    USER_REGISTER_FAILED,
+    USER_REGISTER_SUCCESS,
     CLEAR_ERRORS,
     CLEAR_ALL,
 } from '../actions/authaction';
+
+export const registerInitState = {
+    loading: false,
+    success: null,
+    error: null,
+}
+
+const registerData = (state = registerInitState, action) => {
+    switch (action.type) {
+        case USER_REGISTER_START: return Object.assign({}, state, { loading: true });
+        case USER_REGISTER_SUCCESS: return Object.assign({}, state, { loading: false, success: action.message });
+        case USER_REGISTER_FAILED: return Object.assign({}, state, { loading: false, error: action.error });
+        case CLEAR_ERRORS: return Object.assign({}, registerInitState);
+        case CLEAR_ALL: return Object.assign({}, registerInitState);
+        default: return state;
+    }
+}
 
 export const initUserState = {
     user: null,
@@ -70,4 +90,4 @@ const photoData = (state = initPhotoState, action) => {
     }
 }
 
-export { userData, tokenData, photoData };
+export { userData, tokenData, photoData, registerData };

@@ -7,10 +7,11 @@ import styleHome from '../../Home/Home.css';
 import styleHeader from '../../Header/Header.css';
 import style from './Sign_up_rider.css';
 import Alert from '../../Alert/Alert';
+import Loading from '../../Loading/Loading';
 
 import { connect } from 'react-redux';
 
-import { registerCustomer, clearErrors } from '../../../actions/authaction';
+import { registerUser, clearErrors } from '../../../actions/authaction';
 
 class SignUpRider extends Component {
     constructor(props) {
@@ -37,15 +38,25 @@ class SignUpRider extends Component {
     submit() {
         this.props.register(this.state);
     }
+    renderLoading() {
+        if (this.props.registerData.loading) {
+            return <Loading global={true} />
+        }
+        return null;
+    }
     renderError() {
-        if (this.props.userData.error) {
-            return <Alert global={true} error={this.props.userData.error} click={this.props.clearErrors} />
+        if (this.props.registerData.error) {
+            return <Alert global={true} error={this.props.registerData.error} click={this.props.clearErrors} />
+        }
+        if (this.props.registerData.success) {
+            return <Alert global={true} success={this.props.registerData.success} click={this.props.clearErrors} />
         }
         return null;
     }
     render() {
         return (
             <div>
+                {this.renderLoading()}
                 {this.renderError()}
                 <div className={styleSignInRide.signInBackground}>
                     <div className={styleSignInRide.orangeBackground + ' ' + style.orangeBackground}></div>
@@ -101,15 +112,17 @@ SignUpRider.propTypes = {
     register: PropTypes.func,
     history: PropTypes.object,
     clearErrors: PropTypes.func,
+    registerData: PropTypes.object,
 }
 
 const mapStateToProps = state => ({
     userData: state.userData,
+    registerData: state.registerData,
     history: state.historyData.history
 });
 
 const mapDispatchtoProps = dispatch => ({
-    register: (data) => { dispatch(registerCustomer(data)) },
+    register: (data) => { dispatch(registerUser('customer', data)) },
     clearErrors: () => { dispatch(clearErrors()) }
 });
 

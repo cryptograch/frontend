@@ -4,7 +4,7 @@ import { combineReducers } from 'redux';
 
 // here import custom reducers
 import { testData } from './testreducer';
-import { userData, tokenData, photoData } from './authreducer';
+import { userData, tokenData, photoData, registerData } from './authreducer';
 import { historyData } from './historyreducer';
 import { docData } from './docreducer';
 import { vehData } from './vehiclereducer';
@@ -34,4 +34,5 @@ export default combineReducers({
     reslistData,
     globalviewData,
     balanceData,
+    registerData,
 });

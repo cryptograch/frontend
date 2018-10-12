@@ -3,6 +3,10 @@ export const USER_FETCH_SUCCESS = 'USER_FETCH_SUCCESS';
 export const USER_FETCH_FAILED = 'USER_FETCH_ERROR';
 export const USER_DELETE = 'USER_DELETE';
 
+export const USER_REGISTER_START = 'USER_REGISTER_START';
+export const USER_REGISTER_FAILED = 'USER_REGISTER_FAILED';
+export const USER_REGISTER_SUCCESS = 'USER_REGISTER_SUCCESS';
+
 export const USERPHOTO_FETCH_START = 'USERPHOTO_FETCH_START';
 export const USERPHOTO_FETCH_SUCCESS = 'USERPHOTO_FETCH_SUCCESS';
 export const USERPHOTO_FETCH_FAILED = 'USERPHOTO_FETCH_FAILED';
@@ -35,6 +39,20 @@ export const userFailed = (error) => ({
 
 export const userDelete = () => ({
     type: USER_DELETE
+});
+
+export const registerStart = () => ({
+    type: USER_REGISTER_START
+});
+
+export const registerSuccess = (message) => ({
+    type: USER_REGISTER_SUCCESS,
+    message
+});
+
+export const registerFailed = (error) => ({
+    type: USER_REGISTER_FAILED,
+    error
 });
 
 export const tokenStart = () => ({
@@ -132,7 +150,7 @@ export const refreshToken = (tok, action, ...actionparams) => (dispatch, getStat
 }
 
 export const registerUser = (role, regdata, file) => (dispatch, getState) => {
-    dispatch(userStart());
+    dispatch(registerStart());
     const url = `${apiurl}/api/accounts/${role}s`;
     return fetch(url, {
         method: 'POST',
@@ -152,12 +170,13 @@ export const registerUser = (role, regdata, file) => (dispatch, getState) => {
         })
         .then(data => {
             if (Array.isArray(data[Object.keys(data)[0]])) {
-                dispatch(userFailed(data[Object.keys(data)[0]][0]));
+                dispatch(registerFailed(data[Object.keys(data)[0]][0]));
             } else {
-                dispatch(loginUser({ userName: regdata.email, password: regdata.password }, role));
+                dispatch(registerSuccess('Registration complete, please confirm you email and sign in'));
+                // dispatch(loginUser({ userName: regdata.email, password: regdata.password }, role));
             }
         })
-        .catch(error => { dispatch(userFailed(error.message)) });
+        .catch(error => { dispatch(registerFailed(error.message)) });
 }
 
 // actionCreator register driver
