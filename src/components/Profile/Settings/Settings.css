@@ -63,11 +63,10 @@
   cursor: pointer;
 }
 .changePhoto {
-  display: flex;
-  justify-content: flex-start;
-  align-content: stretch;
-  align-items: center;
-  margin-bottom: 30px;
+  width: 80%;
+  display: grid;
+  grid-template-columns: minmax(200px, 350px) minmax(200px, 350px);
+  grid-column-gap: 15px;
 }
 .showForm, .changeDoc, .vehForm {
   max-width: 80%;
@@ -329,15 +328,17 @@
   flex-flow: column nowrap;
   align-self: center;
 }
-
+@media only screen and (max-width: 800px) {
+  .changePhoto{
+      grid-template-columns: minmax(200px, 250px);
+  }
+}
 @media only screen and (max-width: 700px) {
   .SettingsToolItem{
       padding: 5px;
       font-size: 1.1rem;
   }
-  .changePhoto {
-    display: block;
-  }
+
   .pfotoinput + label {
     margin-left: 0;
   }

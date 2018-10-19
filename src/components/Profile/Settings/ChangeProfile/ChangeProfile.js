@@ -113,12 +113,12 @@ class ChangeProfile extends Component {
                         </div>
                         <h1>Name</h1>
                         <div className={style.changePhoto}>
-                            <div className={style.marginRight}>
+                            
                                 <input className={style.signInInput} type='text' placeholder="First Name" required onChange={(e) => { this.setState({ firstName: e.target.value }) }} />
-                            </div>
-                            <div>
+                            
+                            
                                 <input className={style.signInInput} type='text' placeholder="Last Name" required onChange={(e) => { this.setState({ lastName: e.target.value }) }} />
-                            </div>
+                            
                         </div>
                         <h1>Phone Number</h1>
                         <div className={style.changePhoto}>
@@ -134,12 +134,12 @@ class ChangeProfile extends Component {
                         </div>
                         <h1 className={style.Label}>Password</h1>
                         <div className={style.changePhoto}>
-                            <div className={style.marginRight}>
+                            
                                 <input className={style.signInInput} type='text' placeholder="Current password" required onChange={(e) => { this.setState({ currentPassword: e.target.value }) }} />
-                            </div>
-                            <div>
+                            
+                            
                                 <input className={style.signInInput} type='text' placeholder="New password" required onChange={(e) => { this.setState({ newPassword: e.target.value }) }} />
-                            </div>
+                            
                         </div>
                         <div className={style.docSubmit}>
                             <button className={style.button} onClick={this.confirmChange.bind(this)}>SUBMIT</button>

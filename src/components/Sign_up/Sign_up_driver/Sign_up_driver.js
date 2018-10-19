@@ -75,32 +75,32 @@ class SignUpDriver extends Component {
                             <div className={styleSignUpRide.flexInput + ' ' + styleSignUpRide.marginBot}>
                                 <div className={styleSignUpRide.width50}>
                                     <span className={styleSignInRide.inputSpan}>First name (required)</span>
-                                    <input className={styleSignInRide.signInInput} type="text" name="firstname" placeholder="First name" onChange={(e) => { this.setState({ firstName: e.target.value }) }} />
+                                    <input className={styleSignInRide.signInInput} type="text" required name="firstname" placeholder="First name" onChange={(e) => { this.setState({ firstName: e.target.value }) }} />
                                 </div>
                                 <div className={styleSignUpRide.width50}>
                                     <span className={styleSignInRide.inputSpan}>Last name (required)</span>
-                                    <input className={styleSignInRide.signInInput} type="text" name="lastname" placeholder="Last name" onChange={(e) => { this.setState({ lastName: e.target.value }) }} />
+                                    <input className={styleSignInRide.signInInput} type="text" required name="lastname" placeholder="Last name" onChange={(e) => { this.setState({ lastName: e.target.value }) }} />
                                 </div>
                             </div>
                             <div className={styleSignUpRide.marginBot}>
                                 <span className={styleSignInRide.inputSpan}>Enter your phone number (required)</span>
-                                <input className={styleSignInRide.signInInput} type="phone" placeholder="Phone number" onChange={(e) => { this.setState({ phoneNumber: e.target.value }) }} />
+                                <input className={styleSignInRide.signInInput} type="phone" required placeholder="Phone number" onChange={(e) => { this.setState({ phoneNumber: e.target.value }) }} />
                             </div>
                             <div className={styleSignUpRide.marginBot}>
                                 <span className={styleSignInRide.inputSpan}>Enter your email (required)</span>
-                                <input className={styleSignInRide.signInInput} type="email" placeholder="Email adress" onChange={(e) => { this.setState({ email: e.target.value }) }} />
+                                <input className={styleSignInRide.signInInput} type="email" required placeholder="Email adress" onChange={(e) => { this.setState({ email: e.target.value }) }} />
                             </div>
                             <div className={styleSignUpRide.marginBot}>
                                 <span className={styleSignInRide.inputSpan}>Enter a password (required)</span>
-                                <input className={styleSignInRide.signInInput} type="password" placeholder="Password" onChange={(e) => { this.setState({ password: e.target.value }) }} />
+                                <input className={styleSignInRide.signInInput} type="password" required placeholder="Password" onChange={(e) => { this.setState({ password: e.target.value }) }} />
                             </div>
                             <div className={styleSignUpRide.marginBot}>
                                 <span className={styleSignInRide.inputSpan}>Enter your city (required)</span>
-                                <input className={styleSignInRide.signInInput} type="text" placeholder="City" onChange={(e) => { this.setState({ city: e.target.value }) }} />
+                                <input className={styleSignInRide.signInInput} type="text" required placeholder="City" onChange={(e) => { this.setState({ city: e.target.value }) }} />
                             </div>
                             <div className={styleSignUpRide.marginBot}>
                                 <span className={styleSignInRide.inputSpan}>Enter your privat key (required)</span>
-                                <input className={styleSignInRide.signInInput} type="text" placeholder="Privat key" onChange={(e) => { this.setState({ privateKey: e.target.value }) }} />
+                                <input className={styleSignInRide.signInInput} type="text" required placeholder="Privat key" onChange={(e) => { this.setState({ privateKey: e.target.value }) }} />
                             </div>
                             <input className={styleSignInRide.signInInput + ' ' + styleSignInRide.signInInputSubmit} type="submit" value="Sign Up" onClick={this.submit.bind(this)} />
                             <p className={styleSignUpRide.policy}>
