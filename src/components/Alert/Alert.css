@@ -1,9 +1,9 @@
 .alertcontainer {
     position: fixed;
-    top: 15%;
-    left: 20%;
-    right: 20%;
-    max-width: 60%;
+    bottom: 2%;
+    right: 5%;
+    max-width: 40%;
+    width: 40%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -26,7 +26,7 @@
     flex-grow: 1;
     color: white;
     font-weight: bold;
-    font-size: 18pt;
+    font-size: 1.2rem;
 }
 
 .alertclose {
@@ -119,18 +119,17 @@
 
 @keyframes anim-container {
     0% {
-        top: 10%;
+        bottom: -2%;
     }
     100% {
-        top: 15%;
+        bottom: 2%;
     }
 }
 
 @media only screen and (max-width: 500px) {
     .alertcontainer {
         max-width: 90%;
-        left: 5%;
-        right: 5%;
+        width: 90%;
     }
 }
 

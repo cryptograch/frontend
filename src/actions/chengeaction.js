@@ -50,8 +50,8 @@ export const changeProfile = (data) => (dispatch, getState) => {
             })
                 .then(res => {
                     if (res.status === 204) {
-                        dispatch(updatesuccess('Proile was updated'));
-                        dispatch(getUser());
+                        dispatch(updatesuccess('Profile was updated'));
+                        dispatch(getUser(token));
                     } else if (res.status === 401) {
                         dispatch(refreshToken(token, changeProfile, data));
                     } else if (res.status === 400) {
@@ -61,10 +61,11 @@ export const changeProfile = (data) => (dispatch, getState) => {
                     }
                 })
                 .then(data => {
-                    if (Array.isArray(data[Object.keys(data)[0]])) {
-                        dispatch(updatefailed(data[Object.keys(data)[0]][0]));
+                    if (data) {
+                        if (Array.isArray(data[Object.keys(data)[0]])) {
+                            dispatch(updatefailed(data[Object.keys(data)[0]][0]));
+                        }
                     }
-
                 })
                 .catch(error => dispatch(updatefailed(error.message)));
 

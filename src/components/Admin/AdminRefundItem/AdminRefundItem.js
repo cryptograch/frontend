@@ -121,6 +121,15 @@ class AdminRefundItem extends Component {
             return <img src={nosvg} alt='No' />
         }
     }
+    renderResponse() {
+        if (this.props.data.response) {
+            return (
+                <div className={style.refundMessageContainer}>
+                    <div className={style.refundMessage}>{this.props.data.response}</div>
+                </div>
+            );
+        }
+    }
     render() {
         if (this.props.data) {
             return (
@@ -139,6 +148,7 @@ class AdminRefundItem extends Component {
                             <div className={style.refundMessageContainer}>
                                 <div className={style.refundMessage}>{this.props.data.message}</div>
                             </div>
+                            {this.renderResponse()}
                         </div>
                     </div>
                     {this.renderResolveMain()}

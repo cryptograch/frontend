@@ -337,7 +337,7 @@ export const resolveRequest = (id, message) => (dispatch, getState) => {
                         throw new Error(res.statusText);
                     }
                 })
-                .catch(error => dispatch(error.message));
+                .catch(error => dispatch(changeFailed(error.message)));
         } else {
             dispatch(logout());
         }

@@ -11,18 +11,30 @@ import Alert from '../../Alert/Alert';
 import { connect } from 'react-redux';
 import { loginUser, clearErrors, resendLetter } from '../../../actions/authaction';
 
+import ValidationModel from '../../../validation';
+
 class SignInAdmin extends Component {
     constructor(props) {
         super(props);
         this.state = {
             userName: null,
-            password: null
+            password: null,
+            errors: {},
+            model: new ValidationModel()
         }
     }
     componentDidMount() {
         if (this.props.userData.user) {
             this.props.history.replace('/profile');
         }
+        this.state.model.setModel({
+            userName: {
+                name: 'Login',
+            },
+            password: {
+                name: 'Password',
+            }
+        })
     }
     componentDidUpdate() {
         if (this.props.userData.user) {
@@ -30,7 +42,18 @@ class SignInAdmin extends Component {
         }
     }
     submit() {
-        this.props.login(this.state, 'admin');
+        const { model } = this.state;
+        const data = {
+            userName: this.state.userName,
+            password: this.state.password,
+        }
+        model.validate(data);
+        if (model.isError()) {
+            this.setState({ errors: model.getErrors() });
+        } else {
+            this.setState({ errors: {} });
+            this.props.login(data, 'admin');
+        }
         return false;
     }
     renderError() {
@@ -41,7 +64,7 @@ class SignInAdmin extends Component {
                 case 'Email send':
                     return <Alert global={true} success={this.props.userData.error} click={this.props.clearErrors} />;
                 default:
-                    return <Alert global={true} error={this.props.userData.error} click={this.props.clearErrors} />;
+                    return <span className={`${styleSignInRider.inputSpan} ${styleSignInRider.alertspan}`}>{this.props.userData.error}</span>;
             }
         }
         return null;
@@ -49,7 +72,7 @@ class SignInAdmin extends Component {
     render() {
         return (
             <div className={styleSignInRider.signInBackground}>
-                {this.renderError()}
+
                 <div className={styleSignInRider.orangeBackground}></div>
                 <div className={styleHeader.logo}>
                     <Link to="/home" className={styleHeader.headerLogo__a + ' ' + styleSignInRider.signInLogo}><button className={styleHeader.homeBtn}>
@@ -60,9 +83,18 @@ class SignInAdmin extends Component {
                     <h1 className={styleSignIn.title__h1 + ' ' + styleSignInRider.signInTitle}>Sign <span className={styleHome.yellow_span}>In</span> as admin</h1>
                     <span className={styleSignInRider.inputSpan}>Enter your data</span>
                     <form onSubmit={(e) => { e.preventDefault() }}>
-                        <input className={styleSignInRider.signInInput} type="text" placeholder="Your email adress" onChange={(e) => { this.setState({ userName: e.target.value }) }} />
+                        {this.renderError()}
+                        <input
+                            className={`${styleSignInRider.signInInput} ${(this.state.errors.userName) ? styleSignInRider.inputalert : ''}`}
+                            type="text" placeholder="Your email adress"
+                            onChange={(e) => { this.setState({ userName: e.target.value }) }} />
+                        <span className={`${styleSignInRider.inputSpan} ${styleSignInRider.alertspan}`}>{this.state.errors.userName}</span>
                         <Link to="/forgot-password" className={styleSignInRider.forgotPass}><span>Forgot your password ?</span></Link>
-                        <input className={styleSignInRider.signInInput} type="password" placeholder="Your password" onChange={(e) => { this.setState({ password: e.target.value }) }} />
+                        <input
+                            className={`${styleSignInRider.signInInput} ${(this.state.errors.password) ? styleSignInRider.inputalert : ''}`}
+                            type="password" placeholder="Your password"
+                            onChange={(e) => { this.setState({ password: e.target.value }) }} />
+                        <span className={`${styleSignInRider.inputSpan} ${styleSignInRider.alertspan}`}>{this.state.errors.password}</span>
                         <input className={styleSignInRider.signInInput + ' ' + styleSignInRider.signInInputSubmit} type="submit" value="Submit" onClick={this.submit.bind(this)} />
                     </form>
                     {/* <span>Don't have an account? <NavLink to="/sign-up-driver" className={styleSignInRider.signUpSmallBtn}>Sign up</NavLink></span> */}

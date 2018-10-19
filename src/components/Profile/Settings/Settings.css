@@ -345,6 +345,9 @@
   .docForm h1:first-child, .changePhoto h1:first-child {
     margin-bottom: 10px;
   }
+  .docContainer {
+    margin: 5px;
+  }
 }
 @media only screen and (max-width: 500px) {
     .SettingsToolbar {

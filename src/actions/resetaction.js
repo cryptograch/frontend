@@ -73,8 +73,10 @@ export const sendResetLetter = (email) => (dispatch, getState) => {
                 }
             })
             .then(data => {
-                if (Array.isArray(data[Object.keys(data)[0]])) {
-                    dispatch(sendFailed(data[Object.keys(data)[0]][0]));
+                if (data) {
+                    if (Array.isArray(data[Object.keys(data)[0]])) {
+                        dispatch(sendFailed(data[Object.keys(data)[0]][0]));
+                    }
                 }
             })
             .catch(error => dispatch(sendFailed(error.message)));
@@ -93,14 +95,14 @@ export const resetPassword = (resetdata) => (dispatch, getState) => {
             }),
             body: JSON.stringify(resetdata)
         })
-        .then(res => {
-            if (res.status === 200 || res.status === 201 || res.status === 204) {
-                dispatch(resetSuccess('Password reset successful'));
-            } else {
-                throw new Error(res.statusText);
-            }
-        })
-        .catch(error => dispatch(resetFailed(error.message)))
+            .then(res => {
+                if (res.status === 200 || res.status === 201 || res.status === 204) {
+                    dispatch(resetSuccess('Password reset successful'));
+                } else {
+                    throw new Error(res.statusText);
+                }
+            })
+            .catch(error => dispatch(resetFailed(error.message)))
     } else {
         dispatch(resetFailed('No reset data'));
     }

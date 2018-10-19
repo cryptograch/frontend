@@ -89,6 +89,7 @@ class AdminRefundList extends Component {
                     </div>
                     <div className={profilestyle.contentList}>
                         {this.renderList(this.props.listData.list)}
+                        {this.renderLazyLoad()}
                     </div>
                 </div>);
         }

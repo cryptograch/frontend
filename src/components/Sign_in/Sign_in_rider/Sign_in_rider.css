@@ -41,6 +41,15 @@
    margin-bottom: 10px;
    box-sizing: border-box;
 }
+
+.inputalert {
+  border-color: #ce0a0a;
+}
+
+.alertspan {
+  color: #ce0a0a;
+}
+
 .signInInput::placeholder {
   font-family: 'ProximaNovaThin';
   color: #2b2929;

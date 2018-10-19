@@ -10,7 +10,7 @@ import mapssvg from '../../../assets/maps.svg';
 
 import { connect } from 'react-redux';
 import { apiurl } from '../../../appconfig';
-import { openGoogleMap } from '../../../actions/globalviewaction';
+import { openGoogleMap, addMapRoute } from '../../../actions/globalviewaction';
 
 class AdminRefundItem extends Component {
     constructor(props) {
@@ -19,6 +19,9 @@ class AdminRefundItem extends Component {
             trip: null,
             loadtrip: false,
             triperror: null,
+            triproute: null,
+            routeload: false,
+            routeerror: null,
         }
     }
     componentDidMount() {
@@ -57,7 +60,6 @@ class AdminRefundItem extends Component {
                 .catch(error => this.setState({ triperror: error.message, loadtrip: false }))
         }
     }
-    /* Not work yet*/
     fetchTripRoute() {
         if (this.props.tokenData.token
             && this.props.id) {
@@ -77,13 +79,15 @@ class AdminRefundItem extends Component {
                 })
                 .then(data => {
                     if (data) {
-                       console.log(data);
+                        this.setState({ routeload: false, triproute: data });
+                        this.props.addMapRoute(data);
                     }
                 })
                 .catch(error => console.log(error));
         }
     }
     renderMap() {
+        this.fetchTripRoute();
         const center = {
             lat: this.state.trip.from.latitude,
             lng: this.state.trip.from.longitude
@@ -162,7 +166,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchtoProps = dispatch => ({
-    openGoogleMap: (center, labels) => { dispatch(openGoogleMap(center, labels)) }
+    openGoogleMap: (center, labels) => { dispatch(openGoogleMap(center, labels)) },
+    addMapRoute: (route) => { dispatch(addMapRoute(route)) }
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(AdminRefundItem);

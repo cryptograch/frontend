@@ -50,7 +50,7 @@ class StatisticItem extends Component {
                         this.props.addMapRoute(data);
                     }
                 })
-                .catch(error => console.log(error));
+                .catch(error => this.setState({ triperror: error.message, loadtrip: false }));
         }
     }
     renderMap() {

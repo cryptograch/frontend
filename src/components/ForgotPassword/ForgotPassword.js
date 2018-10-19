@@ -14,15 +14,36 @@ import { connect } from 'react-redux';
 
 import { sendResetLetter, clearError, clearSuccess } from '../../actions/resetaction';
 
+import ValidationModel from '../../validation';
+
 class ForgotPassword extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: ""
+            email: "",
+            errors: {},
+            model: new ValidationModel()
         }
     }
+    componentDidMount() {
+        this.state.model.setModel({
+            email: {
+                name: 'Email',
+                type: 'email'
+            }
+        });
+    }
     submit() {
-        this.props.sendResetLetter(this.state.email);
+        const { model } = this.state;
+        const data = {
+            email: this.state.email,
+        }
+        model.validate(data);
+        if (model.isError()) {
+            this.setState({ errors: model.getErrors() });
+        } else {
+            this.props.sendResetLetter(this.state.email);
+        }
     }
     renderAlert() {
         if (this.props.resetData.sendload) {
@@ -50,7 +71,11 @@ class ForgotPassword extends Component {
                     <h1 className={styleSignIn.title__h1 + ' ' + styleSignInRider.signInTitle}>Forgot <span className={styleHome.yellow_span}>your</span> password</h1>
                     <span>We will send you an email with instructions on how to reset your password</span>
                     <form onSubmit={(e) => { e.preventDefault() }}>
-                        <input className={styleSignInRider.signInInput} type="email" placeholder="Your email adress" onChange={(e) => { this.setState({ email: e.target.value }) }} />
+                        <input
+                            className={`${styleSignInRider.signInInput} ${(this.state.errors.email) ? styleSignInRider.inputalert : ''}`}
+                            type="email" placeholder="Your email adress"
+                            onChange={(e) => { this.setState({ email: e.target.value }) }} />
+                        <span className={`${styleSignInRider.inputSpan} ${styleSignInRider.alertspan}`}>{this.state.errors.email}</span>
                         <input className={styleSignInRider.signInInput + ' ' + styleSignInRider.signInInputSubmit} type="submit" value="Submit" onClick={this.submit.bind(this)} />
                     </form>
                 </div>

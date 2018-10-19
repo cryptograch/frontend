@@ -1,7 +1,8 @@
 .searchContainer {
     display: flex;
     padding: 20px 5px;
-    justify-content: center;
+    margin: 0 20px;
+    justify-content: flex-end;
 }
 .searchInput,
 .users form>input[type=text],
@@ -155,5 +156,8 @@
 @media only screen and (max-width: 500px) {
     .searchInput {
         width: 75%;
+    }
+    .searchContainer {
+      margin: 0;
     }
 }

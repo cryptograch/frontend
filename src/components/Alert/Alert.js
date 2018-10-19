@@ -8,6 +8,13 @@ class Alert extends Component {
     constructor(props) {
         super(props);
     }
+    componentDidUpdate() {
+        if (this.props.success || this.props.error) {
+            setTimeout(() => {
+                this.props.click();
+            }, 5000);
+        }
+    }
     render() {
         if (this.props.global) {
             if (this.props.error) {
@@ -65,7 +72,7 @@ class Alert extends Component {
                             </div>
                         </div>
                         <div className={style.refreshBtn} onClick={this.props.click}>
-                            <img src={refreshsvg} alt='Try again'/>
+                            <img src={refreshsvg} alt='Try again' />
                         </div>
                     </div>
                 );
