@@ -14,12 +14,14 @@ class ChangeDoc extends Component {
         this.state = {
             docphoto: null,
             docphotourl: null,
-            dayFrom: "",
+            /* dayFrom: "",
             yearFrom: "",
             monthFrom: "",
             dayTo: "",
             yearTo: "",
-            monthTo: "",
+            monthTo: "", */
+            dateTo: "",
+            dateFrom: "",
             fileName: "Choose file",
         }
         this.chooseDocPhoto = this.chooseDocPhoto.bind(this);
@@ -39,17 +41,19 @@ class ChangeDoc extends Component {
         }
     }
     uploadDoc() {
+        const from = this.state.dateFrom.split('-');
+        const to = this.state.dateTo.split('-');
+        /* Date: year-mounth-day */
         this.props.uploadDocument({
-            dayFrom: this.state.dayFrom,
-            yearFrom: this.state.yearFrom,
-            monthFrom: this.state.monthFrom,
-            dayTo: this.state.dayTo,
-            yearTo: this.state.yearTo,
-            monthTo: this.state.monthTo,
+            dayFrom: from[2],
+            monthFrom: from[1],
+            yearFrom: from[0],
+            dayTo: to[2],
+            monthTo: to[1],
+            yearTo: to[0],
         }, this.state.docphoto);
     }
     render() {
-
         if (this.props.userData.user) {
             return (
                 <div className={style.docContainer}>
@@ -74,15 +78,17 @@ class ChangeDoc extends Component {
                         <div className={style.docInfo}>
                             <div className={style.docInfoRow}><label>From:</label></div>
                             <div className={style.docInfoRow}>
-                                <input className={style.signInInput} type='text' placeholder="Day" required onChange={(e) => { this.setState({ dayFrom: e.target.value }) }} />
+                                <input className={style.signInInput} type='date' placeholder="Date from" required onChange={(e) => { this.setState({ dateFrom: e.target.value })}}/>
+                                {/* <input className={style.signInInput} type='text' placeholder="Day" required onChange={(e) => { this.setState({ dayFrom: e.target.value }) }} />
                                 <input className={style.signInInput} type='text' placeholder="Mon" required onChange={(e) => { this.setState({ monthFrom: e.target.value }) }} />
-                                <input className={style.signInInput} type='text' placeholder="Year" required onChange={(e) => { this.setState({ yearFrom: e.target.value }) }} />
+                                <input className={style.signInInput} type='text' placeholder="Year" required onChange={(e) => { this.setState({ yearFrom: e.target.value }) }} /> */}
                             </div>
                             <div className={style.docInfoRow}><label>To:</label></div>
                             <div className={style.docInfoRow}>
-                                <input className={style.signInInput} type='text' placeholder="Day" required onChange={(e) => { this.setState({ dayTo: e.target.value }) }} />
+                                <input className={style.signInInput} type='date' placeholder="Date from" required onChange={(e) => { this.setState({ dateTo: e.target.value })}}/>
+                                {/* <input className={style.signInInput} type='text' placeholder="Day" required onChange={(e) => { this.setState({ dayTo: e.target.value }) }} />
                                 <input className={style.signInInput} type='text' placeholder="Mon" required onChange={(e) => { this.setState({ monthTo: e.target.value }) }} />
-                                <input className={style.signInInput} type='text' placeholder="Year" required onChange={(e) => { this.setState({ yearTo: e.target.value }) }} />
+                                <input className={style.signInInput} type='text' placeholder="Year" required onChange={(e) => { this.setState({ yearTo: e.target.value }) }} /> */}
                             </div>
                         </div>
                     </div>

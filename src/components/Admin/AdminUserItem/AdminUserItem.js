@@ -35,11 +35,6 @@ class AdminUserItem extends Component {
         }
         return null;
     }
-    /* renderProfileBtn() {
-        return <button className={style.settingsMainItem}
-            onClick={() => { this.setState({ show: 'profile' }) }}>
-            Show profile</button>
-    } */
     renderToAdminBtn() {
         if (this.props.userData.user.id === rootid && this.props.data.id !== rootid) {
             if (!this.props.data.roles.includes('admin_access')) {

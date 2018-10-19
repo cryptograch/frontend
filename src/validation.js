@@ -72,7 +72,10 @@ class ValidationModel {
         }
     }
     phonenumber(name, val) {
-        /* Not finished yet*/
+        /* const re = /^38-[0-9]{3}-[0-9]{3}-[0-9]{4}$/
+        if (val && !re.test(val)) {
+            throw new Error(`${name} must be phone number. (Example: 38-111-111-1111)`);
+        } */
     }
     password(name, val) {
         if (val && (val.length < 6 || val.length > 100)) {

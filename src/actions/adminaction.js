@@ -7,6 +7,8 @@ export const USERLIST_FETCH_FAILED = 'USERLIST_FETCH_FAILED';
 export const USERLIST_ERROR_CLEAR = 'USERLIST_ERROR_CLEAR';
 export const USERLIST_CLEAR = 'USERLIST_CLEAR';
 export const USERLIST_ALL = 'USERLIST_ALL';
+export const USERLIST_DELETE_ELEMENT = 'USERLIST_DELETE_ELEMENT';
+export const USERLIST_UPDATE_ELEMENT = 'USERLIST_UPDATE_ELEMENT';
 
 export const ADMIN_CHANGE_START = 'ADMIN_CHANGE_START';
 export const ADMIN_CHANGE_SUCCESS = 'ADMIN_CHANGE_SUCCESS';
@@ -40,9 +42,10 @@ const userListAll = () => ({
     type: USERLIST_ALL
 });
 
-const userListErrorClear = () => ({
-    type: USERLIST_ERROR_CLEAR
-});
+const userListDeleteEl = (id) => ({
+    type: USERLIST_DELETE_ELEMENT,
+    id
+})
 
 export const userListClear = () => ({
     type: USERLIST_CLEAR
@@ -152,7 +155,7 @@ export const setUserToAdmin = (id) => (dispatch, getState) => {
                 .then(res => {
                     if (res.status === 200 || res.status === 201 || res.status === 204) {
                         dispatch(changeSuccess('User is admin now'));
-                        dispatch(getUserList(1, 20));
+                        dispatch(changeUpdate(id));
                     } else if (res.status === 401) {
                         dispatch(refreshToken(token, setUserToAdmin, id));
                     } else {
@@ -203,7 +206,6 @@ export const getRefundList = (issolved) => (dispatch, getState) => {
     }
 }
 
-// Not done yet
 export const deleteAdmin = (id) => (dispatch, getState) => {
     if (id) {
         const token = checkAndGetToken(dispatch, getState);
@@ -218,6 +220,7 @@ export const deleteAdmin = (id) => (dispatch, getState) => {
             .then(res => {
                 if (res.status === 200 || res.status === 201 || res.status === 204) {
                     dispatch(changeSuccess('Admin was removed'));
+                    dispatch(changeUpdate(id));
                 } else if (res.status === 401) {
                     dispatch(refreshToken(token, deleteAdmin, id));
                 } else {
@@ -245,7 +248,7 @@ export const deleteUser = (id) => (dispatch, getState) => {
                 .then(res => {
                     if (res.status === 200 || res.status === 201 || res.status === 204) {
                         dispatch(changeSuccess('User was deleted'));
-                        dispatch(getUserList(1, 20));
+                        dispatch(userListDeleteEl(id));
                     } else if (res.status === 401) {
                         dispatch(refreshToken(token, deleteAdmin, id));
                     } else {

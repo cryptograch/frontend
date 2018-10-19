@@ -42,7 +42,6 @@ class AdminUserList extends Component {
         }
         return null;
     }
-
     searchInList() {
         if (this.state.search) {
             this.props.clearlist();

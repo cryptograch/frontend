@@ -3,6 +3,7 @@ import {
     USERLIST_FETCH_SUCCESS,
     USERLIST_FETCH_FAILED,
     USERLIST_ERROR_CLEAR,
+    USERLIST_DELETE_ELEMENT,
     USERLIST_CLEAR,
     USERLIST_ALL,
     ADMIN_CHANGE_START,
@@ -10,6 +11,7 @@ import {
     ADMIN_CHANGE_FAILED,
     ADMIN_CHANGE_CLEARERROR,
     ADMIN_CHANGE_CLEAR,
+    ADMIN_CHANGE_UPDATE,
     REFUNDLIST_FETCH_START,
     REFUNDLIST_FETCH_SUCCESS,
     REFUNDLIST_FETCH_FAILED,
@@ -34,6 +36,7 @@ const userlistData = (state = initUserListState, action) => {
         case USERLIST_FETCH_SUCCESS: return Object.assign({}, state, { loading: false, page: ++state.page, list: [...state.list, ...action.list] });
         case USERLIST_FETCH_FAILED: return Object.assign({}, state, { loading: false, error: action.error });
         case USERLIST_ERROR_CLEAR: return Object.assign({}, state, { error: null });
+        case USERLIST_DELETE_ELEMENT: return Object.assign({}, state, { list: state.list.filter((e) => e.id !== action.id ) });
         case USERLIST_CLEAR: return Object.assign({}, initUserListState);
         case USERLIST_ALL: return Object.assign({}, state, { all: true });
         case CLEAR_ERRORS: return Object.assign({}, state, { error: null });
@@ -68,6 +71,7 @@ const initAdminChangeState = {
     loading: false,
     success: null,
     error: null,
+    id: null,
 }
 
 const adminChangeData = (state = initAdminChangeState, action) => {
@@ -77,6 +81,7 @@ const adminChangeData = (state = initAdminChangeState, action) => {
         case ADMIN_CHANGE_FAILED: return Object.assign({}, state, { loading: false, error: action.error });
         case ADMIN_CHANGE_CLEARERROR: return Object.assign({}, state, { error: null, success: null });
         case ADMIN_CHANGE_CLEAR: return Object.assign({}, initAdminChangeState);
+        case ADMIN_CHANGE_UPDATE: return Object.assign({}, state, { id: action.id });
         case CLEAR_ERRORS: return Object.assign({}, state, { error: null });
         case CLEAR_ALL: return Object.assign({}, initAdminChangeState);
         default: return state;
