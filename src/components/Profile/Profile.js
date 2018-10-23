@@ -41,15 +41,11 @@ class Profile extends Component {
             // this.props.history.replace('/sign-in');
             this.props.getUser();
         }
-        // window.addEventListener('scroll', this.scrollToolBar);
     }
     componentDidUpdate() {
         if (!this.props.userData.user && !this.props.userData.loading) {
             this.props.history.replace('/sign-in');
         }
-    }
-    componentWillUnmount() {
-        // window.removeEventListener('scroll', this.scrollToolBar);
     }
     renderMain() {
         switch (this.state.show) {

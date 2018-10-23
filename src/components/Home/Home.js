@@ -150,7 +150,7 @@ class Home extends Component {
                     </div>
                 </div>
 
-                <div className={style.review}>
+                {/* <div className={style.review}>
                     <h1 className={style.why__h1}>Read our drivers reviews</h1>
                     <div className={style.yellow_border}></div>
                     <div className={style.slide_numberDisplayBlock}>
@@ -216,20 +216,20 @@ class Home extends Component {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> */}
 
                 <div className={style.readMore}>
                     <h1 className={style.readMore__h1}>Try more in our <span className={style.yellow_span}>app</span></h1>
                     <div className={style.yellow_border}></div>
                     <div className={style.flex}>
                         <div>
-                            <a href="#">
+                            <a href="https://play.google.com/store/apps/details?id=com.cryptograch">
                                 <img className={style.getItOnImg} src={googleplay} alt="get-it-on-google-play" />
                             </a>
                         </div>
                         <div>
                             <a href="#">
-                                <img className={style.getItOnImg} src={appstore} alt="get-it-on-google-play" />
+                                <img className={style.getItOnImg} src={appstore} alt="get-it-on-app-store" />
                             </a>
                         </div>
                     </div>

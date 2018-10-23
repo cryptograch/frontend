@@ -27,6 +27,9 @@ class SignInDriver extends Component {
         if (this.props.userData.user) {
             this.props.history.replace('/profile');
         }
+        if (this.props.userData.error) {
+            this.props.clearErrors();
+        }
         this.state.model.setModel({
             userName: {
                 name: 'Email',

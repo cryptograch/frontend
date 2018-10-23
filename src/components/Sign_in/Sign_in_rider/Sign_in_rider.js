@@ -27,6 +27,9 @@ class SignInRider extends Component {
         if (this.props.userData.user) {
             this.props.history.replace('/profile');
         }
+        if (this.props.userData.error) {
+            this.props.clearErrors();
+        }
         this.state.model.setModel({
             userName: {
                 name: 'Email',
@@ -73,7 +76,7 @@ class SignInRider extends Component {
     render() {
         return (
             <div className={style.signInBackground}>
-                {this.renderError()}
+                
                 <div className={style.orangeBackground}></div>
                 <div className={styleHeader.logo}>
                     <Link to="/home" className={styleHeader.headerLogo__a + ' ' + style.signInLogo}><button className={styleHeader.homeBtn}>
@@ -84,6 +87,7 @@ class SignInRider extends Component {
                     <h1 className={styleSignIn.title__h1 + ' ' + style.signInTitle}>Sign <span className={styleHome.yellow_span}>In</span> as rider</h1>
                     <span className={style.inputSpan}>Enter your data</span>
                     <form onSubmit={(e) => { e.preventDefault() }}>
+                        {this.renderError()}
                         <input
                             className={`${style.signInInput} ${(this.state.errors.userName) ? style.inputalert : ''}`}
                             type="email" placeholder="Your email adress"

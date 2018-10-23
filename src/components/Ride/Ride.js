@@ -65,7 +65,7 @@ class Ride extends Component {
                 <div className={styleHome.yellow_border}></div>
                 <div className={styleHome.flex}>
                     <div>
-                        <a href="#">
+                        <a href="https://play.google.com/store/apps/details?id=com.cryptograch">
                             <img className={styleHome.getItOnImg} src={googleplay} alt="get-it-on-google-play"/>
                         </a>
                     </div>

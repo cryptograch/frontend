@@ -88,7 +88,7 @@ class Drive extends Component {
                 </div>
             </div>
 
-            <div className={styleHome.review}>
+            {/* <div className={styleHome.review}>
                 <h1 className={styleHome.why__h1}>Read our drivers reviews</h1>
                 <div className={styleHome.yellow_border}></div>
                 <div className={styleHome.slide_numberDisplayBlock}>
@@ -154,20 +154,20 @@ class Drive extends Component {
                     </div>
                   </div>
                 </div>
-            </div>
+            </div> */}
 
             <div className={styleHome.readMore}>
                 <h1 className={styleHome.readMore__h1}>Try it in our <span className={styleHome.yellow_span}>app</span></h1>
                 <div className={styleHome.yellow_border}></div>
                 <div className={styleHome.flex}>
                     <div>
-                        <a href="#">
+                        <a href="https://play.google.com/store/apps/details?id=com.cryptograchdriver">
                             <img className={styleHome.getItOnImg} src={googleplay} alt="get-it-on-google-play"/>
                         </a>
                     </div>
                     <div>
                         <a href="#">
-                            <img className={styleHome.getItOnImg} src={appstore} alt="get-it-on-google-play"/>
+                            <img className={styleHome.getItOnImg} src={appstore} alt="get-it-on-app-store"/>
                         </a>
                     </div>
                 </div>

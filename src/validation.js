@@ -47,6 +47,7 @@ class ValidationModel {
             case 'key': return this.key(name, val);
             case 'number': return this.number(name, val);
             case 'password': return this.password(name, val);
+            case 'phonenumber': return this.phonenumber(name, val);
             default: return null;
         }
     }
@@ -72,10 +73,10 @@ class ValidationModel {
         }
     }
     phonenumber(name, val) {
-        /* const re = /^38-[0-9]{3}-[0-9]{3}-[0-9]{4}$/
+        const re = /^380[0-9]{9}$/
         if (val && !re.test(val)) {
-            throw new Error(`${name} must be phone number. (Example: 38-111-111-1111)`);
-        } */
+            throw new Error(`${name} must be phone number. (Example: 381111111111)`);
+        }
     }
     password(name, val) {
         if (val && (val.length < 6 || val.length > 100)) {

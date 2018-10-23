@@ -27,6 +27,9 @@ class SignInAdmin extends Component {
         if (this.props.userData.user) {
             this.props.history.replace('/profile');
         }
+        if (this.props.userData.error) {
+            this.props.clearErrors();
+        }
         this.state.model.setModel({
             userName: {
                 name: 'Login',
@@ -72,7 +75,6 @@ class SignInAdmin extends Component {
     render() {
         return (
             <div className={styleSignInRider.signInBackground}>
-
                 <div className={styleSignInRider.orangeBackground}></div>
                 <div className={styleHeader.logo}>
                     <Link to="/home" className={styleHeader.headerLogo__a + ' ' + styleSignInRider.signInLogo}><button className={styleHeader.homeBtn}>

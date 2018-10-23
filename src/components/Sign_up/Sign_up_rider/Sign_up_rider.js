@@ -57,7 +57,6 @@ class SignUpRider extends Component {
                 type: 'key'
             }
         })
-
     }
     componentDidUpdate() {
         if (this.props.userData.user) {
