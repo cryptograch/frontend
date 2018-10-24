@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 
 import { getVehicle, getVehPhoto } from '../../../actions/vehiclesaction';
 import { clearErrors } from '../../../actions/authaction';
+import { openImage } from '../../../actions/globalviewaction';
 
 class Vehicle extends Component {
     constructor(props) {
@@ -22,7 +23,7 @@ class Vehicle extends Component {
     }
     renderPhoto() {
         if (this.props.vehData.url) {
-            return <img src={this.props.vehData.url} alt='photo' />;
+            return <img src={this.props.vehData.url} alt='photo' onClick={() => { this.props.openImage(this.props.vehData.url)}} />;
         }
         if (this.props.vehData.loadphoto) {
             return <Loading />
@@ -30,7 +31,7 @@ class Vehicle extends Component {
         if (this.props.vehData.errorphoto) {
             return <Alert local={true} message='Photo don`t load' click={this.props.getVehPhoto} />
         }
-        return <img src={defaultphoto} alt='photo' />;
+        return <img src={defaultphoto} alt='photo' onClick={() => { this.props.openImage(defaultphoto)}}/>;
     }
     render() {
         if (this.props.vehData.veh) {
@@ -44,10 +45,10 @@ class Vehicle extends Component {
                             </div>
                         </div>
                         <div className={style.containerInfo}>
-                            <h3>Number: {this.props.vehData.veh.number}</h3>
-                            <h3>Model: {this.props.vehData.veh.model}</h3>
-                            <h3>Brand: {this.props.vehData.veh.brand}</h3>
-                            <h3>Color: {this.props.vehData.veh.color}</h3>
+                            <h3><span>Number:</span> {this.props.vehData.veh.number}</h3>
+                            <h3><span>Model:</span> {this.props.vehData.veh.model}</h3>
+                            <h3><span>Brand:</span> {this.props.vehData.veh.brand}</h3>
+                            <h3><span>Color:</span> {this.props.vehData.veh.color}</h3>
                         </div>
                     </div>
                 </div>
@@ -70,6 +71,7 @@ Vehicle.propTypes = {
     vehData: PropTypes.object,
     getVehicle: PropTypes.func,
     clearErrors: PropTypes.func,
+    openImage: PropTypes.func,
 }
 
 const mapStateToProps = state => ({
@@ -80,6 +82,7 @@ const mapDispatchtoProps = dispatch => ({
     getVehicle: () => { dispatch(getVehicle()) },
     getVehPhoto: () => { dispatch(getVehPhoto()) },
     clearErrors: () => { dispatch(clearErrors()) },
+    openImage: (url) => { dispatch(openImage(url)) }
 })
 
 export default connect(mapStateToProps, mapDispatchtoProps)(Vehicle);

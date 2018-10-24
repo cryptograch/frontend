@@ -262,7 +262,7 @@ export const getUser = (tok) => (dispatch, getState) => {
                 } else if (res.status === 400) {
                     return res.json();
                 } else if (res.status === 404) {
-                    dispatch(userSuccess(null));
+                    dispatch(userFailed(res.statusText));
                 } else if (res.status === 401) {
                     dispatch(refreshToken(token, getUser));
                 } else {

@@ -6,7 +6,7 @@
     justify-content: center;
     align-items: center;
     position: relative;
-    margin: 20px;
+    margin: auto 0;
 }
 
 .main {
@@ -24,18 +24,30 @@
     letter-spacing: 4px;
     text-align: center;
   } 
+.vehPhoto {
+    width: 300px;
+    height: 200px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    border-radius: 5px;
+    margin: 10px 5px;
+}
 .vehPhoto > img {
     position: absolute;
     margin: auto;
-    min-height: 300px;
-    min-width: 400px;
-    width: 500px;
+    min-height: 200px;
+    min-width: 300px;
+    width: 300px;
     height: auto;
 }
 
 .container {
     display: flex;
     flex-flow: row wrap;
+    padding: 10px 20px;
 }
 
 .containerPhoto {
@@ -43,8 +55,21 @@
 }
 .containerInfo {
     flex-grow: 1;
-    padding: 20px;
+    margin: auto 5px;
 }
+
+.containerInfo > h3 {
+    font-size: 14pt;
+    margin: 0;
+    padding: 10px 0;
+    border-bottom: 2px solid #dedede;
+}
+
+.containerInfo > h3 > span {
+    font-family: 'ProximaNovaBold';
+    color: #faa71a;
+}
+
 @media only screen and (max-width: 500px) {
     .vehPhoto {
         margin: 10px auto 0 auto;
