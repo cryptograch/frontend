@@ -48,71 +48,17 @@ export const docClear = () => ({
 });
 
 // TODO: actionCreator upload Document info
-export const uploadDocument = (data, file) => (dispatch, getState) => {
+export const uploadDocument = (file, file1) => (dispatch, getState) => {
     // dispatch(docStart());
     const token = checkAndGetToken(dispatch, getState);
-    const checkData = (data) => {
-        if (data.dayFrom &&
-            data.yearFrom &&
-            data.monthFrom &&
-            data.dayTo &&
-            data.yearTo &&
-            data.monthTo) {
-            return true
-        }
-        return false
-    }
-    if (checkData(data)) {
-        dispatch(updatestart());
+    if (file ) {
         if (token) {
-            fetch(`${apiurl}/api/documents/driverlicense`, {
-                method: 'PUT',
-                headers: new Headers({
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token.auth_token}`
-                }),
-                body: JSON.stringify(data)
-            })
-                .then(res => {
-                    if (res.status === 200 || res.status === 204 || res.status === 201 || res.status === 202) {
-                        if (file) {
-                            dispatch(uploadDocPhoto(file, token));
-                        } else {
-                            dispatch(updatesuccess('Documents is update'));
-                            dispatch(getDocument());
-                        }
-                    } else if (res.status === 401) {
-                        dispatch(refreshToken(token, uploadDocument, data, file));
-                    } else {
-                        throw new Error(res.statusText);
-                    }
-                })
-                .catch(error => {
-                    dispatch(updatefailed(error.message));
-                    dispatch(docFailed(error.message));
-                });
-
-        } else {
-            dispatch(logout());
-        }
-    } else if (file) {
-        dispatch(updatestart());
-        dispatch(uploadDocPhoto(file, token));
-    } else {
-        dispatch(updatefailed('No data and photo'));
-    }
-}
-
-// TODO: actionCreator upload Document Photo
-export const uploadDocPhoto = (file, tok) => (dispatch, getState) => {
-    // dispatch(docphotoStart());
-    if (file) {
-        const token = (tok) ? tok :checkAndGetToken(dispatch, getState);
-        if (token) {
+            dispatch(updatestart());
             const data = new FormData();
             data.append('files', file);
+            data.append('files', file1);
 
-            fetch(`${apiurl}/api/documents/driverlicense/image`, {
+            fetch(`${apiurl}/api/documents/driverlicense`, {
                 method: 'PUT',
                 headers: new Headers({
                     'Authorization': `Bearer ${token.auth_token}`
@@ -125,17 +71,27 @@ export const uploadDocPhoto = (file, tok) => (dispatch, getState) => {
                         dispatch(getDocument());
                     } else if (res.status === 401) {
                         dispatch(refreshToken(token, uploadDocPhoto, file));
+                    } else  if (res.status === 400) {
+                        return res.json();
                     } else {
                         throw new Error(res.statusText);
+                    }   
+                })
+                .then(data => {
+                    if (data && Array.isArray(data[Object.keys(data)[0]])) {
+                        dispatch(updatefailed(data[Object.keys(data)[0]][0]));
+                    } else {
+                        dispatch(updatefailed(null));
                     }
                 })
                 .catch(error => {
                     dispatch(updatefailed(error.message));
-                    dispatch(docphotoFailed(error.message));
                 });
         } else {
             dispatch(logout());
         }
+    } else {
+        dispatch(updatefailed('No photos'));
     }
 }
 
@@ -160,8 +116,10 @@ export const getDocument = (tok) => (dispatch, getState) => {
                 }
             })
             .then(data => {
+                console.log(data);
                 dispatch(docSuccess(data));
-                dispatch(getDocPhoto(token));
+                dispatch(getDocPhoto(token, data.frontId));
+                dispatch(getDocPhoto(token, data.backId));
             })
             .catch(error => dispatch(docFailed(error.message)));
     } else {
@@ -170,11 +128,11 @@ export const getDocument = (tok) => (dispatch, getState) => {
 }
 
 // TODO: actionCreator get Document phoho
-export const getDocPhoto = (tok) => (dispatch, getState) => {
+export const getDocPhoto = (tok, id) => (dispatch, getState) => {
     const token = (tok) ? tok : checkAndGetToken(dispatch, getState);
     if (token) {
         dispatch(docphotoStart());
-        fetch(`${apiurl}/api/documents/driverlicense/image`, {
+        fetch(`${apiurl}/api/images/${id}`, {
             method: 'GET',
             headers: new Headers({
                 'Authorization': `Bearer ${token.auth_token}`

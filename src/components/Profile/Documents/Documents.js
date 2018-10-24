@@ -20,15 +20,25 @@ class Documents extends Component {
             this.props.getDoc();
         }
     }
-    renderPhoto() {
-        if (this.props.docData.url) {
-            return <img src={this.props.docData.url} alt='photo' />;
-        }
+    renderMain() {
         if (this.props.docData.loadphoto) {
             return <Loading />
         }
-        if (this.props.docData.errorphoto) {
-            return <Alert local={true} message='Photo dont load' click={this.props.getDocPhoto} />
+        if (this.props.docData.photos) {
+            return this.props.docData.photos.map((photo, key) => {
+                return (
+                    <div key={key} className={style.docPhoto}>
+                        {this.renderPhoto(photo, key)}
+                    </div>
+                );
+            });
+        } else return <Alert local={true} message='Photo dont load' click={this.props.getDocPhoto} />
+    }
+    renderPhoto(photo) {
+        if (photo.url) {
+            return <img src={photo.url} alt='photo' />;
+        } else if (photo.errorphoto) {
+            //handle errors here
         }
         return <img src={defaultphoto} alt='photo' />;
     }
@@ -43,13 +53,12 @@ class Documents extends Component {
                     <h1 className={style.heading}>DOCUMENTS</h1>
                     <div className={style.container}>
                         <div className={style.containerPhoto}>
-                            <div className={style.docPhoto}>
-                                {this.renderPhoto()}
-                            </div>
+                            {this.renderMain()}
+                            {/* <div className={style.docPhoto}>
+                                
+                            </div> */}
                         </div>
                         <div className={style.containerInfo}>
-                            <h3>Licensed from: {(new Date(this.props.docData.doc.licensedFrom)).toDateString()}</h3>
-                            <h3>Licensed to: {(new Date(this.props.docData.doc.licensedTo)).toDateString()}</h3>
                             <h3>Approved: {(this.props.docData.doc.isApproved) ? 'Yes' : 'No'}</h3>
                         </div>
                     </div>

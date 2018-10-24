@@ -16,9 +16,7 @@ const initState = {
     loadphoto: false,
     doc: null,
     errordoc: null,
-    errorphoto: null,
-    blob: null,
-    url: null,
+    photos: [],
 }
 
 // TODO: create reducer docData
@@ -28,8 +26,8 @@ const docData = (state = initState, action) => {
         case DOCUMENT_FETCH_SUCCESS: return Object.assign({}, state, { loaddoc: false, doc: action.doc });
         case DOCUMENT_FETCH_FAILED: return Object.assign({}, state, { loaddoc: false, errordoc: action.error });
         case DOCPHOTO_FETCH_START: return Object.assign({}, state, { loadphoto: true });
-        case DOCPHOTO_FETCH_SUCCESS: return Object.assign({}, state, { loadphoto: false, blob: action.blob, url: action.url });
-        case DOCPHOTO_FETCH_FAILED: return Object.assign({}, state, { loadphoto: false, errorphoto: action.error });
+        case DOCPHOTO_FETCH_SUCCESS: return Object.assign({}, state, { loadphoto: false, photos: [...state.photos, {url: action.url, blob: action.blob}] });
+        case DOCPHOTO_FETCH_FAILED: return Object.assign({}, state, { loadphoto: false, photos: state.photos.push({errorphoto: action.error}) });
         case DOCUMENT_CLEAR: return Object.assign({}, initState);
         case CLEAR_ERRORS: return Object.assign({}, state, { errordoc: null });
         case CLEAR_ALL: return Object.assign({}, initState);

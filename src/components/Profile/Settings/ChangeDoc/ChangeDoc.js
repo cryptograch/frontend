@@ -13,7 +13,10 @@ class ChangeDoc extends Component {
         super(props);
         this.state = {
             docphoto: null,
+            fileName: "Choose file",
+            docphoto1: null,
             docphotourl: null,
+            docphotourl1: null,
             /* dayFrom: "",
             yearFrom: "",
             monthFrom: "",
@@ -22,7 +25,7 @@ class ChangeDoc extends Component {
             monthTo: "", */
             dateTo: "",
             dateFrom: "",
-            fileName: "Choose file",
+            
         }
         this.chooseDocPhoto = this.chooseDocPhoto.bind(this);
     }
@@ -39,35 +42,46 @@ class ChangeDoc extends Component {
                 fileName: file.name,
             });
         }
+        const file1 = e.target.files[1];
+        if (file1) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                this.setState({ docphotourl1: reader.result });
+            };
+            reader.readAsDataURL(file1);
+            this.setState({
+                docphoto1: file1,
+            });
+        }
+
     }
     uploadDoc() {
         const from = this.state.dateFrom.split('-');
         const to = this.state.dateTo.split('-');
         /* Date: year-mounth-day */
-        this.props.uploadDocument({
-            dayFrom: from[2],
-            monthFrom: from[1],
-            yearFrom: from[0],
-            dayTo: to[2],
-            monthTo: to[1],
-            yearTo: to[0],
-        }, this.state.docphoto);
+        this.props.uploadDocument(
+         this.state.docphoto,
+         this.state.docphoto1,
+         );
     }
     render() {
         if (this.props.userData.user) {
             return (
                 <div className={style.docContainer}>
-                    <h2 className={style.docTitle}>Add your license photo</h2>
+                    <h2 className={style.docTitle}>Add your license photos</h2>
                     <div className={style.docPhoto}>
                         <div className={style.docPhotoPreload}>
                             <img src={(this.state.docphotourl) ? this.state.docphotourl : licencedefault} alt='photo' />
                         </div>
+                        <div className={style.docPhotoPreload}>
+                            <img src={(this.state.docphotourl1) ? this.state.docphotourl1 : licencedefault} alt='photo' />
+                        </div>
                         <div className={style.docPhotoInput}>
-                            <input type='file' accept='image/*' onChange={(e) => { this.chooseDocPhoto(e) }} />
+                            <input type='file' accept='image/*' multiple onChange={(e) => { this.chooseDocPhoto(e) }} />
                             <label>Choose</label><input type='text' value={this.state.fileName} placeholder='File' readOnly />
                         </div>
                     </div>
-                    <h2 className={style.docTitle}>Add your license info</h2>
+                    {/* <h2 className={style.docTitle}>Add your license info</h2>
                     <div className={style.docMain}>
                         <div className={style.docMainSide}>
                             <div className={style.docMainTitle}>Driver License</div>
@@ -78,20 +92,20 @@ class ChangeDoc extends Component {
                         <div className={style.docInfo}>
                             <div className={style.docInfoRow}><label>From:</label></div>
                             <div className={style.docInfoRow}>
-                                <input className={style.signInInput} type='date' placeholder="Date from" required onChange={(e) => { this.setState({ dateFrom: e.target.value })}}/>
-                                {/* <input className={style.signInInput} type='text' placeholder="Day" required onChange={(e) => { this.setState({ dayFrom: e.target.value }) }} />
+                                {/*<input className={style.signInInput} type='date' placeholder="Date from" required onChange={(e) => { this.setState({ dateFrom: e.target.value })}}/>
+                                 <input className={style.signInInput} type='text' placeholder="Day" required onChange={(e) => { this.setState({ dayFrom: e.target.value }) }} />
                                 <input className={style.signInInput} type='text' placeholder="Mon" required onChange={(e) => { this.setState({ monthFrom: e.target.value }) }} />
-                                <input className={style.signInInput} type='text' placeholder="Year" required onChange={(e) => { this.setState({ yearFrom: e.target.value }) }} /> */}
+                                <input className={style.signInInput} type='text' placeholder="Year" required onChange={(e) => { this.setState({ yearFrom: e.target.value }) }} /> 
                             </div>
                             <div className={style.docInfoRow}><label>To:</label></div>
                             <div className={style.docInfoRow}>
-                                <input className={style.signInInput} type='date' placeholder="Date from" required onChange={(e) => { this.setState({ dateTo: e.target.value })}}/>
-                                {/* <input className={style.signInInput} type='text' placeholder="Day" required onChange={(e) => { this.setState({ dayTo: e.target.value }) }} />
+                                {/*<input className={style.signInInput} type='date' placeholder="Date from" required onChange={(e) => { this.setState({ dateTo: e.target.value })}}/>
+                                 <input className={style.signInInput} type='text' placeholder="Day" required onChange={(e) => { this.setState({ dayTo: e.target.value }) }} />
                                 <input className={style.signInInput} type='text' placeholder="Mon" required onChange={(e) => { this.setState({ monthTo: e.target.value }) }} />
-                                <input className={style.signInInput} type='text' placeholder="Year" required onChange={(e) => { this.setState({ yearTo: e.target.value }) }} /> */}
+                                <input className={style.signInInput} type='text' placeholder="Year" required onChange={(e) => { this.setState({ yearTo: e.target.value }) }} /> 
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                     <div className={style.docSubmit}>
                         <button className={style.button} onClick={this.uploadDoc.bind(this)}>SUBMIT</button>
                     </div>

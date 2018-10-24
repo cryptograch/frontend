@@ -142,8 +142,14 @@
 .docPhoto {
   flex-grow: 1;
   display: flex;
-  flex-flow: column nowrap;
+  flex-flow: row wrap;
   align-items: center;
+  justify-content: center;
+}
+.docPhotoInput{
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .docPhoto > button {
