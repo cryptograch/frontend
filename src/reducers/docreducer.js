@@ -25,7 +25,7 @@ const docData = (state = initState, action) => {
         case DOCUMENT_FETCH_START: return Object.assign({}, state, { loaddoc: true });
         case DOCUMENT_FETCH_SUCCESS: return Object.assign({}, state, { loaddoc: false, doc: action.doc });
         case DOCUMENT_FETCH_FAILED: return Object.assign({}, state, { loaddoc: false, errordoc: action.error });
-        case DOCPHOTO_FETCH_START: return Object.assign({}, state, { loadphoto: true });
+        case DOCPHOTO_FETCH_START: return Object.assign({}, state, { loadphoto: true, photos: [] });
         case DOCPHOTO_FETCH_SUCCESS: return Object.assign({}, state, { loadphoto: false, photos: [...state.photos, {url: action.url, blob: action.blob}] });
         case DOCPHOTO_FETCH_FAILED: return Object.assign({}, state, { loadphoto: false, photos: state.photos.push({errorphoto: action.error}) });
         case DOCUMENT_CLEAR: return Object.assign({}, initState);

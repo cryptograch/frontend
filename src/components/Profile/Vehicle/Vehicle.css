@@ -10,10 +10,10 @@
 }
 
 .main {
-    width: 100%;
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
+    margin: 0 15px;
   }
 .heading {
     color: #000;
@@ -47,7 +47,7 @@
 .container {
     display: flex;
     flex-flow: row wrap;
-    padding: 10px 20px;
+    padding: 10px 0;
 }
 
 .containerPhoto {
@@ -71,7 +71,4 @@
 }
 
 @media only screen and (max-width: 500px) {
-    .vehPhoto {
-        margin: 10px auto 0 auto;
-    }
 }

@@ -4,7 +4,7 @@ import style from './ResponseList.css';
 import stylemain from '../ProfileMain/ProfileMain.css';
 import profilestyle from '../Profile.css';
 import refreshsvg from '../../../assets/refresh.svg';
-import Loading from '../../Loading/Loading';
+// import Loading from '../../Loading/Loading';
 import Alert from '../../Alert/Alert';
 import LazyLoad from '../../LazyLoad/LazyLoad';
 
@@ -50,14 +50,14 @@ class ResponseList extends Component {
     renderTime(timestring) {
         const currtime = new Date();
         const time = new Date(timestring);
-        let diff = currtime.getTime() - time.getTime()
-        const days = diff / (24 * 60 * 60 * 1000);
-        diff %= (24 * 60 * 60 * 1000);
-        const hours = diff / (60 * 60 * 1000);
-        diff %= (60 * 60 * 1000);
-        const minutes = diff / (60 * 1000);
-        diff %= (60 * 1000);
-        const seconds = diff / 1000;
+        let diff = currtime.getTime() - time.getTime();
+        const days = Math.floor(diff / (24 * 60 * 60 * 1000));
+        diff = diff % (24 * 60 * 60 * 1000);
+        const hours = Math.floor(diff / (60 * 60 * 1000));
+        diff = diff % (60 * 60 * 1000);
+        const minutes = Math.floor(diff / (60 * 1000));
+        diff = diff % (60 * 1000);
+        const seconds = Math.floor(diff / 1000);
         if (days > 6) {
             return time.toDateString();
         }
@@ -84,10 +84,8 @@ class ResponseList extends Component {
                 <div className={stylemain.main}>
                     <div className={style.resHeading}>
                         <h1>RESPONSES</h1>
-                        <div className={style.refreshContainer}>
-                            <div className={profilestyle.refreshBtn} onClick={this.refresh.bind(this)}>
-                                <img src={refreshsvg} alt='refresh' />
-                            </div>
+                        <div className={profilestyle.refreshBtn} onClick={this.refresh.bind(this)}>
+                            <img src={refreshsvg} alt='refresh' />
                         </div>
                     </div>
                     <div className={style.resListMain}>

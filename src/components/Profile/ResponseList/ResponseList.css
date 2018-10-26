@@ -1,7 +1,7 @@
 
 .resHeading {
   padding: 0;
-  padding-left: 72px;
+  padding-left: 42px;
   display: flex;
   border-bottom: 2px solid #dedede;
   align-self:  stretch;
@@ -13,15 +13,14 @@
   padding: 0;
   text-align: center;
   flex-grow: 1;
+  flex-shrink: 1;
   color: #2b2929;
   margin: 0;
   padding: 15px 0;
   letter-spacing: 4px;
 }
 
-.refreshContainer > div {
-  margin: 15px;
-}
+
 
 .resItem {
   display: flex;
@@ -35,6 +34,7 @@
 .resItemInfo {
   padding-bottom: 10px;
   display: flex;
+  justify-content: space-between;
 }
 .resListMain {
   display: flex;
@@ -67,10 +67,6 @@
 @media only screen and (max-width: 500px) {
   .resHeading {
     padding-left: 0;
-    flex-flow: column nowrap;
-  }
-  .refreshContainer {
-    align-self: flex-end;
   }
 }
 

@@ -5,12 +5,14 @@ import Loading from '../../Loading/Loading';
 import Alert from '../../Alert/Alert';
 
 import defaultphoto from '../../../assets/default-license.png';
+import no from '../../../assets/no.svg';
+import yes from '../../../assets/yes.svg';
 
 import { connect } from 'react-redux';
 
 import { getDocument, getDocPhoto } from '../../../actions/docaction';
 import { clearErrors } from '../../../actions/authaction';
-
+import { openImage } from "../../../actions/globalviewaction";
 class Documents extends Component {
     constructor(props) {
         super(props);
@@ -36,11 +38,17 @@ class Documents extends Component {
     }
     renderPhoto(photo) {
         if (photo.url) {
-            return <img src={photo.url} alt='photo' />;
+            return <img src={photo.url} alt='photo' click={() => { this.props.openImage(photo.url) }} />;
         } else if (photo.errorphoto) {
             //handle errors here
         }
-        return <img src={defaultphoto} alt='photo' />;
+        return <img src={defaultphoto} alt='photo' click={() => { this.props.openImage(defaultphoto) }} />;
+    }
+    renderApproveImg() {
+        if (this.props.docData.doc.isApproved) {
+            return <img src={yes} title="Approved" alt='ApproveImg' />
+        }
+        return <img src={no} title="Not approved" alt='ApproveImg' />
     }
     render() {
         // console.log(this.props.docData.doc);
@@ -50,13 +58,15 @@ class Documents extends Component {
         if (this.props.docData.doc) {
             return (
                 <div className={style.main}>
-                    <h1 className={style.heading}>DOCUMENTS</h1>
+                    <div className={style.heading}>
+                        <h1>DOCUMENTS</h1>
+                        <div className={style.approveImg}>
+                            {this.renderApproveImg()}
+                        </div>
+                    </div>
                     <div className={style.container}>
                         <div className={style.containerPhoto}>
                             {this.renderMain()}
-                            {/* <div className={style.docPhoto}>
-                                
-                            </div> */}
                         </div>
                         <div className={style.containerInfo}>
                             <h3>Approved: {(this.props.docData.doc.isApproved) ? 'Yes' : 'No'}</h3>
@@ -83,6 +93,7 @@ Documents.propTypes = {
     getDoc: PropTypes.func,
     clearErrors: PropTypes.func,
     getDocPhoto: PropTypes.func,
+    openImage: PropTypes.func,
 }
 
 const mapStateToProps = state => ({
@@ -92,7 +103,8 @@ const mapStateToProps = state => ({
 const mapDispatchtoProps = dispatch => ({
     getDoc: () => { dispatch(getDocument()) },
     clearErrors: () => { dispatch(clearErrors()) },
-    getDocPhoto: () => { dispatch(getDocPhoto()) }
+    getDocPhoto: () => { dispatch(getDocPhoto()) },
+    openImage: (url) => { dispatch(openImage(url)) }
 })
 
 export default connect(mapStateToProps, mapDispatchtoProps)(Documents);

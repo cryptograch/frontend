@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import { uploadDocument } from '../../../../actions/docaction';
 import licencedefault from '../../../../assets/default-license.png';
-import userdefault from '../../../../assets/default-user.png';
+// import userdefault from '../../../../assets/default-user.png';
 
 class ChangeDoc extends Component {
     constructor(props) {
@@ -17,15 +17,6 @@ class ChangeDoc extends Component {
             docphoto1: null,
             docphotourl: null,
             docphotourl1: null,
-            /* dayFrom: "",
-            yearFrom: "",
-            monthFrom: "",
-            dayTo: "",
-            yearTo: "",
-            monthTo: "", */
-            dateTo: "",
-            dateFrom: "",
-            
         }
         this.chooseDocPhoto = this.chooseDocPhoto.bind(this);
     }
@@ -56,13 +47,10 @@ class ChangeDoc extends Component {
 
     }
     uploadDoc() {
-        const from = this.state.dateFrom.split('-');
-        const to = this.state.dateTo.split('-');
-        /* Date: year-mounth-day */
         this.props.uploadDocument(
-         this.state.docphoto,
-         this.state.docphoto1,
-         );
+            this.state.docphoto,
+            this.state.docphoto1,
+        );
     }
     render() {
         if (this.props.userData.user) {
@@ -81,31 +69,6 @@ class ChangeDoc extends Component {
                             <label>Choose</label><input type='text' value={this.state.fileName} placeholder='File' readOnly />
                         </div>
                     </div>
-                    {/* <h2 className={style.docTitle}>Add your license info</h2>
-                    <div className={style.docMain}>
-                        <div className={style.docMainSide}>
-                            <div className={style.docMainTitle}>Driver License</div>
-                            <div className={style.docMainPhoto}>
-                                <img src={userdefault} alt='photo' />
-                            </div>
-                        </div>
-                        <div className={style.docInfo}>
-                            <div className={style.docInfoRow}><label>From:</label></div>
-                            <div className={style.docInfoRow}>
-                                {/*<input className={style.signInInput} type='date' placeholder="Date from" required onChange={(e) => { this.setState({ dateFrom: e.target.value })}}/>
-                                 <input className={style.signInInput} type='text' placeholder="Day" required onChange={(e) => { this.setState({ dayFrom: e.target.value }) }} />
-                                <input className={style.signInInput} type='text' placeholder="Mon" required onChange={(e) => { this.setState({ monthFrom: e.target.value }) }} />
-                                <input className={style.signInInput} type='text' placeholder="Year" required onChange={(e) => { this.setState({ yearFrom: e.target.value }) }} /> 
-                            </div>
-                            <div className={style.docInfoRow}><label>To:</label></div>
-                            <div className={style.docInfoRow}>
-                                {/*<input className={style.signInInput} type='date' placeholder="Date from" required onChange={(e) => { this.setState({ dateTo: e.target.value })}}/>
-                                 <input className={style.signInInput} type='text' placeholder="Day" required onChange={(e) => { this.setState({ dayTo: e.target.value }) }} />
-                                <input className={style.signInInput} type='text' placeholder="Mon" required onChange={(e) => { this.setState({ monthTo: e.target.value }) }} />
-                                <input className={style.signInInput} type='text' placeholder="Year" required onChange={(e) => { this.setState({ yearTo: e.target.value }) }} /> 
-                            </div>
-                        </div>
-                    </div> */}
                     <div className={style.docSubmit}>
                         <button className={style.button} onClick={this.uploadDoc.bind(this)}>SUBMIT</button>
                     </div>

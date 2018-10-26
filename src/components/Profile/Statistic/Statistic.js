@@ -21,7 +21,7 @@ class Statistic extends Component {
     }
     componentDidMount() {
         // if (!this.props.statData.stat) {
-            this.props.getStatistic();
+        this.props.getStatistic();
         //}
     }
     refresh() {
@@ -30,12 +30,12 @@ class Statistic extends Component {
     }
     renderList() {
         return this.props.statData.stat.map((item, key) => {
-            return <StatisticItem trip={item} key={key}/>;
+            return <StatisticItem trip={item} key={key} />;
         });
     }
     renderLazyLoad() {
-        if(!this.props.statData.all) {
-            return <LazyLoad loading={this.props.statData.loading} do={() => {this.props.getStatistic()}}/>
+        if (!this.props.statData.all) {
+            return <LazyLoad loading={this.props.statData.loading} do={() => { this.props.getStatistic() }} />
         }
         return null;
     }
@@ -51,10 +51,8 @@ class Statistic extends Component {
                 <div className={stylemain.main}>
                     <div className={resstyle.resHeading}>
                         <h1>STATISTIC</h1>
-                        <div className={resstyle.refreshContainer}>
-                            <div className={profilestyle.refreshBtn} onClick={this.refresh.bind(this)}>
-                                <img src={refreshsvg} alt='refresh' />
-                            </div>
+                        <div className={profilestyle.refreshBtn} onClick={this.refresh.bind(this)}>
+                            <img src={refreshsvg} alt='refresh' />
                         </div>
                     </div>
                     <div className={resstyle.resListMain}>
@@ -80,7 +78,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchtoProps = dispatch => ({
     getStatistic: () => { dispatch(getStatistic()) },
-    statClear: () => { dispatch(statClear())}
+    statClear: () => { dispatch(statClear()) }
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(Statistic);

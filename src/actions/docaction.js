@@ -57,7 +57,6 @@ export const uploadDocument = (file, file1) => (dispatch, getState) => {
             const data = new FormData();
             data.append('files', file);
             data.append('files', file1);
-
             fetch(`${apiurl}/api/documents/driverlicense`, {
                 method: 'PUT',
                 headers: new Headers({
@@ -66,11 +65,12 @@ export const uploadDocument = (file, file1) => (dispatch, getState) => {
                 body: data
             })
                 .then(res => {
+                    console.log(res);
                     if (res.status === 200 || res.status === 204 || res.status === 201 || res.status === 202) {
                         dispatch(updatesuccess('Documents is update'));
                         dispatch(getDocument());
                     } else if (res.status === 401) {
-                        dispatch(refreshToken(token, uploadDocPhoto, file));
+                        dispatch(refreshToken(token, uploadDocument, file, file1));
                     } else  if (res.status === 400) {
                         return res.json();
                     } else {
@@ -116,7 +116,6 @@ export const getDocument = (tok) => (dispatch, getState) => {
                 }
             })
             .then(data => {
-                console.log(data);
                 dispatch(docSuccess(data));
                 dispatch(getDocPhoto(token, data.frontId));
                 dispatch(getDocPhoto(token, data.backId));
@@ -140,7 +139,7 @@ export const getDocPhoto = (tok, id) => (dispatch, getState) => {
         })
             .then(res => {
                 if (res.status === 401) {
-                    dispatch(refreshToken(token, getDocPhoto));
+                    dispatch(refreshToken(token, getDocPhoto, null, id));
                 } else if (res.status === 404) {
                     dispatch(docphotoSuccess(null, null));
                     return null
