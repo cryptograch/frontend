@@ -15,7 +15,7 @@ import { userlistData, adminChangeData, refundlistData } from './adminreducer';
 import { globalviewData } from './globalviewreducer';
 import { reslistData } from './reslistreducer';
 import { balanceData } from './ethreducer';
-
+import { driverData, reviewListData, setReviewData } from './driverprofilereducer';
 // Here combine custom reducers
 export default combineReducers({
     testData,
@@ -35,4 +35,7 @@ export default combineReducers({
     globalviewData,
     balanceData,
     registerData,
+    driverData,
+    reviewListData,
+    setReviewData,
 });
