@@ -25,3 +25,8 @@ export const openImage = (url) => ({
 export const close = () => ({
     type: GLOBALVIEW_CLOSE
 });
+
+export const openProfile = () =>({
+    type: GLOBALVIEW_OPEN,
+    show: 'profile'
+});

@@ -7,6 +7,7 @@ import closesvg from '../../assets/close.svg';
 import GoogleMapReact from 'google-map-react';
 import { googleapikey } from '../../appconfig';
 import drivelabel from './drivelabel.svg';
+import Reviews from '../Profile/Reviews/Reviews'
 
 
 import { connect } from 'react-redux';
@@ -63,6 +64,11 @@ class GlobalView extends Component {
         if (this.props.global.show === 'image') {
             return (
                 <img src={this.props.global.data.url} alt='image' />
+            );
+        }
+        if (this.props.global.show === 'profile') {
+            return (
+                <Reviews />
             );
         }
         return null;
