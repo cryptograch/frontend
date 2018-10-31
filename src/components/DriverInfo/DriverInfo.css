@@ -1,0 +1,32 @@
+.infoConteiner{
+    background-color: rgb(255, 255, 255);
+    padding: 40px;
+    border-radius: 12px;
+    min-width: 600px;
+    min-height: 400px;
+}
+.driverInfoPhoto{
+    width: 250px;
+    height: 250px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    border-radius: 50%;
+    margin: 25px;
+}
+.general{
+    display: flex;
+    flex-flow: row nowrap;
+}
+.newReview{
+    display: grid;
+    grid-template-columns: 1fr 70px;
+    grid-template-rows: 30px;
+}
+.newReview > button{
+    background-color: black;
+    color: rgb(255, 255, 255);
+    border: 1px solid black;
+} 

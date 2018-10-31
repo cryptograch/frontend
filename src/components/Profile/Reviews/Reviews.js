@@ -53,7 +53,7 @@ class Reviews extends Component {
                     <li>c</li>
                     <li>d</li>
                 </ul>
-                <button onClick = {() => {this.props.openProfile()}}>openProfile</button>
+                <button onClick = {() => {this.props.openProfile('0e09a93f-5927-41df-8d4b-aba82da9b949')}}>openProfile</button>
 
             </div>
         )
@@ -71,7 +71,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchtoProps = dispatch => ({
     fetchDriverProfile: (id) => { dispatch(fetchDriverProfile(id)) },
-    openProfile: () => {dispatch(openProfile())}
+    openProfile: (id) => {dispatch(openProfile(id))}
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(Reviews);

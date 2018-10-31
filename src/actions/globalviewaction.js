@@ -26,7 +26,8 @@ export const close = () => ({
     type: GLOBALVIEW_CLOSE
 });
 
-export const openProfile = () =>({
+export const openProfile = (id) =>({
     type: GLOBALVIEW_OPEN,
-    show: 'profile'
+    show: 'profile',
+    data: {id}
 });
