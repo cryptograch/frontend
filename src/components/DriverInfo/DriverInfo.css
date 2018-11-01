@@ -4,6 +4,8 @@
     border-radius: 12px;
     min-width: 600px;
     min-height: 400px;
+    overflow-y: scroll;
+    max-height: 80vh;
 }
 .driverInfoPhoto{
     width: 250px;
@@ -23,10 +25,72 @@
 .newReview{
     display: grid;
     grid-template-columns: 1fr 70px;
-    grid-template-rows: 30px;
+    grid-template-rows: 1fr 1fr;
 }
+
+.newReview > textarea {
+    grid-row: 1 / 3;
+    border: 1px solid rgba(0,0,0,0.2);
+    font-size: 1rem;
+    border-radius: 5px;
+    padding: 10px;
+    height: 100px;
+    margin-bottom: 10px;
+    resize: none;
+}
+
 .newReview > button{
-    background-color: black;
-    color: rgb(255, 255, 255);
-    border: 1px solid black;
-} 
+    grid-row: 2 / 3;
+    cursor: pointer;
+    padding: 10px;
+    border: none;
+    border-radius: 3px;
+    background: #2b2929;
+    width: auto;
+    margin: auto;
+    color: white;
+    font-size: 1rem;
+    transition: background-color, color .3s ease-out;
+}
+
+.newReview > button:hover {
+    background: #1a1a1a;
+    color: #faa71a;
+}
+
+
+.reviewList {
+    /* overflow-x: hidden;
+    overflow-y: scroll; */
+    max-height: 20vh;
+    padding: 0;
+}
+
+.reviewList > li {
+    list-style-type: none;
+    padding: 10px;
+}
+
+.reviewContainer {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: stretch;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid rgba(0,0,0,0.2)
+}
+
+.reviewInfo {
+    color: #746f6f;
+    font-size: 0.8rem;
+    margin-bottom: 10px;
+}
+
+.reviewMessage {
+    font-family: 'ProximaNovaRegular';
+    text-align: left;
+    color: #2b2929;
+    font-size: 1rem
+}
+
+

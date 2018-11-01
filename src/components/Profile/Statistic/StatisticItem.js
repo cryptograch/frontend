@@ -79,8 +79,7 @@ class StatisticItem extends Component {
                     <div className={style.TripInfo}>
                         <div className={style.TripTimeInfo}>
                             <div className={style.TripTimeText}>
-                                <span>Ended:</span> {(new Date(this.props.trip.finishTime)).toTimeString()}
-                                <span>Ended:</span> {(new Date(this.props.trip.finishTime)).toTimeString()}
+                                <span>Ended:</span> {(new Date(this.props.trip.finishTime)).toDateString()} {((new Date(this.props.trip.finishTime)).toTimeString()).split(' ')[0]}
                             </div>
                             <div className={style.tripButtons}>
                                 <div className={style.TripMapBtn} onClick={this.renderMap.bind(this)}>

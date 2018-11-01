@@ -22,12 +22,12 @@ class DriverInfo extends Component {
     componentDidMount() {
         if (this.props.id) {
             this.props.fetchDriverProfile(this.props.id);
-            this.props.reviewListClear();
+            //this.props.reviewListClear();
             this.props.fetchDriverReviewList(this.props.id);
         }
         if (this.props.match && this.props.match.params.id) {
             this.props.fetchDriverProfile(this.props.match.params.id);
-            this.props.reviewListClear();
+            //this.props.reviewListClear();
             this.props.fetchDriverReviewList(this.props.match.params.id);
         }
     }
@@ -77,7 +77,13 @@ class DriverInfo extends Component {
         }
         if (reviews) {
             return reviews.map((review, key) => {
-                return <Review review={review} key={key} />
+                return (
+                    <li key={key}>
+                        <Review review={review} />
+                    </li>
+                );
+
+
             })
         }
         if (error) {
@@ -95,26 +101,27 @@ class DriverInfo extends Component {
                     {this.renderDriverInfo()}
                 </div>
                 <div className={style.reviews}>
-                    <h1>Your reviews</h1>
-                    <ul>
+                    <h1>Write your review</h1>
+                    <div className={style.newReview}>
+                        <textarea type='text' placeholder="very interesting opinion" onChange={(e) => { this.setState({ opinion: e.target.value }) }} />
+                        <button onClick={this.submit.bind(this)}>SEND</button>
+                    </div>
+                    <h1>Other reviews</h1>
+                    <ul className={style.reviewList}>
                         {this.renderReviews()}
                     </ul>
-                    <h2>Wrote some shit here...</h2>
-                    <div className={style.newReview}>
-                        <input type='text' placeholder="very interesting opinion" onChange={(e) => { this.setState({ opinion: e.target.value }) }} />
-                        <button onClick={this.submit.bind(this)}>SUBMIT</button>
-                    </div>
                 </div>
             </div>
         )
     }
 }
 
-const Review = ({review, key}) => {
+const Review = ({ review }) => {
     return (
-        <li key={key}>
-            <b>{review.message}</b>
-        </li>
+        <div className={style.reviewContainer}>
+            <span className={style.reviewInfo}>{(new Date(review.creationTime)).toDateString()}</span>
+            <b className={style.reviewMessage}>{review.message}</b>
+        </div>
     );
 }
 
