@@ -9,7 +9,7 @@
 }
 .TripInfo {
     display: flex;
-    padding: 10px;
+    padding: 5px;
     width: 100%;
 }
 
@@ -17,6 +17,8 @@
     flex-grow: 10;
     display: flex;
     flex-flow: column nowrap;
+    margin-right: 10px;
+    justify-content: space-between;
 }
 
 .TripTimeText {
@@ -50,7 +52,7 @@
 
 .TripMapBtn {
     align-items: center;
-    padding: 10px;
+    padding: 5px;
 }
 
 .TripMapBtn > img {
@@ -65,4 +67,9 @@
 
 .TripMapBtn > img:hover {
     background: #faa71a;
+}
+
+.tripButtons {
+    display: flex;
+    flex-flow: row wrap;
 }
