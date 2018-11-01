@@ -71,7 +71,7 @@ class App extends Component {
             <Route exact path='/profile' component={Profile} />
             <Route exact path='/reset-password' component={ResetPassword} />
             <Route exact path='/admin' component={Admin} />
-            <Route component={NotFound} />
+            <Route path='**' component={Profile}/>
           </Switch>
         </div>
       </Router>);

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Route, Link, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import style from './Profile.css';
 import Header from '../Header/Header';
@@ -19,6 +19,8 @@ import pointIMG from '../../assets/point.png';
 import settingsIMG from '../../assets/Settings.png';
 import adminIMG from '../../assets/admin.svg';
 import Reviews from './Reviews/Reviews';
+import NotFound from '../NotFound/NotFound';
+import DriverInfo from '../DriverInfo/DriverInfo';
 import { connect } from 'react-redux';
 import { getUser } from '../../actions/authaction';
 
@@ -107,25 +109,34 @@ class Profile extends Component {
         }
         return <img src={defaultphoto} className={style.profilePhoto} alt='photo' />;
     }
+    renderProfile() {
+        return (
+            <div className={`${style.profileContainer}`}>
+                <div className={`${style.profileToolbar}`}>
+                    <div className={style.photoName}>
+                        <div className={style.profilePhoto}>
+                            {this.renderPhoto()}
+                        </div>
+                        <h3 className={style.profileName}>{this.props.userData.user.firstName} {this.props.userData.user.lastName}</h3>
+                    </div>
+                    {this.renderToolBar()}
+                </div>
+                <div className={`${style.profileMain}`}>
+                    {this.renderMain()}
+                </div>
+            </div>
+        );
+    }
     render() {
         if (this.props.userData.user) {
             return (
                 <div>
                     <Header></Header>
-                    <div className={`${style.profileContainer}`}>
-                        <div className={`${style.profileToolbar}`}>
-                            <div className={style.photoName}>
-                                <div className={style.profilePhoto}>
-                                    {this.renderPhoto()}
-                                </div>
-                                <h3 className={style.profileName}>{this.props.userData.user.firstName} {this.props.userData.user.lastName}</h3>
-                            </div>
-                            {this.renderToolBar()}
-                        </div>
-                        <div className={`${style.profileMain}`}>
-                            {this.renderMain()}
-                        </div>
-                    </div>
+                    <Switch>
+                        <Route exact path='/profile' render={() => this.renderProfile() } />
+                        <Route exact path='/profile/driver/:id' component={DriverInfo} />
+                        <Route component={NotFound} />
+                    </Switch>
                 </div>
             );
         }
@@ -147,7 +158,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchtoProps = dispatch => ({
     getPhoto: () => { dispatch(getPhoto()) },
-    getUser: () => { dispatch(getUser())}
+    getUser: () => { dispatch(getUser()) }
 })
 
 export default connect(mapStateToProps, mapDispatchtoProps)(Profile);

@@ -44,7 +44,7 @@ const driverData = (state = profileInitState, action) => {
 }
 
 export const reviewListInitState = {
-    review: [],
+    reviews: [],
     loading: false,
     error: null,
     all: false,
@@ -54,7 +54,7 @@ export const reviewListInitState = {
 const reviewListData = (state = reviewListInitState, action) => {
     switch (action.type) {
         case REVIEWLIST_FETCH_START: return Object.assign({}, state, { loading: true });
-        case REVIEWLIST_FETCH_SUCCESS: return Object.assign({}, state, { loading: false, review: [...state.review, ...action.review], page: ++state.page });
+        case REVIEWLIST_FETCH_SUCCESS: return Object.assign({}, state, { loading: false, reviews: [...state.reviews, ...action.review], page: ++state.page });
         case REVIEWLIST_FETCH_FAILED: return Object.assign({}, state, { loading: false, error: action.error });
         case REVIEWLIST_CLEAR: return Object.assign({}, reviewListInitState);
         case REVIEWLIST_ALL: return Object.assign({}, state, { all: true });

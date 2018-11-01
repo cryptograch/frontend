@@ -130,8 +130,8 @@ export const fetchDriverProfile = (id) => (dispatch, getState) => {
 }
 
 export const fetchDriverPhoto = (tok, id) => (dispatch, getState) => {
-    const token = (tok) ? tok : checkAndGetToken(dispatch, getState);
     if (id) {
+        const token = (tok) ? tok : checkAndGetToken(dispatch, getState);
         if (token) {
             dispatch(photoStart());
             return fetch(`${apiurl}/api/images/${id}`, {
@@ -164,10 +164,76 @@ export const fetchDriverPhoto = (tok, id) => (dispatch, getState) => {
 
 /* TODO: actionCreator fetch driver reviews by id*/
 export const fetchDriverReviewList = (id) => (dispatch, getState) => {
-
+    if (id) {
+        const token = checkAndGetToken(dispatch, getState);
+        if (token) {
+            dispatch(reviewListStart());
+            fetch(`${apiurl}/api/accounts/drivers/${id}/comments`, {
+                method: 'GET',
+                headers: new Headers({
+                    'Authorization': `Bearer ${token.auth_token}`,
+                })
+            })
+                .then(res => {
+                    if (res.status === 200 || res.status === 201 || res.status === 204) {
+                        return res.json();
+                    } else if (res.status === 401) {
+                        dispatch(refreshToken(token, fetchDriverReviewList, id));
+                    } else if (res.status === 404) {
+                        dispatch(reviewListAll());
+                    } else {
+                        throw new Error(res.statusText);
+                    }
+                })
+                .then(data => {
+                    if (Array.isArray(data)) {
+                        if (data.length === 0) {
+                            dispatch(reviewListAll());
+                        } else {
+                            dispatch(reviewListSuccess(data));
+                        }
+                    }
+                })
+                .catch(error => dispatch(reviewListFailed(error.message)));
+        } else {
+            dispatch(logout());
+        }
+    }
 }
 
 /* TODO: actionCreator set Review for driver by id */
-export const setReview = (id, review) => (dispatch, getState) => {
-
+export const setReview = (driverId, message) => (dispatch, getState) => {
+    if (driverId && message) {
+        const token = checkAndGetToken(dispatch, getState);
+        if (token) {
+            dispatch(setReviewStart());
+            fetch(`${apiurl}/api/tripshistory/comment`, {
+                method: 'POST',
+                headers: new Headers({
+                    'Authorization': `Bearer ${token.auth_token}`,
+                    'Content-Type': 'application/json',
+                }),
+                body: JSON.stringify({ driverId, message })
+            })
+                .then(res => {
+                    if (res.status === 200) {
+                        dispatch(setReviewSuccess('Comment is send'));
+                    } else if (res.status === 400) {
+                        return res.json();
+                    } else if (res.status === 401) {
+                        dispatch(refreshToken(token, setReview, driverId, message));
+                    } else {
+                        throw new Error(res.statusText);
+                    }
+                })
+                .then(data => {
+                    if (data) {
+                        console.log(data);
+                    }
+                })
+                .catch(error => dispatch(setReviewFailed(error.message)));
+        } else {
+            dispatch(logout());
+        }
+    }
 }
