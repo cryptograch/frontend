@@ -11,6 +11,7 @@ import {
     REVIEWLIST_FETCH_FAILED,
     REVIEWLIST_CLEAR,
     REVIEWLIST_ALL,
+    REVIEWLIST_ADD,
     SETREVIEW_FETCH_START,
     SETREVIEW_FETCH_SUCCESS,
     SETREVIEW_FETCH_FAILED,
@@ -58,6 +59,7 @@ const reviewListData = (state = reviewListInitState, action) => {
         case REVIEWLIST_FETCH_FAILED: return Object.assign({}, state, { loading: false, error: action.error });
         case REVIEWLIST_CLEAR: return Object.assign({}, reviewListInitState);
         case REVIEWLIST_ALL: return Object.assign({}, state, { all: true });
+        case REVIEWLIST_ADD: return Object.assign({}, state, { reviews: [action.review, ...state.reviews]});
         case CLEAR_ERRORS: return Object.assign({}, state, { error: null });
         case CLEAR_ALL: return Object.assign({}, reviewListInitState);
         default: return state;

@@ -29,6 +29,7 @@ class ProfileMain extends Component {
                     <h3>Email: {this.props.userData.user.email}</h3>
                     <h3>Phone: {this.props.userData.user.phoneNumber}</h3>
                     <h3>City: {this.props.userData.user.city}</h3>
+                    <h3>Rating: {this.props.userData.user.rating}</h3>
                 </div>
             )
         }

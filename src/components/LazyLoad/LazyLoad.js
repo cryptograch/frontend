@@ -12,7 +12,12 @@ class LazyLoad extends Component {
     }
     componentDidMount() {
         const comp = document.getElementById('lazyload');
-        window.addEventListener('scroll', this.scroll.bind(this));
+        const container = document.getElementById('lz_container');
+        if (container && this.props.container) {
+            container.addEventListener('scroll', this.scroll.bind(this));
+        } else {
+            window.addEventListener('scroll', this.scroll.bind(this));
+        }
         this.setState({ comp }, () => {
             this.scroll();
         });

@@ -6,6 +6,7 @@ import { fetchDriverProfile, fetchDriverReviewList, setReview, fetchDriverPhoto,
 import { openProfile } from '../../actions/globalviewaction';
 import Loading from '../Loading/Loading';
 import Alert from '../Alert/Alert';
+import LazyLoad from '../LazyLoad/LazyLoad';
 import defaultphoto from '../../assets/default-user.png';
 import style from './DriverInfo.css';
 
@@ -21,14 +22,14 @@ class DriverInfo extends Component {
     }
     componentDidMount() {
         if (this.props.id) {
+            this.props.reviewListClear();
             this.props.fetchDriverProfile(this.props.id);
-            //this.props.reviewListClear();
-            this.props.fetchDriverReviewList(this.props.id);
+            // this.props.fetchDriverReviewList(this.props.id);
         }
         if (this.props.match && this.props.match.params.id) {
+            this.props.reviewListClear();
             this.props.fetchDriverProfile(this.props.match.params.id);
-            //this.props.reviewListClear();
-            this.props.fetchDriverReviewList(this.props.match.params.id);
+            // this.props.fetchDriverReviewList(this.props.match.params.id);
         }
     }
     componentDidUpdate() {
@@ -70,11 +71,8 @@ class DriverInfo extends Component {
         }
     }
     renderReviews() {
-        const { loading, reviews, error } = this.props.reviewListData;
+        const { reviews, error } = this.props.reviewListData;
         const { profile } = this.props.driverData;
-        if (loading) {
-            return <Loading />
-        }
         if (reviews) {
             return reviews.map((review, key) => {
                 return (
@@ -82,18 +80,27 @@ class DriverInfo extends Component {
                         <Review review={review} />
                     </li>
                 );
-
-
             })
         }
         if (error) {
-            return <Alert local={true} message='Comments dont load' click={() => { this.fetchDriverReviewList(profile.id) }} />
+            return <Alert local={true} message='Comments dont load' click={() => { this.props.reviewListClear(); this.fetchDriverReviewList(profile.id) }} />
+        }
+        return null;
+    }
+    renderLazyLoad() {
+        const { profile } = this.props.driverData;
+        const { all, loading } = this.props.reviewListData;
+        if (profile && !all) {
+            if (loading) {
+                return <LazyLoad container loading={true} do={() => { this.props.fetchDriverReviewList(profile.id) }} />
+            }
+            return <LazyLoad container loading={false} do={() => { this.props.fetchDriverReviewList(profile.id) }} />
         }
         return null;
     }
     render() {
         return (
-            <div className={style.infoConteiner}>
+            <div id='lz_container' className={style.infoConteiner}>
                 <div className={style.general}>
                     <div className={style.driverInfoPhoto}>
                         {this.renderDriverPhoto()}
@@ -109,6 +116,7 @@ class DriverInfo extends Component {
                     <h1>Other reviews</h1>
                     <ul className={style.reviewList}>
                         {this.renderReviews()}
+                        {this.renderLazyLoad()}
                     </ul>
                 </div>
             </div>

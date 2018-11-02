@@ -116,7 +116,7 @@ export const getDocument = (tok) => (dispatch, getState) => {
                 }
             })
             .then(data => {
-                console.log(data);
+                // console.log(data);
                 dispatch(docSuccess(data));
                 dispatch(getDocPhoto(token, data.frontId));
                 dispatch(getDocPhoto(token, data.backId));

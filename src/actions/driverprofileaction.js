@@ -17,6 +17,7 @@ export const REVIEWLIST_FETCH_SUCCESS = 'REVIEWLIST_FETCH_SUCCESS';
 export const REVIEWLIST_FETCH_FAILED = 'REVIEWLIST_FETCH_FAILED';
 export const REVIEWLIST_CLEAR = 'REVIEWLIST_CLEAR';
 export const REVIEWLIST_ALL = 'REVIEWLIST_ALL';
+export const REVIEWLIST_ADD = 'REVIEWLIST_ADD';
 
 /* Driver profile set review types */
 export const SETREVIEW_FETCH_START = 'SETREVIEW_FETCH_START';
@@ -96,6 +97,10 @@ export const setReviewClear = () => ({
     type: SETREVIEW_CLEARERROR
 });
 
+export const reviewListAdd = (review) => ({
+    type: REVIEWLIST_ADD,
+    review
+});
 
 /* TODO: actionCreator fetch driver profile by Id*/
 export const fetchDriverProfile = (id) => (dispatch, getState) => {
@@ -164,11 +169,14 @@ export const fetchDriverPhoto = (tok, id) => (dispatch, getState) => {
 
 /* TODO: actionCreator fetch driver reviews by id*/
 export const fetchDriverReviewList = (id) => (dispatch, getState) => {
-    if (id) {
+    const loading = getState().reviewListData.loading
+    if (id && !loading) {
+        console.log('fetch');
         const token = checkAndGetToken(dispatch, getState);
         if (token) {
+            const page = getState().reviewListData.page
             dispatch(reviewListStart());
-            fetch(`${apiurl}/api/accounts/drivers/${id}/comments`, {
+            fetch(`${apiurl}/api/accounts/drivers/${id}/comments?PageNumber=${page}&PageSize=${10}`, {
                 method: 'GET',
                 headers: new Headers({
                     'Authorization': `Bearer ${token.auth_token}`,
@@ -218,6 +226,12 @@ export const setReview = (driverId, message) => (dispatch, getState) => {
                 .then(res => {
                     if (res.status === 200) {
                         dispatch(setReviewSuccess('Comment is send'));
+                        dispatch(reviewListAdd({
+                            driverId, 
+                            creationTime: new Date(),
+                            customerId: token.id,
+                            message
+                        }))
                     } else if (res.status === 400) {
                         return res.json();
                     } else if (res.status === 401) {
