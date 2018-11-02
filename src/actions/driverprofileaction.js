@@ -171,7 +171,6 @@ export const fetchDriverPhoto = (tok, id) => (dispatch, getState) => {
 export const fetchDriverReviewList = (id) => (dispatch, getState) => {
     const loading = getState().reviewListData.loading
     if (id && !loading) {
-        console.log('fetch');
         const token = checkAndGetToken(dispatch, getState);
         if (token) {
             const page = getState().reviewListData.page
@@ -241,8 +240,10 @@ export const setReview = (driverId, message) => (dispatch, getState) => {
                     }
                 })
                 .then(data => {
-                    if (data) {
-                        console.log(data);
+                    if (data && Array.isArray(data[Object.keys(data)[0]])) {
+                        dispatch(setReviewFailed(data[Object.keys(data)[0]][0]));
+                    } else {
+                        dispatch(setReviewFailed(null));
                     }
                 })
                 .catch(error => dispatch(setReviewFailed(error.message)));

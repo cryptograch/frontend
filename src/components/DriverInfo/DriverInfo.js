@@ -7,6 +7,7 @@ import { openProfile } from '../../actions/globalviewaction';
 import Loading from '../Loading/Loading';
 import Alert from '../Alert/Alert';
 import LazyLoad from '../LazyLoad/LazyLoad';
+import Review from './Review/Review';
 import defaultphoto from '../../assets/default-user.png';
 import style from './DriverInfo.css';
 
@@ -54,7 +55,7 @@ class DriverInfo extends Component {
     renderDriverInfo() {
         const { loading, error, profile } = this.props.driverData;
         if (loading) {
-            return <Loading />
+            return <Loading />;
         }
         if (error) {
             return <Alert local={true} message='Profile dont load' />
@@ -92,15 +93,15 @@ class DriverInfo extends Component {
         const { all, loading } = this.props.reviewListData;
         if (profile && !all) {
             if (loading) {
-                return <LazyLoad container loading={true} do={() => { this.props.fetchDriverReviewList(profile.id) }} />
+                return <LazyLoad container={(this.props.local) ? true : false} loading={true} do={() => { this.props.fetchDriverReviewList(profile.id) }} />
             }
-            return <LazyLoad container loading={false} do={() => { this.props.fetchDriverReviewList(profile.id) }} />
+            return <LazyLoad container={(this.props.local) ? true : false} loading={false} do={() => { this.props.fetchDriverReviewList(profile.id) }} />
         }
         return null;
     }
     render() {
         return (
-            <div id='lz_container' className={style.infoConteiner}>
+            <div id='lz_container' className={(this.props.local) ? style.infoConteiner: style.infoConteinerGlobal}>
                 <div className={style.general}>
                     <div className={style.driverInfoPhoto}>
                         {this.renderDriverPhoto()}
@@ -122,15 +123,6 @@ class DriverInfo extends Component {
             </div>
         )
     }
-}
-
-const Review = ({ review }) => {
-    return (
-        <div className={style.reviewContainer}>
-            <span className={style.reviewInfo}>{(new Date(review.creationTime)).toDateString()}</span>
-            <b className={style.reviewMessage}>{review.message}</b>
-        </div>
-    );
 }
 
 DriverInfo.propTypes = {

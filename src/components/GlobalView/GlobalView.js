@@ -68,7 +68,7 @@ class GlobalView extends Component {
         }
         if (this.props.global.show === 'profile') {
             return (
-                <DriverInfo id = {this.props.global.data.id} />
+                <DriverInfo local id = {this.props.global.data.id} />
             );
         }
         return null;

@@ -7,6 +7,16 @@
     overflow-y: scroll;
     max-height: 80vh;
 }
+
+.infoConteinerGlobal{
+    background-color: rgb(255, 255, 255);
+    padding: 40px;
+    min-height: 100vh;
+    max-width: 1140px;
+    margin: 0 auto;
+    padding-top: 70px;
+}
+
 .driverInfoPhoto{
     width: 250px;
     height: 250px;
@@ -60,9 +70,6 @@
 
 
 .reviewList {
-    /* overflow-x: hidden;
-    overflow-y: scroll; */
-    max-height: 20vh;
     padding: 0;
 }
 
@@ -71,26 +78,9 @@
     padding: 10px;
 }
 
-.reviewContainer {
-    display: flex;
-    flex-flow: column nowrap;
-    align-items: stretch;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid rgba(0,0,0,0.2)
+
+@media screen and (max-width: 500px) {
+    .infoConteinerGlobal{
+        padding: 70px 10px 40px 10px;
+    }
 }
-
-.reviewInfo {
-    color: #746f6f;
-    font-size: 0.8rem;
-    margin-bottom: 10px;
-}
-
-.reviewMessage {
-    font-family: 'ProximaNovaRegular';
-    text-align: left;
-    color: #2b2929;
-    font-size: 1rem
-}
-
-
