@@ -101,8 +101,9 @@
         max-width: 90vw;
         max-height: 85vh;
     }
+
     .globalContent > img {
-        max-width: 90vw;
+        max-width: 90vw;    
     }
     .globalContentMap {
         width: 90vw;
@@ -110,11 +111,5 @@
     }
     .globalClose {
         right: -10px;
-    }
-}
-@media only screen and (max-width: 1000px){
-    .globalContent{
-        margin-right: 150px;
-        margin-left: 150px;
     }
 }

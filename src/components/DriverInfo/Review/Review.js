@@ -72,7 +72,7 @@ class Review extends Component {
                 </div>
                 <div className={style.reviewContent}>
                     <span className={style.reviewInfo}>{review.firstName} {review.lastName} <time>{(new Date(review.creationTime)).toDateString()}</time></span>
-                    <b className={style.reviewMessage}>{review.message}</b>
+                    <div className={style.reviewMessage}>{review.message}</div>
                 </div>
             </div>
         )

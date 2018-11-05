@@ -10,8 +10,10 @@
     flex-grow: 1;
     display: flex;
     flex-flow: column nowrap;
+    width: 80%;
     padding: 0 10px;
-    padding: 10px
+    padding: 10px;
+    word-wrap: break-word;
 }
 
 .reviewInfo {
@@ -29,7 +31,8 @@
     font-family: 'ProximaNovaRegular';
     text-align: left;
     color: #2b2929;
-    font-size: 1rem
+    font-size: 1rem;
+    word-wrap: break-word;
 }
 
 .reviewPhoto {
