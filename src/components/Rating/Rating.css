@@ -1,0 +1,20 @@
+.container {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}
+
+.imgContent {
+    align-self: stretch;
+}
+
+.imgContent > img {
+    max-width: 64px;
+    max-height: 64px;
+}
+
+.container > label {
+    font-weight: bold;
+    color: #faa71a;
+    font-family: 'ProximaNovaBold';
+}

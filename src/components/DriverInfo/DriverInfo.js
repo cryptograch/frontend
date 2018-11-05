@@ -8,6 +8,7 @@ import Loading from '../Loading/Loading';
 import Alert from '../Alert/Alert';
 import LazyLoad from '../LazyLoad/LazyLoad';
 import Review from './Review/Review';
+import Rating from '../Rating/Rating';
 import defaultphoto from '../../assets/default-user.png';
 import style from './DriverInfo.css';
 
@@ -67,6 +68,7 @@ class DriverInfo extends Component {
                     <h2>Name : {profile.firstName} {profile.lastName}</h2>
                     <h2>phone: {profile.phoneNumber}</h2>
                     <h2>email: {profile.email}</h2>
+                    <h2><Rating rating={profile.rating}/></h2>
                 </div>
             );
         }
