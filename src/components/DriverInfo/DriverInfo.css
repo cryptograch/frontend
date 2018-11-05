@@ -2,8 +2,8 @@
     background-color: rgb(255, 255, 255);
     padding: 40px;
     border-radius: 12px;
-    min-width: 600px;
-    min-height: 400px;
+    width: 70vw;
+    height: 80%;
     overflow-y: scroll;
     max-height: 80vh;
 }
@@ -18,8 +18,9 @@
 }
 
 .driverInfoPhoto{
-    width: 250px;
-    height: 250px;
+    min-width: 250px;
+    max-width: 250px;
+    min-height: 250px;
     overflow: hidden;
     display: flex;
     justify-content: center;
@@ -78,6 +79,36 @@
     padding: 10px;
 }
 
+<<<<<<< Updated upstream
+=======
+.reviewContainer {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: stretch;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid rgba(0,0,0,0.2)
+}
+
+.reviewInfo {
+    color: #746f6f;
+    font-size: 0.8rem;
+    margin-bottom: 10px;
+}
+
+.reviewMessage {
+    font-family: 'ProximaNovaRegular';
+    text-align: left;
+    color: #2b2929;
+    font-size: 1rem
+}
+@media only screen and (max-width: 1000px){
+    .infoConteiner{
+        margin-right: 300px
+    }
+}
+
+>>>>>>> Stashed changes
 
 @media screen and (max-width: 500px) {
     .infoConteinerGlobal{

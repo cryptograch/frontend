@@ -112,3 +112,9 @@
         right: -10px;
     }
 }
+@media only screen and (max-width: 1000px){
+    .globalContent{
+        margin-right: 150px;
+        margin-left: 150px;
+    }
+}
