@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
-import { fetchDriverProfile, fetchDriverReviewList, setReview, fetchDriverPhoto, reviewListClear } from '../../actions/driverprofileaction';
+import { fetchDriverProfile, fetchDriverReviewList, setReview, fetchDriverPhoto, reviewListClear, setReviewClear } from '../../actions/driverprofileaction';
 import { openProfile } from '../../actions/globalviewaction';
 import Loading from '../Loading/Loading';
 import Alert from '../Alert/Alert';
@@ -49,7 +49,7 @@ class DriverInfo extends Component {
             return <img src={this.props.driverData.photourl} alt='photo' />
         }
         if (photoerror) {
-            return <Alert local={true} message='Photo dont load' click={() => { this.props.fetchDriverPhoto(null, profile.id) }} />
+            return <Alert local={true} message='Photo dont load' click={() => { this.props.fetchDriverPhoto(profile.id) }} />
         }
         return <img src={defaultphoto} alt='photo' />;
     }
@@ -59,7 +59,7 @@ class DriverInfo extends Component {
             return <Loading />;
         }
         if (error) {
-            return <Alert local={true} message='Profile dont load' />
+            return <Alert local={true} message='Profile dont load' click={() => { this.props.fetchDriverProfile(this.props.id) }} />
         }
         if (profile) {
             const { profile } = this.props.driverData
@@ -68,10 +68,17 @@ class DriverInfo extends Component {
                     <h2>Name : {profile.firstName} {profile.lastName}</h2>
                     <h2>phone: {profile.phoneNumber}</h2>
                     <h2>email: {profile.email}</h2>
-                    <h2><Rating rating={profile.rating}/></h2>
+                    <h2><Rating rating={profile.rating} /></h2>
                 </div>
             );
         }
+    }
+    renderErrors() {
+        const { error } = this.props.setReviewData;
+        if (error) {
+            return <Alert global error={error} click={() => { this.props.setReviewClear() }} />
+        }
+        return null;
     }
     renderReviews() {
         const { reviews, error } = this.props.reviewListData;
@@ -103,7 +110,8 @@ class DriverInfo extends Component {
     }
     render() {
         return (
-            <div id='lz_container' className={(this.props.local) ? style.infoConteiner: style.infoConteinerGlobal}>
+            <div id='lz_container' className={(this.props.local) ? style.infoConteiner : style.infoConteinerGlobal}>
+                {this.renderErrors()}
                 <div className={style.general}>
                     <div className={style.driverInfoPhoto}>
                         {this.renderDriverPhoto()}
@@ -112,10 +120,10 @@ class DriverInfo extends Component {
                 </div>
                 <div className={style.reviews}>
                     <h1>Write your review</h1>
-                    <div className={style.newReview}>
+                    <form className={style.newReview} onSubmit={(e) => { e.preventDefault() }}>
                         <textarea type='text' placeholder="very interesting opinion" onChange={(e) => { this.setState({ opinion: e.target.value }) }} />
-                        <button onClick={this.submit.bind(this)}>SEND</button>
-                    </div>
+                        <input type='submit' onClick={this.submit.bind(this)} value='SEND' />
+                    </form>
                     <h1>Other reviews</h1>
                     <ul className={style.reviewList}>
                         {this.renderReviews()}
@@ -134,7 +142,8 @@ DriverInfo.propTypes = {
     fetchDriverReviewList: PropTypes.func,
     setReview: PropTypes.func,
     fetchDriverPhoto: PropTypes.func,
-    reviewListClear: PropTypes.func
+    reviewListClear: PropTypes.func,
+    setReviewClear: PropTypes.func,
 }
 
 const mapStateToProps = state => ({
@@ -148,8 +157,9 @@ const mapDispatchtoProps = dispatch => ({
     openProfile: () => { dispatch(openProfile()) },
     fetchDriverReviewList: (id) => { dispatch(fetchDriverReviewList(id)) },
     setReview: (id, message) => { dispatch(setReview(id, message)) },
-    fetchDriverPhoto: () => { dispatch(fetchDriverPhoto(null, id)) },
-    reviewListClear: () => { dispatch(reviewListClear()) }
+    fetchDriverPhoto: (id) => { dispatch(fetchDriverPhoto(null, id)) },
+    reviewListClear: () => { dispatch(reviewListClear()) },
+    setReviewClear: () => { dispatch(setReviewClear()) },
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(DriverInfo);

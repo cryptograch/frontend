@@ -8,7 +8,7 @@ class Alert extends Component {
     constructor(props) {
         super(props);
     }
-    componentDidUpdate() {
+    componentDidMount() {
         if (this.props.success || this.props.error) {
             setTimeout(() => {
                 this.props.click();

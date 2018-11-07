@@ -51,15 +51,17 @@
     transition: border .3s ease-out;
 }
 
-.newReview > textarea:focus  {
+.newReview:focus-within > textarea  {
     border-bottom: 2px solid #faa71a;
 }
 
-.newReview > textarea:focus ~ button {
+.newReview:focus-within > input[type=submit] {
+    visibility: visible;
     opacity: 1;
 }
 
-.newReview > button {
+.newReview > input[type=submit] {
+    visibility: hidden;
     opacity: 0;
     grid-column: 2 / 3;
     grid-row: 2 / 3;
@@ -76,7 +78,7 @@
     transition: background-color .3s ease-out, opacity .3s ease-out;
 }
 
-.newReview > button:hover {
+.newReview > input[type=submit]:hover {
     background: #1a1a1a;
     color: #faa71a;
 }

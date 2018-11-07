@@ -229,7 +229,9 @@ export const setReview = (driverId, message) => (dispatch, getState) => {
                             driverId, 
                             creationTime: new Date(),
                             customerId: token.id,
-                            message
+                            message,
+                            firstName: getState().userData.user.firstName,
+                            lastName: getState().userData.user.lastName,
                         }))
                     } else if (res.status === 400) {
                         return res.json();
