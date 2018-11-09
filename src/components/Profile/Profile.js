@@ -18,7 +18,6 @@ import listIMG from '../../assets/list.png';
 import pointIMG from '../../assets/point.png';
 import settingsIMG from '../../assets/Settings.png';
 import adminIMG from '../../assets/admin.svg';
-import Reviews from './Reviews/Reviews';
 import NotFound from '../NotFound/NotFound';
 import DriverInfo from '../DriverInfo/DriverInfo';
 import { connect } from 'react-redux';
@@ -57,7 +56,6 @@ class Profile extends Component {
             case 'statistic': return <Statistic />;
             case 'settings': return <Settings />;
             case 'response': return <ResponseList />;
-            case 'reviews': return <Reviews />;
             default: return null;
         }
     }
@@ -79,7 +77,6 @@ class Profile extends Component {
                     <div className={this.state.show === 'statistic' ? `${style.active} ${style.profileToolItem}` : `${style.profileToolItem}`} onClick={() => { this.setState({ show: 'statistic' }) }}><img src={listIMG} /> <div><strong>Statistic</strong></div></div>
                     <div className={this.state.show === 'response' ? `${style.active} ${style.profileToolItem}` : `${style.profileToolItem}`} onClick={() => { this.setState({ show: 'response' }) }}><img src={pointIMG} /> <div><strong>Your responses</strong></div></div>
                     <div className={this.state.show === 'settings' ? `${style.active} ${style.profileToolItem}` : `${style.profileToolItem}`} onClick={() => { this.setState({ show: 'settings' }) }}><img src={settingsIMG} /> <div><strong>Settings</strong></div></div>
-                    <div className={this.state.show === 'reviews' ? `${style.active} ${style.profileToolItem}` : `${style.profileToolItem}`} onClick={() => { this.setState({ show: 'reviews' }) }}><img src={settingsIMG} /> <div><strong>Reviews</strong></div></div>
                 </div>
             );
         }
