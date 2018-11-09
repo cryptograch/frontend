@@ -68,7 +68,13 @@
 }
 .changePhoto {
   width: 80%;
-  display: grid;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+
+}
+.changeProfInfo{
+    display: grid;
   grid-template-columns: minmax(200px, 350px) minmax(200px, 350px);
   grid-column-gap: 15px;
 }
@@ -76,6 +82,7 @@
   max-width: 80%;
   margin: 0 auto;
   margin-bottom: 20px;
+  
 }
 .signInInput {
    display: block;
@@ -149,6 +156,7 @@
   flex-flow: row wrap;
   align-items: center;
   justify-content: center;
+
 }
 .docPhotoInput{
   width: 100%;
