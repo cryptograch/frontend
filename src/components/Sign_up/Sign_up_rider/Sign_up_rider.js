@@ -66,7 +66,7 @@ class SignUpRider extends Component {
     submit() {
         const { model } = this.state;
         const data = {
-            email: this.state.email,
+            email: this.state.email.toLowerCase(),
             password: this.state.password,
             lastName: this.state.lastName,
             firstName: this.state.firstName,
