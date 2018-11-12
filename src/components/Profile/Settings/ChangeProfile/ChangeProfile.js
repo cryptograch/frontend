@@ -68,7 +68,7 @@ class ChangeProfile extends Component {
             }
         })
     }
-
+    
     chooseNewPhoto(e) {
         const file = e.target.files[0];
         if (file) {
@@ -149,7 +149,7 @@ class ChangeProfile extends Component {
                 <div>
                     <div className={style.showForm} >
                         <div className={style.changePhoto}>
-                            <div className={style.docPhoto}>
+                            
                                 <h1 className={style.docTitle}> Add your Photo</h1>
                                 <div className={style.profilePhotoPreload}>
                                     <img src={(this.state.newphotourl) ? this.state.newphotourl : userdefault} alt='photo' />
@@ -161,34 +161,34 @@ class ChangeProfile extends Component {
                                 <div className={style.docSubmit}>
                                     <button className={style.button} onClick={this.uploadNewPhoto.bind(this)}>SUBMIT</button>
                                 </div>
-                            </div>
+                            
                         </div>
                         <h1>Name</h1>
                         <span>{(this.state.errors.lastName) ? this.state.errors.lastName : ''}</span>
                         <span>{(this.state.errors.firstName) ? this.state.errors.firstName : ''}</span>
-                        <div className={style.changePhoto}>
+                        <div className={style.changeProfInfo}>
                             <input className={style.signInInput} type='text' placeholder="First Name"  onChange={(e) => { this.setState({ firstName: e.target.value }) }} />
                             <input className={style.signInInput} type='text' placeholder="Last Name" onChange={(e) => { this.setState({ lastName: e.target.value }) }} />
                         </div>
                         <h1>Phone Number</h1>
                         <span>{(this.state.errors.phoneNumber) ? this.state.errors.phoneNumber : ''}</span>
-                        <div className={style.changePhoto}>
+                        <div className={style.changeProfInfo}>
                             <input className={style.signInInput} type='text' placeholder="Enter new phone" onChange={(e) => { this.setState({ phoneNumber: e.target.value }) }} />
                         </div>
                         <h1 className={style.Label}>City</h1>
                         <span>{(this.state.errors.city) ? this.state.errors.city : ''}</span>
-                        <div className={style.changePhoto}>
+                        <div className={style.changeProfInfo}>
                             <input className={style.signInInput} type='text' placeholder="Enter new city" onChange={(e) => { this.setState({ city: e.target.value }) }} />
                         </div>
                         <h1 className={style.Label}>Private Key</h1>
                         <span>{(this.state.errors.privateKey) ? this.state.errors.privateKey : ''}</span>
-                        <div className={style.changePhoto}>
+                        <div className={style.changeProfInfo}>
                             <input className={style.signInInput} type='text' placeholder="New Private Key" onChange={(e) => { this.setState({ privateKey: e.target.value }) }} />
                         </div>
                         <h1 className={style.Label}>Password</h1>
                         <span>{(this.state.errors.currentPassword) ? this.state.errors.currentPassword : ''}</span>
                         <span>{(this.state.errors.newPassword) ? this.state.errors.newPassword : ''}</span>
-                        <div className={style.changePhoto}>
+                        <div className={style.changeProfInfo}>
                             <input className={style.signInInput} type='password' placeholder="Current password" onChange={(e) => { this.setState({ currentPassword: e.target.value }) }} />
                             <input className={style.signInInput} type='password' placeholder="New password" required onChange={(e) => { this.setState({ newPassword: e.target.value }) }} />
                         </div>

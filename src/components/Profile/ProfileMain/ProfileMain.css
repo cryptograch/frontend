@@ -1,6 +1,7 @@
 .main {
   display: flex;
   flex-flow: column nowrap;
+  align-items: stretch;
   margin: 0 10px;
 }
 .main h3 {

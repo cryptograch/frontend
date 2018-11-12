@@ -24,16 +24,17 @@
 
 .loadshape {
     position: absolute;
-    width: 2.2vh;
-    height: 2.2vh;
+    width: 16px;
+    height:  16px;
     background: white;
     border-radius: 50%;
     z-index: 10;
-    top: -2.2vh;
+    top: -8px;
+    left: -8px;
 }
 
 .shapeone {
-    left: -4.4vh;
+    left: -24px;
     animation: loadanimone 2.5s linear infinite;
 }
 
@@ -43,7 +44,7 @@
 }
 
 .shapethree {
-    left: 4.4vh;
+    left: 24px;
     animation: loadanimthree 2.5s linear infinite;
 }
 

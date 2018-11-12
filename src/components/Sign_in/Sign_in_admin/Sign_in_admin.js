@@ -47,7 +47,7 @@ class SignInAdmin extends Component {
     submit() {
         const { model } = this.state;
         const data = {
-            userName: this.state.userName,
+            userName: this.state.userName.toLowerCase(),
             password: this.state.password,
         }
         model.validate(data);

@@ -98,11 +98,12 @@
 @media only screen and (max-width: 500px) {
     .globalContent {
         margin-top: 40px;
-        max-width: 90vw;
+        max-width: 95vw;
         max-height: 85vh;
     }
+
     .globalContent > img {
-        max-width: 90vw;
+        max-width: 90vw;    
     }
     .globalContentMap {
         width: 90vw;

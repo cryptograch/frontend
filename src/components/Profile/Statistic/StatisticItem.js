@@ -5,10 +5,11 @@ import PropTypes from 'prop-types';
 import Alert from '../../Alert/Alert'; */
 import style from "./Statistic.css";
 import mapssvg from '../../../assets/maps.svg';
+import driversvg from '../../../assets/driver.svg';
 
 import { connect } from 'react-redux';
 import { apiurl } from '../../../appconfig';
-import { openGoogleMap, addMapRoute } from '../../../actions/globalviewaction';
+import { openGoogleMap, addMapRoute, openProfile } from '../../../actions/globalviewaction';
 
 class StatisticItem extends Component {
     constructor(props) {
@@ -78,10 +79,15 @@ class StatisticItem extends Component {
                     <div className={style.TripInfo}>
                         <div className={style.TripTimeInfo}>
                             <div className={style.TripTimeText}>
-                                <span>Ended:</span> {(new Date(this.props.trip.finishTime)).toTimeString()}
+                                <span>Ended:</span> {(new Date(this.props.trip.finishTime)).toDateString()} {((new Date(this.props.trip.finishTime)).toTimeString()).split(' ')[0]}
                             </div>
-                            <div className={style.TripMapBtn} onClick={this.renderMap.bind(this)}>
-                                <img src={mapssvg} alt='Map' />
+                            <div className={style.tripButtons}>
+                                <div className={style.TripMapBtn} onClick={this.renderMap.bind(this)}>
+                                    <img src={mapssvg} alt='Map' />
+                                </div>
+                                <div className={style.TripMapBtn} onClick={() => { this.props.openProfile(this.props.trip.driverId) }}>
+                                    <img src={driversvg} alt='Driver Info' />
+                                </div>
                             </div>
                         </div>
                         <div className={style.TripMainInfo}>
@@ -105,7 +111,8 @@ StatisticItem.propTypes = {
     tokenData: PropTypes.object,
     userData: PropTypes.object,
     addMapRoute: PropTypes.func,
-    openGoogleMap: PropTypes.func
+    openGoogleMap: PropTypes.func,
+    openProfile: PropTypes.func,
 }
 
 const mapStateToProps = state => ({
@@ -115,7 +122,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchtoProps = dispatch => ({
     openGoogleMap: (center, labels) => { dispatch(openGoogleMap(center, labels)) },
-    addMapRoute: (route) => { dispatch(addMapRoute(route)) }
+    addMapRoute: (route) => { dispatch(addMapRoute(route)) },
+    openProfile: (id) => { dispatch(openProfile(id)) }
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(StatisticItem);

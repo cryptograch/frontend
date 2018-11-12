@@ -1,0 +1,57 @@
+.reviewContainer {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: stretch;
+    margin-bottom: 10px;
+    border: 1px solid rgba(0,0,0,0.2)
+}
+
+.reviewContent {
+    flex-grow: 1;
+    display: flex;
+    flex-flow: column nowrap;
+    width: 80%;
+    padding: 0 10px;
+    padding: 10px;
+    word-wrap: break-word;
+}
+
+.reviewInfo {
+   
+    overflow: hidden;
+}
+
+.reviewInfo > time {
+    margin-left: 20px;
+    color: #746f6f;
+    font-size: 0.8rem;
+}
+
+.reviewMessage {
+    font-family: 'ProximaNovaRegular';
+    text-align: left;
+    color: #2b2929;
+    font-size: 1rem;
+    word-wrap: break-word;
+}
+
+.reviewPhoto {
+    margin: 10px;
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    border-radius: 50%;
+}
+
+.reviewPhoto > img {
+    position: absolute;
+    margin: auto;
+    min-height: 70px;
+    min-width: 70px;
+    width: 70px;
+    height: auto;
+}
