@@ -28,6 +28,7 @@ import { connect } from 'react-redux';
 // import our actionCreator
 import { testRun } from '../../actions/testaction';
 import { getUser } from '../../actions/authaction';
+import { createConnection } from '../../actions/chataction';
 
 class App extends Component {
   componentDidMount() {
@@ -83,7 +84,7 @@ App.propTypes = {
   // Check data
   // testData must be a object
   testData: PropTypes.object,
-  // runTest must be a function 
+  // runTest must be a function
   runTest: PropTypes.func,
   // history must be a object
   history: PropTypes.object,

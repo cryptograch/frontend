@@ -26,6 +26,7 @@ import { getUser } from '../../actions/authaction';
 import defaultphoto from '../../assets/default-user.png';
 
 // import { uploadPhoto, logout } from '../../actions/authaction';
+import { createConnection } from '../../actions/chataction';
 
 class Profile extends Component {
     constructor(props) {
@@ -42,10 +43,15 @@ class Profile extends Component {
             // this.props.history.replace('/sign-in');
             this.props.getUser();
         }
+        this.props.createConnection();
+
     }
     componentDidUpdate() {
         if (!this.props.userData.user && !this.props.userData.loading) {
             this.props.history.replace('/sign-in');
+        }
+        if (this.props.chatData.connection.start) {
+          console.log('Start');
         }
     }
     renderMain() {
@@ -150,12 +156,14 @@ ProfileMain.propTypes = {
 
 const mapStateToProps = state => ({
     userData: state.userData,
-    photoData: state.photoData
+    photoData: state.photoData,
+    chatData: state.chatData
 })
 
 const mapDispatchtoProps = dispatch => ({
     getPhoto: () => { dispatch(getPhoto()) },
-    getUser: () => { dispatch(getUser()) }
+    getUser: () => { dispatch(getUser()) },
+    createConnection: () => { dispatch(createConnection())}
 })
 
 export default connect(mapStateToProps, mapDispatchtoProps)(Profile);

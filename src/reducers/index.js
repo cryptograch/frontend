@@ -16,6 +16,7 @@ import { globalviewData } from './globalviewreducer';
 import { reslistData } from './reslistreducer';
 import { balanceData } from './ethreducer';
 import { driverData, reviewListData, setReviewData } from './driverprofilereducer';
+import { chatData } from './chatreducer';
 // Here combine custom reducers
 export default combineReducers({
     testData,
@@ -38,4 +39,5 @@ export default combineReducers({
     driverData,
     reviewListData,
     setReviewData,
+    chatData,
 });
