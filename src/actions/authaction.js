@@ -7,10 +7,6 @@ export const USER_REGISTER_START = 'USER_REGISTER_START';
 export const USER_REGISTER_FAILED = 'USER_REGISTER_FAILED';
 export const USER_REGISTER_SUCCESS = 'USER_REGISTER_SUCCESS';
 
-export const USERPHOTO_FETCH_START = 'USERPHOTO_FETCH_START';
-export const USERPHOTO_FETCH_SUCCESS = 'USERPHOTO_FETCH_SUCCESS';
-export const USERPHOTO_FETCH_FAILED = 'USERPHOTO_FETCH_FAILED';
-
 export const TOKEN_SUCCESS = 'TOKEN_SUCCESS';
 export const TOKEN_START = 'TOKEN_START';
 export const TOKEN_FAILED = 'TOKEN_FAILED';
@@ -22,6 +18,7 @@ export const CLEAR_ALL = 'CLEAR_ALL';
 import { apiurl } from '../appconfig';
 
 import { updatestart, updatesuccess, updatefailed } from './chengeaction';
+import { getPhoto } from './photoaction';
 
 export const userStart = () => ({
     type: USER_FETCH_START
@@ -72,25 +69,6 @@ export const tokenDelete = () => ({
     type: TOKEN_DELETE
 })
 
-export const photoStart = () => ({
-    type: USERPHOTO_FETCH_START
-});
-
-export const photoSuccess = (blob, url) => ({
-    type: USERPHOTO_FETCH_SUCCESS,
-    blob,
-    url,
-});
-
-export const photoFailed = (error) => ({
-    type: USERPHOTO_FETCH_FAILED,
-    error
-});
-
-export const clearErrors = () => ({
-    type: CLEAR_ERRORS
-})
-
 export const clearAll = () => ({
     type: CLEAR_ALL
 })
@@ -106,16 +84,6 @@ export const checkAndGetToken = (dispatch, getState) => {
     }
     return null;
 }
-
-/* export const checkAuth = (res, dispatch) => {
-    if (res.status === 200 || res.status === 204) {
-        return res.json();
-    } else if (res.status === 401) {
-        dispatch(logout());
-    } else {
-        throw new Error(res.statusText);
-    }
-} */
 
 // TODO: ActionCreator refresh token
 export const refreshToken = (tok, action, ...actionparams) => (dispatch, getState) => {
@@ -273,8 +241,8 @@ export const getUser = (tok) => (dispatch, getState) => {
                 if (data) {
                     data.role = token.role;
                     dispatch(userSuccess(data));
-                    if (!getState().photoData.url || (getState().userData.user && data.profilePictureId !== getState().userData.user.profilePictureId)) {
-                        dispatch(getPhoto(token, data.profilePictureId));
+                    if (data.profilePictureId) {
+                        dispatch(getPhoto(data.profilePictureId, token));
                     }
                 }
             })
@@ -283,118 +251,12 @@ export const getUser = (tok) => (dispatch, getState) => {
         dispatch(logout());
     }
 }
-
-// actionCreator login driver
-/* export const loginDriver = (logdata) => (dispatch, getState) => {
-    dispatch(userStart());
-    fetch(`${apiurl}/api/Auth/driver`, {
-        method: 'POST',
-        headers: new Headers({
-            'Content-Type': 'application/json'
-        }),
-        body: JSON.stringify(logdata)
-    })
-        .then(res => {
-            if (res.status === 200 || res.status === 201 || res.status === 204) {
-                return res.json();
-            } else if (res.status === 400) {
-                return res.json();
-            } else {
-                throw new Error(res.statusText);
-            }
-        })
-        .then(token => {
-            if (token.auth_token) {
-                token.role = 'driver';
-                dispatch(tokenSuccess(token));
-                dispatch(getDriver(token));
-            } else {
-                // console.log(token[Object.keys(token)[0]][0]);
-                dispatch(userFailed(token[Object.keys(token)[0]][0]));
-            }
-        })
-        .catch(error => {
-            dispatch(userFailed(error.message));
-            // dispatch(logout());
-        });
-} */
-
-// actionCreator get driver profile
-/* export const getDriver = (token) => (dispatch, getState) => {
-    if (token) {
-        dispatch(userStart());
-        fetch(`${apiurl}/api/accounts/drivers/${token.id}`, {
-            method: 'GET',
-            headers: new Headers({
-                'Authorization': `Bearer ${token.auth_token}`
-            })
-        })
-            .then(res => {
-                if (res.status === 200 || res.status === 204 || res.status === 201) {
-                    return res.json();
-                } else if (res.status === 400) {
-                    return res.json();
-                } else if (res.status === 404) {
-                    dispatch(userSuccess(null));
-                } else {
-                    throw new Error(res.statusText);
-                }
-            })
-            .then(data => {
-                if (data) {
-                    data.role = 'driver';
-                    dispatch(userSuccess(data));
-                    if (!getState().photoData.url || (getState().userData.user && data.profilePictureId !== getState().userData.user.profilePictureId)) {
-                        dispatch(getPhoto(token, data.profilePictureId));
-                    }
-                }
-            })
-            .catch(error => dispatch(userFailed(error.message)));
-    } else {
-        dispatch(logout());
-    }
-} */
 
 // actionCreator log out user
 export const logout = () => (dispatch, getState) => {
     dispatch(userDelete());
     dispatch(tokenDelete());
     dispatch(clearAll());
-}
-
-// actionCreator get user photo
-export const getPhoto = (tok, id) => (dispatch, getState) => {
-    const token = (tok) ? tok : checkAndGetToken(dispatch, getState);
-    const photoid = (id) ? id : getState().userData.user.profilePictureId;
-    if (photoid) {
-        if (token) {
-            dispatch(photoStart());
-            return fetch(`${apiurl}/api/images/${photoid}`, {
-                method: 'GET',
-                headers: new Headers({
-                    'Authorization': `Bearer ${token.auth_token}`
-                })
-            })
-                .then(res => {
-                    if (res.status === 401) {
-                        dispatch(refreshToken(token, getPhoto, null, id));
-                    } else if (res.status === 404) {
-                        dispatch(photoSuccess(null, null));
-                    } else if (res.status === 200 || res.status === 204 || res.status === 201) {
-                        return res.blob();
-                    } else {
-                        throw new Error(res.statusText);
-                    }
-                })
-                .then(blob => {
-                    const url = URL.createObjectURL(blob);
-                    dispatch(photoSuccess(blob, url));
-                })
-                .catch(error => dispatch(photoFailed(error.message)));
-        } else {
-            dispatch(logout());
-        }
-    }
 }
 
 // actionCreator upload user photo
@@ -468,145 +330,6 @@ export const registerCustomer = (regdata, file) => (dispatch, getState) => {
         })
         .catch(error => { dispatch(userFailed(error.message)) });
 }
-
-// TODO: actionCreator login Customer
-/* export const loginCustomer = (logdata) => (dispatch, getState) => {
-    dispatch(userStart());
-    fetch(`${apiurl}/api/Auth/customer`, {
-        method: 'POST',
-        headers: new Headers({
-            'Content-Type': 'application/json'
-        }),
-        body: JSON.stringify(logdata)
-    })
-        .then(res => {
-            if (res.status === 200 || res.status === 201 || res.status === 204) {
-                return res.json();
-            } else if (res.status === 400) {
-                return res.json();
-            } else {
-                throw new Error(res.statusText);
-            }
-        })
-        .then(token => {
-            if (token.auth_token) {
-                token.role = 'customer';
-                dispatch(tokenSuccess(token));
-                dispatch(getCustomer(token));
-            } else {
-                // console.log(token[Object.keys(token)[0]][0]);
-                dispatch(userFailed(token[Object.keys(token)[0]][0]));
-            }
-        })
-        .catch(error => {
-            dispatch(userFailed(error.message));
-            // dispatch(logout());
-        });
-} */
-
-// TODO: actionCreator get Customer profile
-/* export const getCustomer = (token) => (dispatch, getState) => {
-    if (token) {
-        dispatch(userStart());
-        fetch(`${apiurl}/api/accounts/customers/${token.id}`, {
-            method: 'GET',
-            headers: new Headers({
-                'Authorization': `Bearer ${token.auth_token}`
-            })
-        })
-            .then(res => {
-                if (res.status === 200 || res.status === 204 || res.status === 201) {
-                    return res.json();
-                } else if (res.status === 400) {
-                    return res.json();
-                } else if (res.status === 404) {
-                    dispatch(userSuccess(null));
-                } else {
-                    throw new Error(res.statusText);
-                }
-            })
-            .then(data => {
-                if (data) {
-                    data.role = 'customer';
-                    dispatch(userSuccess(data));
-                    if (!getState().photoData.url || (getState().userData.user && data.profilePictureId !== getState().userData.user.profilePictureId)) {
-                        dispatch(getPhoto(token, data.profilePictureId));
-                    }
-                }
-            })
-            .catch(error => dispatch(userFailed(error.message)));
-    } else {
-        dispatch(logout());
-    }
-} */
-
-// TODO: actionCreator register Admin
-export const registerAdmin = () => (dispatch, getState) => {
-
-}
-
-// TODO: actionCreator login Admin
-/* export const loginAdmin = () => (dispatch, getState) => {
-    dispatch(userStart());
-    fetch(`${apiurl}/api/Auth/driver`, {
-        method: 'POST',
-        headers: new Headers({
-            'Content-Type': 'application/json'
-        }),
-        body: JSON.stringify(logdata)
-    })
-        .then(res => {
-            if (res.status === 200 || res.status === 201 || res.status === 204) {
-                return res.json();
-            } else if (res.status === 400) {
-                return res.json();
-            } else {
-                throw new Error(res.statusText);
-            }
-        })
-        .then(token => {
-            if (token.auth_token) {
-                token.role = 'driver';
-                dispatch(tokenSuccess(token));
-                dispatch(getDriver(token));
-            } else {
-                // console.log(token[Object.keys(token)[0]][0]);
-                dispatch(userFailed(token[Object.keys(token)[0]][0]));
-            }
-        })
-        .catch(error => {
-            dispatch(userFailed(error.message));
-            // dispatch(logout());
-        });
-} */
-
-// TODO: actionCreator get Admin profile
-/* export const getAdmin = (token) => (dispatch, getState) => {
-
-} */
-
-// ActionCreator get User by Role
-/* export const getUserV2 = (tok) => (dispatch, getState) => {
-    const token = (tok) ? tok : checkAndGetToken(dispatch, getState);
-    if (token && token.role) {
-        switch (token.role) {
-            case 'admin': {
-                dispatch(getAdmin(token));
-                break;
-            }
-            case 'driver': {
-                dispatch(getDriver(token));
-                break;
-            }
-            case 'customer': {
-                dispatch(getCustomer(token));
-                break;
-            }
-        }
-    } else {
-        dispatch(logout());
-    }
-} */
 
 export const resendLetter = (data) => (dispatch, getState) => {
     dispatch(userStart());

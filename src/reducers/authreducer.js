@@ -7,9 +7,6 @@ import {
     TOKEN_SUCCESS,
     TOKEN_DELETE,
     TOKEN_FAILED,
-    USERPHOTO_FETCH_START,
-    USERPHOTO_FETCH_SUCCESS,
-    USERPHOTO_FETCH_FAILED,
     USER_REGISTER_START,
     USER_REGISTER_FAILED,
     USER_REGISTER_SUCCESS,
@@ -73,21 +70,4 @@ const tokenData = (state = initTokenState, action) => {
     }
 }
 
-export const initPhotoState = {
-    blob: null,
-    url: null,
-    loading: false,
-    error: null,
-}
-
-const photoData = (state = initPhotoState, action) => {
-    switch (action.type) {
-        case USERPHOTO_FETCH_START: return Object.assign({}, state, { loading: true });
-        case USERPHOTO_FETCH_SUCCESS: return Object.assign({}, state, { blob: action.blob, url: action.url, loading: false });
-        case USERPHOTO_FETCH_FAILED: return Object.assign({}, state, { error: action.error, loading: false });
-        case CLEAR_ALL: return Object.assign({}, initPhotoState);
-        default: return state;
-    }
-}
-
-export { userData, tokenData, photoData, registerData };
+export { userData, tokenData, registerData };

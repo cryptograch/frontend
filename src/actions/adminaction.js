@@ -1,5 +1,6 @@
 import { checkAndGetToken, logout, refreshToken } from './authaction';
 import { apiurl } from '../appconfig';
+import { getPhoto } from './photoaction';
 
 export const USERLIST_FETCH_START = 'USERLIST_FETCH_START';
 export const USERLIST_FETCH_SUCCESS = 'USERLIST_FETCH_SUCCESS';
@@ -9,6 +10,17 @@ export const USERLIST_CLEAR = 'USERLIST_CLEAR';
 export const USERLIST_ALL = 'USERLIST_ALL';
 export const USERLIST_DELETE_ELEMENT = 'USERLIST_DELETE_ELEMENT';
 export const USERLIST_UPDATE_ELEMENT = 'USERLIST_UPDATE_ELEMENT';
+
+export const USERLIST_PROFILE_START = 'USERLIST_PROFILE_START';
+export const USERLIST_PROFILE_SUCCESS = 'USERLIST_PROFILE_SUCCESS';
+export const USERLIST_PROFILE_FAILED = 'USERLIST_PROFILE_FAILED';
+export const USERLIST_PROFILE_CLEAR = 'USERLIST_PROFILE_CLEAR';
+
+/*No finish yet */
+export const USERLIST_DOC_START = 'USERLIST_DOC_START';
+export const USERLIST_DOC_SUCCESS = 'USERLIST_DOC_SUCCESS';
+export const USERLIST_DOC_FAILED = 'USERLIST_DOC_FAILED';
+export const USERLIST_DOC_CLEAR = 'USERLIST_DOC_CLEAR';
 
 export const ADMIN_CHANGE_START = 'ADMIN_CHANGE_START';
 export const ADMIN_CHANGE_SUCCESS = 'ADMIN_CHANGE_SUCCESS';
@@ -24,25 +36,25 @@ export const REFUNDLIST_ERROR_CLEAR = 'REFUNDLIST_ERROR_CLEAR';
 export const REFUNDLIST_CLEAR = 'REFUNDLIST_CLEAR';
 export const REFUNDLIST_ALL = 'REFUNDLIST_ALL';
 
-const userListStart = () => ({
+export const userListStart = () => ({
     type: USERLIST_FETCH_START
 });
 
-const userListSuccess = (list) => ({
+export const userListSuccess = (list) => ({
     type: USERLIST_FETCH_SUCCESS,
     list
 });
 
-const userListFailed = (error) => ({
+export const userListFailed = (error) => ({
     type: USERLIST_FETCH_FAILED,
     error
 });
 
-const userListAll = () => ({
+export const userListAll = () => ({
     type: USERLIST_ALL
 });
 
-const userListDeleteEl = (id) => ({
+export const userListDeleteEl = (id) => ({
     type: USERLIST_DELETE_ELEMENT,
     id
 })
@@ -51,21 +63,21 @@ export const userListClear = () => ({
     type: USERLIST_CLEAR
 });
 
-const changeStart = () => ({
+export const changeStart = () => ({
     type: ADMIN_CHANGE_START
 });
 
-const changeSuccess = (mess) => ({
+export const changeSuccess = (mess) => ({
     type: ADMIN_CHANGE_SUCCESS,
     mess
 });
 
-const changeFailed = (error) => ({
+export const changeFailed = (error) => ({
     type: ADMIN_CHANGE_FAILED,
     error
 });
 
-const changeUpdate = (id) => ({
+export const changeUpdate = (id) => ({
     type: ADMIN_CHANGE_UPDATE,
     id
 })
@@ -74,34 +86,74 @@ export const changeClearError = () => ({
     type: ADMIN_CHANGE_CLEARERROR
 });
 
-const adminChangeClear = () => ({
+export const adminChangeClear = () => ({
     type: ADMIN_CHANGE_CLEAR
 });
 
-const refundListStart = () => ({
+export const refundListStart = () => ({
     type: REFUNDLIST_FETCH_START
 });
 
-const refundListSuccess = (list) => ({
+export const refundListSuccess = (list) => ({
     type: REFUNDLIST_FETCH_SUCCESS,
     list
 });
 
-const refundListFailed = (error) => ({
+export const refundListFailed = (error) => ({
     type: REFUNDLIST_FETCH_FAILED,
     error
 });
 
-const refundListAll = () => ({
+export const refundListAll = () => ({
     type: REFUNDLIST_ALL
 });
 
-const refundListErrorClear = () => ({
+export const refundListErrorClear = () => ({
     type: REFUNDLIST_ERROR_CLEAR
 });
 
 export const refundListClear = () => ({
     type: REFUNDLIST_CLEAR
+});
+
+export const userListProfileStart = (id) => ({
+    type: USERLIST_PROFILE_START,
+    id
+});
+
+export const userListProfileSuccess = (id, profile) => ({
+    type: USERLIST_PROFILE_SUCCESS,
+    id, profile
+});
+
+export const userListProfileFailed = (id, error) => ({
+    type: USERLIST_PROFILE_FAILED,
+    id, error
+});
+
+export const userListProfileClear = (id) => ({
+    type: USERLIST_PROFILE_CLEAR,
+    id
+});
+
+export const userListDocStart = (id) => ({
+    type: USERLIST_DOC_START,
+    id
+});
+
+export const userListDocSuccess = (id, doc) => ({
+    type: USERLIST_DOC_SUCCESS,
+    id, doc
+});
+
+export const userListDocFailed = (id, error) => ({
+    type: USERLIST_DOC_FAILED,
+    id, error
+});
+
+export const userListDocClear = (id) => ({
+    type: USERLIST_DOC_CLEAR,
+    id
 });
 
 export const getUserList = (search) => (dispatch, getState) => {
@@ -175,6 +227,16 @@ export const getRefundList = (issolved) => (dispatch, getState) => {
         if (token) {
             const page = getState().refundlistData.page;
             dispatch(refundListStart());
+            // dispatch(refundListSuccess([{
+            //     id: '169e7570-cc7b-45ae-88fa-b8c045066427',
+            //     message: 'message',
+            //     creationTime: new Date().toString(),
+            //     solved: false,
+            //     customerId: '1bf4707c-0901-4199-9221-bd3cf937c564',
+            //     identityId: '6e7164f5-69a5-4aa2-9456-de10209c222a',
+            //     tripHistoryId: 'd8624571-f66e-47fe-88cc-2ee8908480cb',
+            // }]));
+            // dispatch(refundListAll());
             fetch(`${apiurl}/api/admins/refundRequests?PageNumber=${page}&PageSize=${5}&IsSolved=${issolved}`, {
                 method: 'GET',
                 headers: new Headers({
@@ -217,17 +279,17 @@ export const deleteAdmin = (id) => (dispatch, getState) => {
                     'Authorization': `Bearer ${token.auth_token}`
                 })
             })
-            .then(res => {
-                if (res.status === 200 || res.status === 201 || res.status === 204) {
-                    dispatch(changeSuccess('Admin was removed'));
-                    dispatch(changeUpdate(id));
-                } else if (res.status === 401) {
-                    dispatch(refreshToken(token, deleteAdmin, id));
-                } else {
-                    throw new Error(res.statusText);
-                }
-            })
-            .catch(error => dispatch(changeFailed(error.message)));
+                .then(res => {
+                    if (res.status === 200 || res.status === 201 || res.status === 204) {
+                        dispatch(changeSuccess('Admin was removed'));
+                        dispatch(changeUpdate(id));
+                    } else if (res.status === 401) {
+                        dispatch(refreshToken(token, deleteAdmin, id));
+                    } else {
+                        throw new Error(res.statusText);
+                    }
+                })
+                .catch(error => dispatch(changeFailed(error.message)));
         } else {
             dispatch(logout());
         }
@@ -360,16 +422,91 @@ export const sendResponse = (identityId, message) => (dispatch, getState) => {
                 }),
                 body: JSON.stringify({ message, identityId })
             })
-            .then(res => {
-                if (res.status === 200 || res.status === 201 || res.status === 204) {
-                    dispatch(changeSuccess('Response was send'));
-                } else if (res.status === 401) {
-                    dispatch(refreshToken(token, sendResponse, identityId, message));
-                } else {
-                    throw new Error(res.statusText);
-                }
+                .then(res => {
+                    if (res.status === 200 || res.status === 201 || res.status === 204) {
+                        dispatch(changeSuccess('Response was send'));
+                    } else if (res.status === 401) {
+                        dispatch(refreshToken(token, sendResponse, identityId, message));
+                    } else {
+                        throw new Error(res.statusText);
+                    }
+                })
+                .catch(error => dispatch(changeFailed(error.message)));
+        } else {
+            dispatch(logout());
+        }
+    }
+}
+
+export const getUserProfile = (id) => (dispatch, getState) => {
+    if (id && !getState().userlistData.profiles[id]) {
+        const token = checkAndGetToken(dispatch, getState);
+        if (token) {
+            dispatch(userListProfileStart(id));
+            fetch(`${apiurl}/api/admins/getuser/${id}`, {
+                method: 'GET',
+                headers: new Headers({
+                    'Authorization': `Bearer ${token.auth_token}`
+                })
             })
-            .catch(error => dispatch(changeFailed(error.message)));
+                .then(res => {
+                    if (res.status === 200) {
+                        return res.json();
+                    } else if (res.status === 401) {
+                        dispatch(refreshToken(token, getUserProfile, id));
+                    } else {
+                        throw new Error(res.statusText);
+                    }
+                })
+                .then(data => {
+                    if (data) {
+                        dispatch(userListProfileSuccess(id, data));
+                        if (data) {
+
+                        }
+                    } else {
+                        dispatch(userListProfileSuccess(id, null));
+                    }
+                })
+                .catch(error => dispatch(userListProfileFailed(id, error.message)));
+        } else {
+            dispatch(logout());
+        }
+    }
+}
+
+export const getUserLicense = (id) => (dispatch, getState) => {
+    if (id && !getState().userlistData.docs[id]) {
+        const token = checkAndGetToken(dispatch, getState);
+        if (token) {
+            dispatch(userListDocStart(id));
+            fetch(`${apiurl}/api/admins/driverlicenses/${id}`, {
+                method: 'GET',
+                headers: new Headers({
+                    'Authorization': `Bearer ${token.auth_token}`
+                })
+            })
+                .then(res => {
+                    if (res.status === 200) {
+                        return res.json();
+                    } else if (refreshToken.status === 401) {
+                        dispatch(refreshToken(token, getUserLicense, id));
+                    } else if (res.status === 404) {
+                        dispatch(userListDocSuccess(id, null));
+                    } else {
+                        throw new Error(res.statusText);
+                    }
+                })
+                .then(data => {
+                    if (data) {
+                        dispatch(userListDocSuccess(id, data));
+                        dispatch(getPhoto(data.fronId, token));
+                        dispatch(getPhoto(data.backId, token));
+                    } else {
+                        dispatch(userListDocSuccess(id, null));
+                    }
+                })
+                .catch(error => dispatch(userListDocFailed(error.message)));
         } else {
             dispatch(logout());
         }

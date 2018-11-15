@@ -73,8 +73,8 @@
 
 }
 .changeProfInfo {
-    display: grid;
-  grid-template-columns: minmax(200px, 350px) minmax(200px, 350px);
+  display: grid;
+  grid-template-columns: minmax(100px, 200px) minmax(100px, 200px);
   grid-column-gap: 15px;
 }
 .showForm, .changeDoc, .vehForm {

@@ -95,7 +95,7 @@ export const changeKey = (data) => (dispatch, getState) => {
                         dispatch(getUser());
                         // console.log('key update ok');
                     } else if (res.status === 401) {
-                        dispatch(refreshToken(token, changeProfile, data));
+                        dispatch(refreshToken(token, changeKey, data));
                     } else {
                         throw new Error(res.statusText);
                     }

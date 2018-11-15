@@ -46,7 +46,6 @@ class AdminUserItem extends Component {
                     onClick={() => { this.props.deleteAdmin(this.props.data.ids.adminId) }}>
                     Remove from admin</button>
             }
-            return null;
         }
         return null;
     }

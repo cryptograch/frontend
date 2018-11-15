@@ -13,8 +13,8 @@
 }
 
 .refundSolve > img {
-    max-width: 48px;
-    max-height: 48px;
+    max-width: 32px;
+    max-height: 32px;
 }
 
 .refundContent {
@@ -95,6 +95,7 @@
 .adminTripMapBtn {
     align-items: center;
     padding: 10px;
+    margin-right: auto;
 }
 
 .adminTripMapBtn > img {

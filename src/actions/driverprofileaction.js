@@ -226,7 +226,7 @@ export const setReview = (driverId, message) => (dispatch, getState) => {
                     if (res.status === 200) {
                         dispatch(setReviewSuccess('Comment is send'));
                         dispatch(reviewListAdd({
-                            driverId, 
+                            driverId,
                             creationTime: new Date(),
                             customerId: token.id,
                             message,

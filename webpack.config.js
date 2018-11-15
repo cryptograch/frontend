@@ -66,11 +66,11 @@ module.exports = {
             options: {
               modules: true,
               importLoaders: 1,
-              // localIdentName: "[name]_[local]_[hash:base64]",
+              localIdentName: (this.mode === 'production') ? "[hash:base64]" : "[name]_[local]",
               sourceMap: true,
               minimize: true
             }
-          }
+          },
         ]
       },
       {

@@ -27,6 +27,7 @@ import defaultphoto from '../../assets/default-user.png';
 
 // import { uploadPhoto, logout } from '../../actions/authaction';
 import { createConnection } from '../../actions/chataction';
+import { getPhoto } from '../../actions/photoaction';
 
 class Profile extends Component {
     constructor(props) {
@@ -101,14 +102,20 @@ class Profile extends Component {
         return null;
     }
     renderPhoto() {
-        if (this.props.photoData.url) {
-            return <img src={this.props.photoData.url} alt='photo' />;
-        }
-        if (this.props.photoData.loading) {
-            return <Loading />
-        }
-        if (this.props.photoData.error) {
-            return <Alert local={true} message='Photo dont load' click={this.props.getPhoto} />
+        const { photosData, userData, getPhoto } = this.props;
+        const { user } = userData;
+        if (user && user.profilePictureId && photosData[user.profilePictureId]) {
+            const { loading, url, error } = photosData[user.profilePictureId];
+            if (url) {
+                return <img src={url} alt='photo' />;
+            }
+            if (loading) {
+                return <Loading />
+            }
+            if (error) {
+                return <Alert local={true} message='Photo dont load' click={() => { getPhoto(user.profilePictureId)}} />
+            }
+            return <img src={defaultphoto} className={style.profilePhoto} alt='photo' />;
         }
         return <img src={defaultphoto} className={style.profilePhoto} alt='photo' />;
     }
@@ -149,9 +156,10 @@ class Profile extends Component {
 
 ProfileMain.propTypes = {
     userData: PropTypes.object,
-    photoData: PropTypes.object,
     getPhoto: PropTypes.func,
-    getUser: PropTypes.func
+    getUser: PropTypes.func,
+    photosData: PropTypes.object,
+    createConnection: PropTypes.func
 }
 
 const mapStateToProps = state => ({
@@ -161,9 +169,9 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchtoProps = dispatch => ({
-    getPhoto: () => { dispatch(getPhoto()) },
+    getPhoto: (id) => { dispatch(getPhoto(id)) },
     getUser: () => { dispatch(getUser()) },
     createConnection: () => { dispatch(createConnection())}
-})
+});
 
 export default connect(mapStateToProps, mapDispatchtoProps)(Profile);

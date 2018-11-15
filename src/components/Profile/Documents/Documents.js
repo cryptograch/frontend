@@ -13,6 +13,8 @@ import { connect } from 'react-redux';
 import { getDocument, getDocPhoto } from '../../../actions/docaction';
 import { clearErrors } from '../../../actions/authaction';
 import { openImage } from "../../../actions/globalviewaction";
+import { getPhoto } from '../../../actions/photoaction';
+
 class Documents extends Component {
     constructor(props) {
         super(props);
@@ -23,26 +25,34 @@ class Documents extends Component {
         }
     }
     renderMain() {
-        if (this.props.docData.loadphoto) {
-            return <Loading />
-        }
-        if (this.props.docData.photos) {
-            return this.props.docData.photos.map((photo, key) => {
-                return (
-                    <div key={key} className={style.docPhoto}>
-                        {this.renderPhoto(photo, key)}
+        const { doc } = this.props.docData;
+        const { photosData } = this.props;
+        if (doc) {
+            return (
+                <div className={style.containerPhoto}>
+                    <div className={style.docPhoto}>
+                        {this.renderPhoto(photosData[doc.frontId], doc.frontId)}
                     </div>
-                );
-            });
+                    <div className={style.docPhoto}>
+                        {this.renderPhoto(photosData[doc.backId], doc.backId)}
+                    </div>
+                </div>
+            );
+
         } else return <Alert local={true} message='Photo dont load' click={this.props.getDocPhoto} />
     }
-    renderPhoto(photo) {
-        if (photo.url) {
-            return <img src={photo.url} alt='photo' click={() => { this.props.openImage(photo.url) }} />;
-        } else if (photo.errorphoto) {
-            //handle errors here
+    renderPhoto(photo, id) {
+        if (photo) {
+            if (photo.loading) {
+                return <Loading />
+            }
+            if (photo.url) {
+                return <img src={photo.url} alt='photo' onClick={() => { this.props.openImage(photo.url) }} />;
+            } else if (photo.error) {
+                return <Alert local={true} message='Photo dont load' click={() => { getPhoto(id) }} />
+            }
         }
-        return <img src={defaultphoto} alt='photo' click={() => { this.props.openImage(defaultphoto) }} />;
+        return <img src={defaultphoto} alt='photo' onClick={() => { this.props.openImage(defaultphoto) }} />;
     }
     renderApproveImg() {
         if (this.props.docData.doc.isApproved) {
@@ -52,10 +62,11 @@ class Documents extends Component {
     }
     render() {
         // console.log(this.props.docData.doc);
-        if (this.props.docData.loaddoc) {
+        const { loading, doc, error } = this.props.docData;
+        if (loading) {
             return <Loading />
         }
-        if (this.props.docData.doc) {
+        if (doc) {
             return (
                 <div className={style.main}>
                     <div className={style.heading}>
@@ -65,9 +76,7 @@ class Documents extends Component {
                         </div>
                     </div>
                     <div className={style.container}>
-                        <div className={style.containerPhoto}>
-                            {this.renderMain()}
-                        </div>
+                        {this.renderMain()}
                         <div className={style.containerInfo}>
                             <h3>Approved: {(this.props.docData.doc.isApproved) ? 'Yes' : 'No'}</h3>
                         </div>
@@ -75,7 +84,7 @@ class Documents extends Component {
                 </div>
             );
         }
-        if (this.props.docData.errordoc) {
+        if (error) {
             return (
                 <div className={style.main}>
                     {/* <Alert global={true} error={this.props.docData.errordoc} click={this.props.clearErrors} /> */}
@@ -94,17 +103,21 @@ Documents.propTypes = {
     clearErrors: PropTypes.func,
     getDocPhoto: PropTypes.func,
     openImage: PropTypes.func,
+    photosData: PropTypes.object,
+    getPhoto: PropTypes.func
 }
 
 const mapStateToProps = state => ({
     docData: state.docData,
+    photosData: state.photosData,
 })
 
 const mapDispatchtoProps = dispatch => ({
     getDoc: () => { dispatch(getDocument()) },
     clearErrors: () => { dispatch(clearErrors()) },
     getDocPhoto: () => { dispatch(getDocPhoto()) },
-    openImage: (url) => { dispatch(openImage(url)) }
+    openImage: (url) => { dispatch(openImage(url)) },
+    getPhoto: (id) => { dispatch(getPhoto(id)) }
 })
 
 export default connect(mapStateToProps, mapDispatchtoProps)(Documents);

@@ -3,13 +3,11 @@ import { apiurl } from '../appconfig';
 import { checkAndGetToken, logout, refreshToken } from './authaction';
 
 import { updatestart, updatesuccess, updatefailed } from './chengeaction';
+import { getPhoto } from './photoaction';
 
 export const VEHICLE_FETCH_START = 'VEHICLE_FETCH_START';
 export const VEHICLE_FETCH_SUCCESS = 'VEHICLE_FETCH_SUCCESS';
 export const VEHICLE_FETCH_FAILED = 'VEHICLE_FETCH_FAILED';
-export const VEHPHOTO_FETCH_START = 'VEHPHOTO_FETCH_START';
-export const VEHPHOTO_FETCH_SUCCESS = 'VEHPHOTO_FETCH_SUCCESS';
-export const VEHPHOTO_FETCH_FAILED = 'VEHPHOTO_FETCH_FAILED';
 export const VEHICLE_CLEAR = 'VEHICLE_CLEAR';
 // TODO: create all action's types
 
@@ -26,21 +24,6 @@ const vehicleSuccess = (veh) => ({
 
 const vehicleFailed = (error) => ({
     type: VEHICLE_FETCH_FAILED,
-    error
-})
-
-const vehphotoStart = () => ({
-    type: VEHPHOTO_FETCH_START
-})
-
-const vehphotoSuccess = (blob, url) => ({
-    type: VEHPHOTO_FETCH_SUCCESS,
-    blob,
-    url
-})
-
-const vehphotoFailed = (error) => ({
-    type: VEHPHOTO_FETCH_FAILED,
     error
 })
 
@@ -152,49 +135,15 @@ export const getVehicle = (tok) => (dispatch, getState) => {
                 }
             })
             .then(data => {
-                // console.log(data);
                 dispatch(vehicleSuccess(data));
-                dispatch(getVehPhoto(token));
+                if (data.pictures && Array.isArray(data.pictures)) {
+                    data.pictures.forEach(id => {
+                        dispatch(getPhoto(id, token));
+                    });
+                }
             })
             .catch(error => dispatch(vehicleFailed(error.message)));
     } else {
         dispatch(logout());
-    }
-}
-
-// TODO: actionCreator get Document phoho
-export const getVehPhoto = (tok) => (dispatch, getState) => {
-    const id = getState().vehData.veh.pictures[0];
-    if (id) {
-        const token = (tok) ? tok : checkAndGetToken(dispatch, getState);
-        if (token) {
-            dispatch(vehphotoStart());
-            fetch(`${apiurl}/api/images/${id}`, {
-                method: 'GET',
-                headers: new Headers({
-                    'Authorization': `Bearer ${token.auth_token}`
-                })
-            })
-                .then(res => {
-                    if (res.status === 401) {
-                        dispatch(refreshToken(token, getVehPhoto));
-                    } else if (res.status === 404) {
-                        dispatch(vehphotoSuccess(null, null));
-                    } else if (res.status === 200 || res.status === 204 || res.status === 201 || res.status === 202) {
-                        return res.blob();
-                    } else {
-                        throw new Error(res.statusText);
-                    }
-                })
-                .then(blob => {
-                    const url = URL.createObjectURL(blob);
-                    dispatch(vehphotoSuccess(blob, url));
-                })
-                .catch(error => dispatch(vehphotoFailed(error.message)));
-        } else {
-            dispatch(logout());
-        }
-    } else {
-        dispatch(vehphotoSuccess(null, null));
     }
 }

@@ -4,62 +4,39 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Loading from '../../Loading/Loading';
 import Alert from '../../Alert/Alert';
+
 import defaultphoto from '../../../assets/default-user.png';
 import style from './Review.css';
 import { apiurl } from '../../../appconfig';
 
+import { getPhoto } from "../../../actions/photoaction";
+
 class Review extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            photoload: false,
-            photoerror: null,
-            photourl: null,
-        }
     }
     componentDidMount() {
-        const { review } = this.props;
-        if (review.pictureId) {
-            this.fetchPhoto(review.pictureId);
+        const { review, photosData, getPhoto } = this.props;
+        if (review.pictureId && !photosData[review.pictureId]) {
+            getPhoto(review.pictureId);
         }
     }
     componentDidUpdate() {
     }
-    fetchPhoto(id) {
-        if (id && !this.state.photoload && !this.state.photourl) {
-            const token = this.props.tokenData.token;
-            this.setState({ photoload: true });
-            fetch(`${apiurl}/api/images/${id}`, {
-                method: 'GET',
-                headers: new Headers({
-                    'Authorization': `Bearer ${token.auth_token}`
-                })
-            })
-                .then(res => {
-                    if (res.status === 200) {
-                        return res.blob();
-                    } else if (res.status === 404) {
-                        this.setState({ photourl: defaultphoto });
-                    } else {
-                        throw new Error(res.statusText);
-                    }
-                })
-                .then(blob => {
-                    if (blob) {
-                        const url = URL.createObjectURL(blob);
-                        this.setState({ photourl: url, photoload: false });
-                    }
-                })
-                .catch(error => this.setState({ photoerror: error.message, photoload: false }));
-        }
-    }
     renderPhoto() {
-        const { photoload, photourl, photoerror } = this.state;
-        if (photoload) {
-            return <Loading />
-        }
-        if (photourl) {
-            return <img src={photourl} alt='photo' />
+        const { review, photosData, getPhoto } = this.props;
+        if (review.pictureId && photosData[review.pictureId]) {
+            const { loading, url, error } = this.props.photosData[review.pictureId]
+            if (loading) {
+                return <Loading />
+            }
+            if (url) {
+                return <img src={url} alt='photo' />
+            }
+            if (error) {
+                return <Alert local message='Photo dont load' click={() => { getPhoto(review.pictureId) }} />
+            }
+            return <img src={defaultphoto} alt='photo' />
         }
         return <img src={defaultphoto} alt='photo' />
     }
@@ -81,15 +58,18 @@ class Review extends Component {
 
 Review.propTypes = {
     review: PropTypes.object.isRequired,
-    tokenData: PropTypes.object
+    reviewListData: PropTypes.object,
+    getPhoto: PropTypes.func,
+    photosData: PropTypes.object
 }
 
 const mapStateToProps = state => ({
-    tokenData: state.tokenData
+    reviewListData: state.reviewListData,
+    photosData: state.photosData,
 });
 
 const mapDispatchtoProps = dispatch => ({
-
+    getPhoto: (id) => { dispatch(getPhoto(id)) }
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(Review);

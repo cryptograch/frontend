@@ -12,6 +12,8 @@ import { getVehicle, getVehPhoto } from '../../../actions/vehiclesaction';
 import { clearErrors } from '../../../actions/authaction';
 import { openImage } from '../../../actions/globalviewaction';
 
+import { getPhoto } from '../../../actions/photoaction';
+
 class Vehicle extends Component {
     constructor(props) {
         super(props);
@@ -21,17 +23,35 @@ class Vehicle extends Component {
             this.props.getVehicle();
         }
     }
-    renderPhoto() {
-        if (this.props.vehData.url) {
-            return <img src={this.props.vehData.url} alt='photo' onClick={() => { this.props.openImage(this.props.vehData.url)}} />;
+    renderPhotos() {
+        const { veh } = this.props.vehData;
+        if (veh && veh.pictures && Array.isArray(veh.pictures)) {
+            return veh.pictures.map((id, key) => {
+                return (
+                    <div key={key} className={style.vehPhoto}>
+                        {this.renderPhoto(id, key)}
+                    </div>
+                );
+            });
         }
-        if (this.props.vehData.loadphoto) {
-            return <Loading />
+    }
+
+    renderPhoto(id) {
+        const { photosData, getPhoto } = this.props;
+        if (photosData[id]) {
+            const { loading, url, error } = photosData[id];
+            if (url) {
+                return <img src={url} alt='photo' onClick={() => { this.props.openImage(url) }} />;
+            }
+            if (loading) {
+                return <Loading />
+            }
+            if (error) {
+                return <Alert local={true} message='Photo don`t load' click={() => { getPhoto(id) }} />
+            }
+            return <img src={defaultphoto} alt='photo' onClick={() => { this.props.openImage(defaultphoto) }} />;
         }
-        if (this.props.vehData.errorphoto) {
-            return <Alert local={true} message='Photo don`t load' click={this.props.getVehPhoto} />
-        }
-        return <img src={defaultphoto} alt='photo' onClick={() => { this.props.openImage(defaultphoto)}}/>;
+        return <img src={defaultphoto} alt='photo' onClick={() => { this.props.openImage(defaultphoto) }} />;
     }
     render() {
         if (this.props.vehData.veh) {
@@ -40,9 +60,7 @@ class Vehicle extends Component {
                     <h1 className={style.heading}>YOUR CAR</h1>
                     <div className={style.container}>
                         <div className={style.containerPhoto}>
-                            <div className={style.vehPhoto}>
-                                {this.renderPhoto()}
-                            </div>
+                            {this.renderPhotos()}
                         </div>
                         <div className={style.containerInfo}>
                             <h3><span>Number:</span> {this.props.vehData.veh.number}</h3>
@@ -72,15 +90,18 @@ Vehicle.propTypes = {
     getVehicle: PropTypes.func,
     clearErrors: PropTypes.func,
     openImage: PropTypes.func,
+    photosData: PropTypes.object,
+    getPhoto: PropTypes.func
 }
 
 const mapStateToProps = state => ({
-    vehData: state.vehData
+    vehData: state.vehData,
+    photosData: state.photosData,
 })
 
 const mapDispatchtoProps = dispatch => ({
     getVehicle: () => { dispatch(getVehicle()) },
-    getVehPhoto: () => { dispatch(getVehPhoto()) },
+    getPhoto: (id) => { dispatch(getPhoto(id)) },
     clearErrors: () => { dispatch(clearErrors()) },
     openImage: (url) => { dispatch(openImage(url)) }
 })

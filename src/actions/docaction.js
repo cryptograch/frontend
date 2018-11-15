@@ -3,6 +3,7 @@ import { apiurl } from '../appconfig';
 import { checkAndGetToken, logout, refreshToken } from './authaction';
 
 import { updatestart, updatesuccess, updatefailed } from './chengeaction';
+import { getPhoto } from './photoaction';
 
 export const DOCUMENT_FETCH_START = 'DOCUMENT_FETCH_START';
 export const DOCUMENT_FETCH_SUCCESS = 'DOCUMENT_FETCH_SUCCESS';
@@ -65,7 +66,6 @@ export const uploadDocument = (file, file1) => (dispatch, getState) => {
                 body: data
             })
                 .then(res => {
-                    console.log(res);
                     if (res.status === 200 || res.status === 204 || res.status === 201 || res.status === 202) {
                         dispatch(updatesuccess('Documents is update'));
                         dispatch(getDocument());
@@ -117,8 +117,8 @@ export const getDocument = (tok) => (dispatch, getState) => {
             })
             .then(data => {
                 dispatch(docSuccess(data));
-                dispatch(getDocPhoto(token, data.frontId));
-                dispatch(getDocPhoto(token, data.backId));
+                dispatch(getPhoto(data.frontId, token));
+                dispatch(getPhoto(data.backId, token));
             })
             .catch(error => dispatch(docFailed(error.message)));
     } else {
@@ -127,36 +127,36 @@ export const getDocument = (tok) => (dispatch, getState) => {
 }
 
 // TODO: actionCreator get Document phoho
-export const getDocPhoto = (tok, id) => (dispatch, getState) => {
-    const token = (tok) ? tok : checkAndGetToken(dispatch, getState);
-    if (token) {
-        dispatch(docphotoStart());
-        fetch(`${apiurl}/api/images/${id}`, {
-            method: 'GET',
-            headers: new Headers({
-                'Authorization': `Bearer ${token.auth_token}`
-            })
-        })
-            .then(res => {
-                if (res.status === 401) {
-                    dispatch(refreshToken(token, getDocPhoto, null, id));
-                } else if (res.status === 404) {
-                    dispatch(docphotoSuccess(null, null));
-                    return null
-                } else if (res.status === 200 || res.status === 204 || res.status === 201 || res.status === 202) {
-                    return res.blob();
-                } else {
-                    throw new Error(res.statusText);
-                }
-            })
-            .then(blob => {
-                if (blob) {
-                    const url = URL.createObjectURL(blob);
-                    dispatch(docphotoSuccess(blob, url));
-                }
-            })
-            .catch(error => dispatch(docphotoFailed(error.message)));
-    } else {
-        dispatch(logout());
-    }
-}
+// export const getDocPhoto = (tok, id) => (dispatch, getState) => {
+//     const token = (tok) ? tok : checkAndGetToken(dispatch, getState);
+//     if (token) {
+//         dispatch(docphotoStart());
+//         fetch(`${apiurl}/api/images/${id}`, {
+//             method: 'GET',
+//             headers: new Headers({
+//                 'Authorization': `Bearer ${token.auth_token}`
+//             })
+//         })
+//             .then(res => {
+//                 if (res.status === 401) {
+//                     dispatch(refreshToken(token, getDocPhoto, null, id));
+//                 } else if (res.status === 404) {
+//                     dispatch(docphotoSuccess(null, null));
+//                     return null
+//                 } else if (res.status === 200 || res.status === 204 || res.status === 201 || res.status === 202) {
+//                     return res.blob();
+//                 } else {
+//                     throw new Error(res.statusText);
+//                 }
+//             })
+//             .then(blob => {
+//                 if (blob) {
+//                     const url = URL.createObjectURL(blob);
+//                     dispatch(docphotoSuccess(blob, url));
+//                 }
+//             })
+//             .catch(error => dispatch(docphotoFailed(error.message)));
+//     } else {
+//         dispatch(logout());
+//     }
+// }

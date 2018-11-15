@@ -125,7 +125,7 @@
 .adminUserProfileText > p {
     display: flex;
     align-items: center;
-    flex: 1 1 100%;
+    flex-grow: 1;
     margin: 0;
     flex-grow: 5;
     overflow: hidden;
