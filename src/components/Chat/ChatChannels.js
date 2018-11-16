@@ -47,7 +47,9 @@ class ChatChannels extends Component {
             }
             if (list && Array.isArray(list)) {
                 return list.map((channel, key) => {
-                    return <li key={key} onClick={(e) => { this.openChat(channel) }}><Channel channel={channel} /></li>
+                  const { user } = this.props.userData;
+                  const target = channel.members.filter(i => i.identityId !== user.identityId)[0];
+                    return <li key={key} onClick={(e) => { this.openChat(channel) }}><Channel channel={channel} user={target}/></li>
                 });
             }
             return 'No chats'
@@ -84,22 +86,23 @@ class ChatChannels extends Component {
     }
 }
 
-const Channel = ({ channel }) => {
+const Channel = ({ channel, user }) => {
     return (
         <div>
-            <h3>{channel.members[0].firstName} {channel.members[0].lastName}</h3>
-            <h3>{channel.members[1].firstName} {channel.members[1].lastName}</h3>
+            <h3>{user.firstName} {user.lastName}</h3>
         </div>
     );
 }
 
 ChatChannels.propTypes = {
     chatData: PropTypes.object,
-    subscribe: PropTypes.func
+    subscribe: PropTypes.func,
+    userData: PropTypes.object
 }
 
 const mapStateToProps = state => ({
-    chatData: state.chatData
+    chatData: state.chatData,
+    userData: state.userData
 });
 
 const mapDispatchtoProps = dispatch => ({

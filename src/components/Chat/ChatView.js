@@ -36,7 +36,7 @@ class ChatView extends Component {
         const { channel, chatData } = this.props;
         const { messages } = chatData;
         if (Array.isArray(messages.list)) {
-            return messages.list.map((message, key) => {
+            return messages.list.slice(0).reverse().map((message, key) => {
                 const user = channel.members.filter(i => i.identityId === message.userId)[0];
                 return <li key={key}><Message message={message} user={user} /></li>
             })
@@ -44,7 +44,7 @@ class ChatView extends Component {
     }
     render() {
         return (
-            <div>
+            <div className={style.chatView}>
                 <div>
                     <ul>
                         {this.renderMessages()}
