@@ -68,7 +68,7 @@ class ChangeProfile extends Component {
             }
         })
     }
-    
+
     chooseNewPhoto(e) {
         const file = e.target.files[0];
         if (file) {
@@ -138,7 +138,7 @@ class ChangeProfile extends Component {
                         newPassword: this.state.newPassword,
                     })
                 } else {
-                    this.setState({ errors: { currentPassword: 'Password not confirmed'} });
+                    this.setState({ errors: { currentPassword: 'Password not confirmed' } });
                 }
             }
         }
@@ -149,25 +149,25 @@ class ChangeProfile extends Component {
                 <div>
                     <div className={style.showForm} >
                         <div className={style.changePhoto}>
-                            
-                                <h1 className={style.docTitle}> Add your Photo</h1>
-                                <div className={style.profilePhotoPreload}>
-                                    <img src={(this.state.newphotourl) ? this.state.newphotourl : userdefault} alt='photo' />
-                                </div>
-                                <div className={style.docPhotoInput}>
-                                    <input type='file' accept='image/*' onChange={(e) => { this.chooseNewPhoto(e) }} />
-                                    <label>Choose</label><input type='text' value={this.state.fileName} placeholder='File' readOnly />
-                                </div>
-                                <div className={style.docSubmit}>
-                                    <button className={style.button} onClick={this.uploadNewPhoto.bind(this)}>SUBMIT</button>
-                                </div>
-                            
+
+                            <h1 className={style.docTitle}> Add your Photo</h1>
+                            <div className={style.profilePhotoPreload}>
+                                <img src={(this.state.newphotourl) ? this.state.newphotourl : userdefault} alt='photo' />
+                            </div>
+                            <div className={style.docPhotoInput}>
+                                <input type='file' accept='image/*' onChange={(e) => { this.chooseNewPhoto(e) }} />
+                                <label>Choose</label><input type='text' value={this.state.fileName} placeholder='File' readOnly />
+                            </div>
+                            <div className={style.docSubmit}>
+                                <button className={style.button} onClick={this.uploadNewPhoto.bind(this)}>SUBMIT</button>
+                            </div>
+
                         </div>
                         <h1>Name</h1>
                         <span>{(this.state.errors.lastName) ? this.state.errors.lastName : ''}</span>
                         <span>{(this.state.errors.firstName) ? this.state.errors.firstName : ''}</span>
                         <div className={style.changeProfInfo}>
-                            <input className={style.signInInput} type='text' placeholder="First Name"  onChange={(e) => { this.setState({ firstName: e.target.value }) }} />
+                            <input className={style.signInInput} type='text' placeholder="First Name" onChange={(e) => { this.setState({ firstName: e.target.value }) }} />
                             <input className={style.signInInput} type='text' placeholder="Last Name" onChange={(e) => { this.setState({ lastName: e.target.value }) }} />
                         </div>
                         <h1>Phone Number</h1>
