@@ -20,6 +20,8 @@ import settingsIMG from '../../assets/Settings.png';
 import adminIMG from '../../assets/admin.svg';
 import NotFound from '../NotFound/NotFound';
 import DriverInfo from '../DriverInfo/DriverInfo';
+import ChatChannels from '../Chat/ChatChannels';
+
 import { connect } from 'react-redux';
 import { getUser } from '../../actions/authaction';
 
@@ -63,6 +65,7 @@ class Profile extends Component {
             case 'statistic': return <Statistic />;
             case 'settings': return <Settings />;
             case 'response': return <ResponseList />;
+            case 'chats': return  <ChatChannels />;
             default: return null;
         }
     }
@@ -82,6 +85,7 @@ class Profile extends Component {
                 <div className={`${style.profileToolbarMain}`}>
                     <div className={this.state.show === 'main' ? `${style.active} ${style.profileToolItem}` : `${style.profileToolItem}`} onClick={() => { this.setState({ show: 'main' }) }}><img src={homeIMG} /> <div><strong>Main</strong></div></div>
                     <div className={this.state.show === 'statistic' ? `${style.active} ${style.profileToolItem}` : `${style.profileToolItem}`} onClick={() => { this.setState({ show: 'statistic' }) }}><img src={listIMG} /> <div><strong>Statistic</strong></div></div>
+                    <div className={this.state.show === 'chats' ? `${style.active} ${style.profileToolItem}` : `${style.profileToolItem}`} onClick={() => { this.setState({ show: 'chats' }) }}><img src={settingsIMG} /> <div><strong>Chats</strong></div></div>
                     <div className={this.state.show === 'response' ? `${style.active} ${style.profileToolItem}` : `${style.profileToolItem}`} onClick={() => { this.setState({ show: 'response' }) }}><img src={pointIMG} /> <div><strong>Your responses</strong></div></div>
                     <div className={this.state.show === 'settings' ? `${style.active} ${style.profileToolItem}` : `${style.profileToolItem}`} onClick={() => { this.setState({ show: 'settings' }) }}><img src={settingsIMG} /> <div><strong>Settings</strong></div></div>
                 </div>
@@ -94,6 +98,7 @@ class Profile extends Component {
                     <div className={this.state.show === 'documents' ? `${style.active} ${style.profileToolItem}` : `${style.profileToolItem}`} onClick={() => { this.setState({ show: 'documents' }) }}><img src={licenseIMG} /> <div><strong>Documents</strong></div></div>
                     <div className={this.state.show === 'vehicle' ? `${style.active} ${style.profileToolItem}` : `${style.profileToolItem}`} onClick={() => { this.setState({ show: 'vehicle' }) }}><img src={autoIMG} /><div><strong> Vehicle</strong></div></div>
                     <div className={this.state.show === 'statistic' ? `${style.active} ${style.profileToolItem}` : `${style.profileToolItem}`} onClick={() => { this.setState({ show: 'statistic' }) }}><img src={listIMG} /> <div><strong>Statistic</strong></div></div>
+                    <div className={this.state.show === 'chats' ? `${style.active} ${style.profileToolItem}` : `${style.profileToolItem}`} onClick={() => { this.setState({ show: 'chats' }) }}><img src={settingsIMG} /> <div><strong>Chats</strong></div></div>
                     <div className={this.state.show === 'response' ? `${style.active} ${style.profileToolItem}` : `${style.profileToolItem}`} onClick={() => { this.setState({ show: 'response' }) }}><img src={pointIMG} /> <div><strong>Your responses</strong></div></div>
                     <div className={this.state.show === 'settings' ? `${style.active} ${style.profileToolItem}` : `${style.profileToolItem}`} onClick={() => { this.setState({ show: 'settings' }) }}><img src={settingsIMG} /> <div><strong>Settings</strong></div></div>
                 </div>
@@ -164,7 +169,7 @@ ProfileMain.propTypes = {
 
 const mapStateToProps = state => ({
     userData: state.userData,
-    photoData: state.photoData,
+    photosData: state.photosData,
     chatData: state.chatData
 })
 
