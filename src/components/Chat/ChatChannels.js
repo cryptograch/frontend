@@ -113,9 +113,6 @@ class ChatChannels extends Component {
                 <div className={style.channelList}>
                     <ul className={style.usersList}>
                         {this.renderChannels()}
-                        {this.renderChannels()}
-                        {this.renderChannels()}
-                        {this.renderChannels()}
                     </ul>
                 </div>
                 <div>
