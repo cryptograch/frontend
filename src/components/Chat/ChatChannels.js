@@ -104,14 +104,17 @@ class ChatChannels extends Component {
     render() {
         return (
             <div>
-                <form onSubmit={(e) => { e.preventDefault() }}>
-                    <input type='text' onChange={(e) => { this.setState({ id: e.target.value }) }} placeholder="User id" />
-                    <input type='submit' onClick={this.submit.bind(this)} value='Ok' />
+                <h1 className={style.title}>CHATS</h1>
+                <form className={style.formSearch} onSubmit={(e) => { e.preventDefault() }}>
+                    <input className={style.idInput} type='text' onChange={(e) => { this.setState({ id: e.target.value }) }} placeholder="User id" />
+                    <input className={style.input} type='submit' onClick={this.submit.bind(this)} value='Search' />
                 </form>
 
                 <div className={style.channelList}>
-                    <h1>Chats</h1>
-                    <ul>
+                    <ul className={style.usersList}>
+                        {this.renderChannels()}
+                        {this.renderChannels()}
+                        {this.renderChannels()}
                         {this.renderChannels()}
                     </ul>
                 </div>

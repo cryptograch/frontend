@@ -152,8 +152,8 @@ class ChatView extends Component {
                     </div>
                 </div>
                 <form onSubmit={(e) => { e.preventDefault() }}>
-                    <textarea type='text' placeholder='Your message' onChange={(e) => { this.setState({ message: e.target.value }) }}></textarea>
-                    <input type='submit' value='Send' onClick={this.submit.bind(this)} />
+                    <textarea className={style.textarea} type='text' placeholder='Your message' onChange={(e) => { this.setState({ message: e.target.value }) }}></textarea>
+                    <input className={style.input} type='submit' value='Send' onClick={this.submit.bind(this)} />
                 </form>
             </div>
         );

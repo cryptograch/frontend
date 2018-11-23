@@ -1,3 +1,4 @@
+
 .messageContainer {
     height: 500px;
     position: relative;
@@ -63,7 +64,7 @@
 }
 
 .channelList {
-
+    margin-top: 20px;
 }
 
 .channelList > ul {
@@ -119,3 +120,81 @@
     width: 60px;
     height: auto;
 }
+.chat {
+  display: flex;
+  justify-content: space-between;
+}
+.title {
+  color: #2b2929;
+  margin: 0;
+  width: 100%;
+  padding: 15px 0;
+  letter-spacing: 4px;
+  text-align: center;
+}
+input {
+  padding: 0;
+}
+.chatWindow ul {
+  padding-left: 0;
+}
+li {
+  list-style: none;
+}
+.channelList li {
+  cursor: pointer;
+}
+.channelList li:hover {
+  background-color: #faa71a;
+}
+.formSearch {
+  text-align: center;
+}
+.idInput {
+  width: 60%;
+  border: 1px solid #2b2929;
+  font: 16px 'ProximaNovaRegular';
+  color: #2b2929;
+  padding: 5px 20px;
+  padding-left: 10px;
+  margin-top: 5px;
+  outline: none;
+  box-sizing: border-box;
+}
+.input {
+  width: 30%;
+  border: none;
+  background: none;
+  background-color: #2b2929;
+  color: #fff;
+  font-size: 16px;
+  padding: 7px 20px;
+  text-decoration: none;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  box-sizing: border-box;
+}
+.input:hover {
+  background-color: #928e8e;
+  transition: 0.3s;
+  cursor: pointer;
+}
+.chatWindow h3 {
+  font-weight: bold;
+}
+.textarea {
+  overflow: hidden;
+  width: 99%;
+  height: 100px;
+  resize: none;
+}
+.usersList {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  max-width: 670px;
+}
+::-webkit-scrollbar { height: 5px; }
+::-webkit-scrollbar-thumb { height: 50px; background-color: #2b2929; border-radius: 3px; }
+::-webkit-scrollbar-corner { background-color: #999; }

@@ -100,7 +100,7 @@ export const createConnection = () => (dispatch, getState) => {
 
     connection.on("publication", (data) => {
       let message = null;
-      try {
+        try {
         message = JSON.parse(data);
         dispatch(sendAdd({
           publicationTime: message.PublicationTime,
