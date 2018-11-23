@@ -62,6 +62,13 @@ class ChatView extends Component {
             this.setScroll();
         }
     }
+    onEnterPress(e) {
+        if (e.keyCode == 13 && e.shiftKey == false) {
+            e.preventDefault();
+            this.submit();
+        }
+    }
+
     onScroll() {
         const view = this.chatViewRef.current;
         const container = this.scrollRef.current;
@@ -98,7 +105,7 @@ class ChatView extends Component {
     renderMessage(message, user) {
         if (message && user) {
             return (
-                <div class={style.messageMain}>
+                <div className={style.messageMain}>
                     <div className={style.channelPhoto}>
                         {this.renderPhoto(user.profilePictureId)}
                     </div>
@@ -151,8 +158,12 @@ class ChatView extends Component {
                         <div id='scrollPane'></div>
                     </div>
                 </div>
-                <form onSubmit={(e) => { e.preventDefault() }}>
-                    <textarea className={style.textarea} type='text' placeholder='Your message' onChange={(e) => { this.setState({ message: e.target.value }) }}></textarea>
+                <form className={style.textform} onSubmit={(e) => { e.preventDefault() }}>
+                    <textarea className={style.textarea} 
+                                type='text' placeholder='Your message' 
+                                onChange={(e) => { this.setState({ message: e.target.value }) }}
+                                onKeyDown={this.onEnterPress.bind(this)}>
+                    </textarea>
                     <input className={style.input} type='submit' value='Send' onClick={this.submit.bind(this)} />
                 </form>
             </div>
