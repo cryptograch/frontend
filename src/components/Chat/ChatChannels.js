@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import { Route, Link, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import style from './Chat.css';
 
 import Loading from '../Loading/Loading';
 import Alert from '../Alert/Alert';
 import ChatView from './ChatView';
-
+import defaultphoto from '../../assets/default-user.png';
 import { connect } from 'react-redux';
 
-import { getChannels, subscribe } from '../../actions/chataction';
+import { getChannels, subscribe, listClear } from '../../actions/chataction';
+import { getPhoto } from '../../actions/photoaction';
 
 class ChatChannels extends Component {
     constructor(props) {
@@ -25,18 +25,18 @@ class ChatChannels extends Component {
     componentDidUpdate() {
     }
     openChat(channel) {
-        if (!this.state.channel) {
+        if (this.state.channel !== channel) {
+            this.props.listClear();
             this.setState({ channel });
-        } else {
-            this.setState({ channel: null });
         }
-
     }
     submit() {
         this.props.subscribe(this.state.id);
     }
     renderChannels() {
         const { channels } = this.props.chatData;
+        const { user } = this.props.userData;
+        const { getPhoto, photosData } = this.props;
         if (channels) {
             const { loading, list, error } = channels;
             if (loading) {
@@ -47,19 +47,58 @@ class ChatChannels extends Component {
             }
             if (list && Array.isArray(list)) {
                 return list.map((channel, key) => {
-                    return <li key={key} onClick={(e) => { this.openChat(channel) }}><Channel channel={channel} /></li>
+                    let curruser;
+                    if (channel.members && channel.members.length === 1) {
+                        curruser = channel.members[0];
+                    } else {
+                        curruser = channel.members.filter(i => i.identityId !== user.identityId)[0];
+                    }
+                    if (curruser && curruser.profilePictureId && !photosData[curruser.profilePictureId]) {
+                        getPhoto(curruser.profilePictureId);
+                    }
+                    return <li key={key} onClick={(e) => { this.openChat(channel) }}>{this.renderChannel(curruser)}</li>
                 });
             }
-            return 'No chats'
+            return 'No chats';
         }
         return "No chats";
+    }
+    renderPhoto(id) {
+        const { photosData, getPhoto } = this.props;
+        if (id && photosData[id]) {
+            const { loading, url, error } = photosData[id];
+            if (url) {
+                return <img src={url} alt='photo' />;
+            }
+            if (loading) {
+                return <Loading />
+            }
+            if (error) {
+                return <Alert local={true} message='Photo dont load' click={() => { getPhoto(id) }} />
+            }
+            return <img src={defaultphoto} className={style.profilePhoto} alt='photo' />;
+        }
+        return <img src={defaultphoto} className={style.profilePhoto} alt='photo' />;
+    }
+    renderChannel(user) {
+        if (user) {
+            return (
+                <div className={style.channelContainer}>
+                    <div className={style.channelPhoto}>
+                        {this.renderPhoto(user.profilePictureId)}
+                    </div>
+                    <label>{user.firstName} {user.lastName}</label>
+                </div>
+            );
+        }
+        return null;
     }
     renderChat() {
         const { channel } = this.state;
         if (channel) {
             return <ChatView channel={channel} />
         } else {
-            return null;
+            return null
         }
     }
     render() {
@@ -70,41 +109,51 @@ class ChatChannels extends Component {
                     <input type='submit' onClick={this.submit.bind(this)} value='Ok' />
                 </form>
 
-                <div>
+                <div className={style.channelList}>
                     <h1>Chats</h1>
                     <ul>
                         {this.renderChannels()}
                     </ul>
                 </div>
                 <div>
-                    {this.renderChat()};
+                    {this.renderChat()}
                 </div>
             </div>
         );
     }
 }
 
-const Channel = ({ channel }) => {
-    return (
-        <div>
-            <h3>{channel.members[0].firstName} {channel.members[0].lastName}</h3>
-            <h3>{channel.members[1].firstName} {channel.members[1].lastName}</h3>
-        </div>
-    );
-}
+// const Channel = ({ user }) => {
+//     if (user) {
+//         return (
+//             <div>
+//                 <h3>{user.firstName} {user.lastName}</h3>
+//             </div>
+//         );
+//     }
+
+// }
 
 ChatChannels.propTypes = {
     chatData: PropTypes.object,
-    subscribe: PropTypes.func
+    subscribe: PropTypes.func,
+    listClear: PropTypes.func,
+    userData: PropTypes.object,
+    getPhoto: PropTypes.func,
+    photosData: PropTypes.object
 }
 
 const mapStateToProps = state => ({
-    chatData: state.chatData
+    chatData: state.chatData,
+    userData: state.userData,
+    photosData: state.photosData,
 });
 
 const mapDispatchtoProps = dispatch => ({
     getChannels: () => { dispatch(getChannels()) },
-    subscribe: (id) => { dispatch(subscribe(id)) }
+    subscribe: (id) => { dispatch(subscribe(id)) },
+    listClear: () => { dispatch(listClear()) },
+    getPhoto: (id) => { dispatch(getPhoto(id)) }
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(ChatChannels);

@@ -8,17 +8,25 @@ class LazyLoad extends Component {
         super(props);
         this.state = {
             comp: null,
+            container: null,
         }
     }
     componentDidMount() {
         const comp = document.getElementById('lazyload');
         const container = document.getElementById('lz_container');
         if (container && this.props.container) {
-            container.addEventListener('scroll', this.scroll.bind(this));
+            if (this.props.reverse) {
+                this.scroll = this.scrollReverse.bind(this);
+                container.addEventListener('scroll', this.scroll);
+            } else {
+                this.scroll = this.scrollNormal.bind(this);
+                container.addEventListener('scroll', this.scroll);
+            }
         } else {
-            window.addEventListener('scroll', this.scroll.bind(this));
+            this.scroll = this.scrollNormal.bind(this);
+            window.addEventListener('scroll', this.scroll);
         }
-        this.setState({ comp }, () => {
+        this.setState({ comp, container }, () => {
             this.scroll();
         });
     }
@@ -26,6 +34,9 @@ class LazyLoad extends Component {
         this.scroll();
     }
     scroll() {
+
+    }
+    scrollNormal() {
         if (!this.props.loading) {
             let wY = window.scrollY + window.innerHeight;
             let tC = this.state.comp.getBoundingClientRect().top;
@@ -34,8 +45,19 @@ class LazyLoad extends Component {
             }
         }
     }
+    scrollReverse() {
+        if (!this.props.loading) {
+            let sT = this.state.container.scrollTop;
+            if (sT < 250) {
+                this.props.do();
+            }
+        }
+    }
     componentWillUnmount() {
         window.removeEventListener('scroll', this.scroll);
+        if (this.state.container) {
+            this.state.container.removeEventListener('scroll', this.scroll);
+        }
     }
     render() {
         return <div id="lazyload" className={style.LazyLoad} onClick={this.props.do}><Loading /></div>
