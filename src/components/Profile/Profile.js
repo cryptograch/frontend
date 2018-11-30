@@ -83,7 +83,7 @@ class Profile extends Component {
                 <div className={`${style.profileToolbarMain}`}>
                     <div className={this.state.show === 'main' ? `${style.active} ${style.profileToolItem}` : `${style.profileToolItem}`} onClick={() => { this.setState({ show: 'main' }) }}><img src={homeIMG} /> <div><strong>Main</strong></div></div>
                     <div className={this.state.show === 'statistic' ? `${style.active} ${style.profileToolItem}` : `${style.profileToolItem}`} onClick={() => { this.setState({ show: 'statistic' }) }}><img src={listIMG} /> <div><strong>Statistic</strong></div></div>
-                    <div className={this.state.show === 'chats' ? `${style.active} ${style.profileToolItem}` : `${style.profileToolItem}`} onClick={() => { this.setState({ show: 'chats' }) }}><img src={settingsIMG} /> <div><strong>Chats</strong></div></div>
+                    <div className={this.state.show === 'chats' ? `${style.active} ${style.profileToolItem}` : `${style.profileToolItem}`} onClick={() => { this.setState({ show: 'chats' }) }}><img src={chatIMG} /> <div><strong>Chats</strong></div></div>
                     <div className={this.state.show === 'response' ? `${style.active} ${style.profileToolItem}` : `${style.profileToolItem}`} onClick={() => { this.setState({ show: 'response' }) }}><img src={pointIMG} /> <div><strong>Your responses</strong></div></div>
                     <div className={this.state.show === 'settings' ? `${style.active} ${style.profileToolItem}` : `${style.profileToolItem}`} onClick={() => { this.setState({ show: 'settings' }) }}><img src={settingsIMG} /> <div><strong>Settings</strong></div></div>
                 </div>
