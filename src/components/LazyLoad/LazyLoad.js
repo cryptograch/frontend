@@ -38,10 +38,19 @@ class LazyLoad extends Component {
     }
     scrollNormal() {
         if (!this.props.loading) {
-            let wY = window.scrollY + window.innerHeight;
-            let tC = this.state.comp.getBoundingClientRect().top;
-            if (wY - tC > 10) {
-                this.props.do();
+            if (this.state.container) {
+                let oH = this.state.container.offsetHeight;
+                let sT = this.state.container.scrollTop;
+                let oT = this.state.comp.offsetTop;
+                if (oH + sT > oT - 250) {
+                    this.props.do();
+                }
+            } else {
+                let wY = window.scrollY + window.innerHeight;
+                let tC = this.state.comp.getBoundingClientRect().top;
+                if (wY - tC > 10) {
+                    this.props.do();
+                }
             }
         }
     }

@@ -63,6 +63,23 @@
     border-radius: 2px;
 }
 
+.scrollPaneH {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: rgba(216, 223, 225, 0.45);
+    height: 9px;
+    border-radius: 2px;
+    transform: translate(0, 0);
+}
+
+.scrollPaneH > div {
+    background: #2b2929;
+    height: inherit;
+    margin: 0;
+    border-radius: 2px;
+}
+
 .channelList {
     margin: 20px 10px 0 10px;
     position: relative;
@@ -97,7 +114,7 @@
 }
 
 .channelContainer:hover > label {
-    opacity: 1;
+    /* opacity: 1; */
 }
 
 .channelPhoto {
@@ -212,8 +229,10 @@ flex: 1 1 60%;
   overflow-x: scroll;
   overflow-y: hidden;
   width: 100%;
+  bottom: -15px;
   margin: 0;
   padding: 0;
+  padding-bottom: 15px;
   display: flex;
   flex-flow: row nowrap;
   list-style: none;

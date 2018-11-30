@@ -6,6 +6,7 @@ import Loading from '../Loading/Loading';
 import Alert from '../Alert/Alert';
 import ChatView from './ChatView';
 import defaultphoto from '../../assets/default-user.png';
+import ScrollPane from './ScrollPane';
 import { connect } from 'react-redux';
 
 import { getChannels, subscribe, listClear } from '../../actions/chataction';
@@ -17,12 +18,29 @@ class ChatChannels extends Component {
         this.state = {
             id: "",
             channel: null,
+            scroll: 0,
+            active: false,
         }
+        this.scrollRef = React.createRef();
+        this.viewRef = React.createRef();
     }
     componentDidMount() {
         this.props.getChannels();
     }
     componentDidUpdate() {
+        const { channels } = this.props.chatData;
+        const { user } = this.props.userData;
+        const { getPhoto, photosData } = this.props;
+        if (Array.isArray(channels.list)) {
+            channels.list.forEach(channel => {
+                const curruser = channel.members.filter(i => i.identityId !== user.identityId)[0];
+                if (curruser && curruser.profilePictureId && !photosData[curruser.profilePictureId]) {
+                    getPhoto(curruser.profilePictureId);
+                }
+            });
+        }
+    }
+    componentWillUnmount() {
     }
     openChat(channel) {
         if (this.state.channel !== channel) {
@@ -36,7 +54,6 @@ class ChatChannels extends Component {
     renderChannels() {
         const { channels } = this.props.chatData;
         const { user } = this.props.userData;
-        const { getPhoto, photosData } = this.props;
         if (channels) {
             const { loading, list, error } = channels;
             if (loading) {
@@ -52,9 +69,6 @@ class ChatChannels extends Component {
                         curruser = channel.members[0];
                     } else {
                         curruser = channel.members.filter(i => i.identityId !== user.identityId)[0];
-                    }
-                    if (curruser && curruser.profilePictureId && !photosData[curruser.profilePictureId]) {
-                        getPhoto(curruser.profilePictureId);
                     }
                     return <li key={key} onClick={(e) => { this.openChat(channel) }}>{this.renderChannel(curruser)}</li>
                 });
@@ -110,10 +124,11 @@ class ChatChannels extends Component {
                     <input className={style.input} type='submit' onClick={this.submit.bind(this)} value='Search' />
                 </form>
 
-                <div className={style.channelList}>
-                    <ul className={style.usersList}>
+                <div ref={this.viewRef} className={style.channelList}>
+                    <ul ref={this.scrollRef} className={style.usersList}>
                         {this.renderChannels()}
                     </ul>
+                    <ScrollPane horizontal scrollRef={this.scrollRef} viewRef={this.viewRef}/>
                 </div>
                 <div>
                     {this.renderChat()}

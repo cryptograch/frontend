@@ -7,6 +7,7 @@ import Alert from '../Alert/Alert';
 import LazyLoad from '../LazyLoad/LazyLoad';
 
 import defaultphoto from '../../assets/default-user.png';
+import ScrollPane from './ScrollPane';
 
 import { connect } from 'react-redux';
 
@@ -22,18 +23,13 @@ class ChatView extends Component {
             new: false,
         }
         this.scrollRef = React.createRef();
-        this.chatViewRef = React.createRef();
+        this.viewRef = React.createRef();
     }
     componentDidMount() {
-        const { channel, getMessages } = this.props;
-        // if (channel.id) {
-        //     // getMessages(channel.id);
-        // }
-
-        const comp = document.getElementById('lz_container');
+        const comp = this.scrollRef.current;
         comp.addEventListener('scroll', (e) => { this.onScroll.call(this, e) });
     }
-    componentDidUpdate(prevprops) {
+    componentDidUpdate(prevprops, prevstate) {
         const { chatData } = this.props;
         const prevlist = prevprops.chatData.messages.list;
         const prev = (prevlist) ? prevlist.length : null;
@@ -43,15 +39,16 @@ class ChatView extends Component {
             this.setScroll()
         }
         if (!Number.isNaN(prev) && !Number.isNaN(curr) && curr !== prev) {
-            this.setState({ new: true });
+            const c = this.scrollRef.current;
+            const { scroll } = this.state;
+            this.scrollRef.current.scrollTop = c.scrollHeight - scroll;
         }
-
-        // if (chatData.success) {
-        //     this.setScroll();
-        // }
+        if (prevstate.new) {
+            this.setState();
+        }
     }
     componentWillUnmount() {
-        const comp = document.getElementById('lz_container');
+        const comp = this.scrollRef.current;
         comp.removeEventListener('scroll', this.onScroll);
     }
     submit() {
@@ -59,6 +56,7 @@ class ChatView extends Component {
         const targetUser = channel.members.filter(i => i.identityId !== userData.user.identityId)[0];
         if (targetUser && targetUser.identityId) {
             send(targetUser.identityId, this.state.message);
+            this.setState({ message: '' });
             this.setScroll();
         }
     }
@@ -70,15 +68,8 @@ class ChatView extends Component {
     }
 
     onScroll() {
-        const view = this.chatViewRef.current;
         const container = this.scrollRef.current;
-        const pane = document.getElementById('scrollPane');
-        if (pane && container && view) {
-            const containerHeight = view.offsetHeight;
-            const k = container.scrollTop / (container.scrollHeight);
-            const k2 = container.scrollHeight / containerHeight;
-            pane.style.height = `${containerHeight / k2}px`;
-            pane.style.transform = `translate(0px, ${k * containerHeight}px)`;
+        if (container) {
             this.setState({ scroll: container.scrollHeight - container.scrollTop });
         }
     }
@@ -141,22 +132,17 @@ class ChatView extends Component {
         return null;
     }
     render() {
-        if (this.scrollRef.current && this.state.new) {
-            const c = this.scrollRef.current;
-            const { scroll } = this.state;
-            this.scrollRef.current.scrollTop = c.scrollHeight - scroll;
-            this.setState({ new: false });
-        }
         return (
             <div>
-                <div ref={this.chatViewRef} className={style.messageContainer}>
+                <div ref={this.viewRef} className={style.messageContainer}>
                     <ul id='lz_container' ref={this.scrollRef} className={style.contentScroll}>
                         {this.renderLazyLoad()}
                         {this.renderMessages()}
                     </ul>
-                    <div className={style.scrollPane}>
+                    <ScrollPane scrollRef={this.scrollRef} viewRef={this.viewRef} />
+                    {/* <div className={style.scrollPane}>
                         <div id='scrollPane'></div>
-                    </div>
+                    </div> */}
                 </div>
                 <form className={style.textform} onSubmit={(e) => { e.preventDefault() }}>
                     <textarea className={style.textarea} 
