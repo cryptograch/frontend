@@ -11,7 +11,7 @@ export const FETCH_CHANNELS_START = 'FETCH_CHANNELS_START';
 export const FETCH_CHANNELS_SUCCESS = 'FETCH_CHANNELS_SUCCESS';
 export const FETCH_CHANNELS_FAILED = 'FETCH_CHANNELS_FAILED';
 
-export const CHAT_MESSAGES_START = 'LIST_MESSAGES_START';
+export const CHAT_MESSAGES_START = 'CHAT_MESSAGES_START';
 export const CHAT_MESSAGES_SUCCESS = 'CHAT_MESSAGES_SUCCESS';
 export const CHAT_MESSAGES_FAILED = 'CHAT_MESSAGES_FAILED';
 export const CHAT_MESSAGES_CLEAR = 'CHAT_MESSAGES_CLEAR';
@@ -45,7 +45,7 @@ export const channelsSuccess = (list) => ({
 });
 
 export const channelsFailed = (error) => ({
-  type: FETCH_CHANNELS_FAILES,
+  type: FETCH_CHANNELS_FAILED,
   error
 });
 
@@ -100,7 +100,7 @@ export const createConnection = () => (dispatch, getState) => {
 
     connection.on("publication", (data) => {
       let message = null;
-      try {
+        try {
         message = JSON.parse(data);
         dispatch(sendAdd({
           publicationTime: message.PublicationTime,
@@ -131,7 +131,6 @@ export const subscribe = (id) => (dispatch, getState) => {
 export const send = (id, message) => (dispatch, getState) => {
   const { conn } = getState().chatData.connection;
   if (conn) {
-    // console.log(id, message);
     dispatch(sendStart());
     conn.invoke("Publish", id, message)
       .catch(error => dispatch(sendFailed(error.message)));
@@ -153,6 +152,8 @@ export const getChannels = () => (dispatch, getState) => {
           return res.json();
         } else if (res.status === 401) {
           dispatch(refreshToken(token, getChannels));
+        } else if (res.status === 404) {
+          dispatch(channelsSuccess(null));
         } else {
           throw new Error(res.statusText);
         }
@@ -171,11 +172,13 @@ export const getChannels = () => (dispatch, getState) => {
 }
 
 export const getMessages = (id) => (dispatch, getState) => {
-  if (id) {
+  const { page, loading } = getState().chatData.messages;
+  if (id && !loading) {
     const token = checkAndGetToken(dispatch, getState);
     if (token) {
+      const query = (!Number.isNaN(page)) ? `&from=${page * 5}&to=${page * 5 + 5}`: '';
       dispatch(listStart());
-      fetch(`${apiurl}/api/chat/getmessages?channelId=${id}&from=0&to=10`, {
+      fetch(`${apiurl}/api/chat/getmessages?channelId=${id}${query}`, {
         method: 'GET',
         headers: new Headers({
           'Authorization': `Bearer ${token.auth_token}`,
