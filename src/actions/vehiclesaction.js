@@ -82,11 +82,14 @@ export const uploadVehicle = (data, file) => (dispatch, getState) => {
 }
 
 // TODO: actionCreator upload Vehicle Photo
-export const uploadVehPhoto = (file, token) => (dispatch, getState) => {
-    if (file) {
+export const uploadVehPhoto = (files, token) => (dispatch, getState) => {
+    if (files) {
         if (token) {
             const data = new FormData();
-            data.append('files', file);
+            files.forEach(file => {
+                data.append('files', file);
+            })
+            
             fetch(`${apiurl}/api/vehicles/images`, {
                 method: 'POST',
                 headers: new Headers({

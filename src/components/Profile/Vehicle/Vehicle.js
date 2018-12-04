@@ -44,7 +44,7 @@ class Vehicle extends Component {
         if (veh && veh.pictures && Array.isArray(veh.pictures)) {
             return veh.pictures.map((id, key) => {
                 return (
-                    <div key={key} className={`${style.vehPhoto} ${(key === slide) ? style.block : style.none}`}>
+                    <div key={key} className={style.vehPhoto}>
                         {this.renderPhoto(id, key)}
                     </div>
                 );
@@ -100,18 +100,19 @@ class Vehicle extends Component {
             return (
                 <div className={style.main}>
                     <h1 className={style.heading}>YOUR CAR</h1>
-                    <div className={style.container}>
-                        <div className={style.containerPhoto}>
-                            {this.renderSliderBtn('prev')}
-                            {this.renderSliderBtn('next')}
-                            {this.renderPhotos()}
-                        </div>
+                    <div className={style.container}> 
                         <div className={style.containerInfo}>
                             <h3><span>Number:</span> {this.props.vehData.veh.number}</h3>
                             <h3><span>Model:</span> {this.props.vehData.veh.model}</h3>
                             <h3><span>Brand:</span> {this.props.vehData.veh.brand}</h3>
                             <h3><span>Color:</span> {this.props.vehData.veh.color}</h3>
                         </div>
+                        <div className={style.containerPhoto}>
+                            {/* {this.renderSliderBtn('prev')}
+                            {this.renderSliderBtn('next')} */}
+                            {this.renderPhotos()}
+                        </div>
+                       
                     </div>
                 </div>
             );

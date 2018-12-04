@@ -89,7 +89,7 @@ class ResponseList extends Component {
                         </div>
                     </div>
                     <div className={style.resListMain}>
-                        {this.renderList()}
+                        {this.renderList()} 
                         {this.renderLazyLoad()}
                     </div>
                 </div>

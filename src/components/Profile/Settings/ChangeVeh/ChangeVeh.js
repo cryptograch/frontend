@@ -14,6 +14,7 @@ class ChangeVeh extends Component {
         this.state = {
             vehphoto: null,
             vehphotourl: null,
+            urls: [],
             number: "",
             model: "",
             brand: "",
@@ -23,15 +24,23 @@ class ChangeVeh extends Component {
         this.chooseVehPhoto = this.chooseVehPhoto.bind(this);
     }
     chooseVehPhoto(e) {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                this.setState({ vehphotourl: reader.result });
-            };
-            reader.readAsDataURL(file);
-            this.setState({ vehphoto: file,
-                            fileName: file.name, });
+        const files = e.target.files;
+        if (files) {
+            let urls = [];
+            [...files].forEach(file => {
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    urls = [...urls, reader.result];
+                    this.setState({ urls });
+                };
+                reader.readAsDataURL(file);
+            });
+           
+            this.setState({ vehphoto: [...files],
+                            vehphotourl: urls[0],
+                            fileName: files[0].name,
+                            urls
+                         });
         }
     }
     uploadVeh() {
@@ -52,7 +61,7 @@ class ChangeVeh extends Component {
                             <img src={(this.state.vehphotourl) ? this.state.vehphotourl : vehicledefault} alt='photo' />
                         </div>
                         <div className={style.docPhotoInput}>
-                            <input type='file' accept='image/*' onChange={(e) => { this.chooseVehPhoto(e) }} />
+                            <input type='file' accept='image/*' multiple onChange={(e) => { this.chooseVehPhoto(e) }} />
                             <label>Choose</label><input type='text' value={this.state.fileName} placeholder='File' readOnly />
                         </div>
                     </div>

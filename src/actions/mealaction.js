@@ -17,6 +17,9 @@ export const meallistfaild = (error) => ({
     type: MEAL_LIST_FETCH_FAILED,
     error
 });
+export const meallistclear = () => ({
+    type: MEAL_LIST_CLEAR
+})
 
 export const fetchMealList = () => (dispatch, getState) => {
     const token = checkAndGetToken(dispatch, getState);
