@@ -3,29 +3,36 @@ import { apiurl } from '../appconfig';
 import { checkAndGetToken, logout, refreshToken } from './authaction';
 
 import { updatestart, updatesuccess, updatefailed } from './chengeaction';
-import { getPhoto } from './photoaction';
+import { getPhoto, photoClear } from './photoaction';
 
 export const VEHICLE_FETCH_START = 'VEHICLE_FETCH_START';
 export const VEHICLE_FETCH_SUCCESS = 'VEHICLE_FETCH_SUCCESS';
 export const VEHICLE_FETCH_FAILED = 'VEHICLE_FETCH_FAILED';
 export const VEHICLE_CLEAR = 'VEHICLE_CLEAR';
+
+export const VEHPHOTO_DELETE_ID = 'DELETE_PHOTO_ID';
 // TODO: create all action's types
 
 
 // TODO: create all action's
-const vehicleStart = () => ({
+export const vehicleStart = () => ({
     type: VEHICLE_FETCH_START
 })
 
-const vehicleSuccess = (veh) => ({
+export const vehicleSuccess = (veh) => ({
     type: VEHICLE_FETCH_SUCCESS,
     veh
 });
 
-const vehicleFailed = (error) => ({
+export const vehicleFailed = (error) => ({
     type: VEHICLE_FETCH_FAILED,
     error
 })
+
+export const deletePhotoId = (id) => ({
+    type: VEHPHOTO_DELETE_ID,
+    id
+});
 
 export const vehClear = () => ({
     type: VEHICLE_CLEAR
@@ -159,4 +166,34 @@ export const getVehicle = (tok) => (dispatch, getState) => {
     //     pictures: ["e89ffbc9-cd46-4ef2-a7ee-c6e97dfd4ade.jpeg", "6ddd6713-e010-4007-8524-9f6acab50d23.png", "e89ffbc9-cd46-4ef2-a7ee-c6e97dfd4ade.jpeg"],
     //     driverId: "0e09a93f-5927-41df-8d4b-aba82da9b949",
     // }));
+}
+
+export const deleteVehPhoto = (id) => (dispatch, getState) => {
+    const token = checkAndGetToken(dispatch, getState);
+    if (token) {
+        dispatch(updatestart());
+        fetch(`${apiurl}/api/vehicles/images/${id}`, {
+            method: 'DELETE',
+            headers: new Headers({
+                'Authorization': `Bearer ${token.auth_token}`
+            })
+        })
+            .then(res => {
+                if (res.status === 200 || res.status === 201 || res.status === 204) {
+                    dispatch(updatesuccess('Photo is deleted'));
+                    dispatch(deletePhotoId(id));
+                    dispatch(photoClear(id));
+                } else if (res.status === 401) {
+                    dispatch(refreshToken(token, deleteVehPhoto, id));
+                } else {
+                    throw new Error(res.statusText);
+                }
+            })
+            .catch(error => dispatch(updatefailed(error.message)));
+    } else {
+        dispatch(logout());
+    }
+    // dispatch(updatesuccess('Photo is deleted'));
+    // dispatch(deletePhotoId(id));
+    // dispatch(photoClear(id));
 }

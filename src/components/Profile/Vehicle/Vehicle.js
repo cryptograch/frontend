@@ -5,12 +5,10 @@ import Loading from '../../Loading/Loading';
 import Alert from '../../Alert/Alert';
 
 import defaultphoto from '../../../assets/default-vehicle.png';
-import next from '../../../assets/next.svg';
-import prev from '../../../assets/prev.svg';
 
 import { connect } from 'react-redux';
 
-import { getVehicle } from '../../../actions/vehiclesaction';
+import { getVehicle, deleteVehPhoto } from '../../../actions/vehiclesaction';
 import { clearErrors } from '../../../actions/authaction';
 import { openImage } from '../../../actions/globalviewaction';
 
@@ -19,9 +17,6 @@ import { getPhoto } from '../../../actions/photoaction';
 class Vehicle extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            slide: 0,
-        }
     }
     componentDidMount() {
         if (!this.props.vehData.veh) {
@@ -40,7 +35,6 @@ class Vehicle extends Component {
     }
     renderPhotos() {
         const { veh } = this.props.vehData;
-        const { slide } = this.state;
         if (veh && veh.pictures && Array.isArray(veh.pictures)) {
             return veh.pictures.map((id, key) => {
                 return (
@@ -49,20 +43,6 @@ class Vehicle extends Component {
                     </div>
                 );
             });
-        }
-    }
-
-    changeSlide(n) {
-        const { vehData } = this.props;
-        if (Array.isArray(vehData.veh.pictures)) {
-            let slide = this.state.slide;
-            slide += n;
-            if (slide > vehData.veh.pictures.length - 1) {
-                slide = 0;
-            } else if (slide < 0) {
-                slide = vehData.veh.pictures.length - 1;
-            }
-            this.setState({ slide });
         }
     }
 
@@ -83,17 +63,6 @@ class Vehicle extends Component {
         }
         return <img src={defaultphoto} alt='photo' onClick={() => { this.props.openImage(defaultphoto) }} />;
     }
-    renderSliderBtn(type) {
-        const { veh } = this.props.vehData;
-        if (Array.isArray(veh.pictures) && veh.pictures.length > 1) {
-            switch(type) {
-                case 'prev': return <div className={`${style.slidebtn} ${style.dec}`} onClick={() => { this.changeSlide(-1) }}> <img src={prev} alt="prev"/> </div>;
-                case 'next': return <div className={`${style.slidebtn} ${style.inc}`} onClick={() => { this.changeSlide(1) }}> <img src={next} alt="next"/> </div>;
-                default: return null;
-            }
-        } 
-        return null;
-    }
 
     render() {
         if (this.props.vehData.veh) {
@@ -108,8 +77,6 @@ class Vehicle extends Component {
                             <h3><span>Color:</span> {this.props.vehData.veh.color}</h3>
                         </div>
                         <div className={style.containerPhoto}>
-                            {/* {this.renderSliderBtn('prev')}
-                            {this.renderSliderBtn('next')} */}
                             {this.renderPhotos()}
                         </div>
                        
@@ -136,7 +103,8 @@ Vehicle.propTypes = {
     clearErrors: PropTypes.func,
     openImage: PropTypes.func,
     photosData: PropTypes.object,
-    getPhoto: PropTypes.func
+    getPhoto: PropTypes.func,
+    deleteVehPhoto: PropTypes.func
 }
 
 const mapStateToProps = state => ({
@@ -148,7 +116,8 @@ const mapDispatchtoProps = dispatch => ({
     getVehicle: () => { dispatch(getVehicle()) },
     getPhoto: (id) => { dispatch(getPhoto(id)) },
     clearErrors: () => { dispatch(clearErrors()) },
-    openImage: (url) => { dispatch(openImage(url)) }
+    openImage: (url) => { dispatch(openImage(url)) },
+    deleteVehPhoto: (id) => { dispatch(deleteVehPhoto(id)) }
 })
 
 export default connect(mapStateToProps, mapDispatchtoProps)(Vehicle);

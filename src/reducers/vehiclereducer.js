@@ -3,7 +3,8 @@ import {
     VEHICLE_FETCH_START,
     VEHICLE_FETCH_SUCCESS,
     VEHICLE_FETCH_FAILED,
-    VEHICLE_CLEAR
+    VEHICLE_CLEAR,
+    VEHPHOTO_DELETE_ID
 } from '../actions/vehiclesaction';
 
 import { CLEAR_ERRORS, CLEAR_ALL } from '../actions/authaction';
@@ -23,6 +24,8 @@ const vehData = (state = initState, action) => {
         case VEHICLE_CLEAR: return Object.assign({}, initState);
         case CLEAR_ERRORS: return Object.assign({}, state, { error: null });
         case CLEAR_ALL: return Object.assign({}, initState);
+
+        case VEHPHOTO_DELETE_ID: return Object.assign({}, state, { veh: Object.assign(state.veh, { pictures: state.veh.pictures.filter(p => p !== action.id) }) });
         default: return state;
     }
 }

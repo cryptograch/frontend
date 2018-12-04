@@ -177,6 +177,7 @@
   position: relative;
   border-radius: 5px;
   margin: 10px 0;
+  animation: slideanim .2s ease-out ;
 }
 
 .docPhotoPreload > img {
@@ -186,6 +187,75 @@
   min-width: 300px;
   width: 300px;
   height: auto;
+}
+
+.vehinput {
+  opacity: 1;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border: 2px solid #555555;
+  transition: opacity .3s ease-out;
+  border-radius: 5px;
+  min-height: 100px;
+  margin: 0 20px;
+}
+
+.vehinput > input[type=file] {
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  left: 0;
+  width: 400px;
+  height: 400px;
+  z-index: 2;
+}
+
+.vehinput > label {
+  padding: 20px 40px;
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #555555;
+}
+
+.vehinput:hover {
+  opacity: 0.8;
+} 
+
+.vehpreview {
+  position: relative;
+}
+
+.slidebtn {
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto 10px;
+  z-index: 2;
+  width: 25px;
+  height: 25px;
+  padding: 5px;
+  background: white;
+  border-radius: 5px;
+}
+
+.block {
+  display: block;
+}
+
+.none {
+  display: none;
+}
+
+.dec {
+ left: 0;
+}
+
+.inc {
+  right: 0;
 }
 
 .profilePhotoPreload {
@@ -344,6 +414,16 @@
   flex-flow: column nowrap;
   align-self: center;
 }
+
+@keyframes slideanim {
+  0% {
+      opacity: 0;
+  }
+  100% {
+      opacity: 1;
+  }
+}
+
 @media only screen and (max-width: 800px) {
   .changeProfInfo{
       grid-template-columns: minmax(200px, 250px);
