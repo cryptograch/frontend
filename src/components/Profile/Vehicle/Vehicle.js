@@ -4,11 +4,13 @@ import style from './Vehicle.css';
 import Loading from '../../Loading/Loading';
 import Alert from '../../Alert/Alert';
 
-import defaultphoto from '../../../assets/default-vehicle.png'
+import defaultphoto from '../../../assets/default-vehicle.png';
+import next from '../../../assets/next.svg';
+import prev from '../../../assets/prev.svg';
 
 import { connect } from 'react-redux';
 
-import { getVehicle, getVehPhoto } from '../../../actions/vehiclesaction';
+import { getVehicle } from '../../../actions/vehiclesaction';
 import { clearErrors } from '../../../actions/authaction';
 import { openImage } from '../../../actions/globalviewaction';
 
@@ -17,22 +19,50 @@ import { getPhoto } from '../../../actions/photoaction';
 class Vehicle extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            slide: 0,
+        }
     }
     componentDidMount() {
         if (!this.props.vehData.veh) {
             this.props.getVehicle();
         }
     }
+    componentDidUpdate() {
+        const { vehData, photosData, getPhoto } = this.props;
+        if (vehData.veh && Array.isArray(vehData.veh.pictures)) {
+            vehData.veh.pictures.forEach(picture => {
+                if (!photosData[picture]) {
+                    getPhoto(picture);
+                }
+            });
+        }
+    }
     renderPhotos() {
         const { veh } = this.props.vehData;
+        const { slide } = this.state;
         if (veh && veh.pictures && Array.isArray(veh.pictures)) {
             return veh.pictures.map((id, key) => {
                 return (
-                    <div key={key} className={style.vehPhoto}>
+                    <div key={key} className={`${style.vehPhoto} ${(key === slide) ? style.block : style.none}`}>
                         {this.renderPhoto(id, key)}
                     </div>
                 );
             });
+        }
+    }
+
+    changeSlide(n) {
+        const { vehData } = this.props;
+        if (Array.isArray(vehData.veh.pictures)) {
+            let slide = this.state.slide;
+            slide += n;
+            if (slide > vehData.veh.pictures.length - 1) {
+                slide = 0;
+            } else if (slide < 0) {
+                slide = vehData.veh.pictures.length - 1;
+            }
+            this.setState({ slide });
         }
     }
 
@@ -53,6 +83,18 @@ class Vehicle extends Component {
         }
         return <img src={defaultphoto} alt='photo' onClick={() => { this.props.openImage(defaultphoto) }} />;
     }
+    renderSliderBtn(type) {
+        const { veh } = this.props.vehData;
+        if (Array.isArray(veh.pictures) && veh.pictures.length > 1) {
+            switch(type) {
+                case 'prev': return <div className={`${style.slidebtn} ${style.dec}`} onClick={() => { this.changeSlide(-1) }}> <img src={prev} alt="prev"/> </div>;
+                case 'next': return <div className={`${style.slidebtn} ${style.inc}`} onClick={() => { this.changeSlide(1) }}> <img src={next} alt="next"/> </div>;
+                default: return null;
+            }
+        } 
+        return null;
+    }
+
     render() {
         if (this.props.vehData.veh) {
             return (
@@ -60,6 +102,8 @@ class Vehicle extends Component {
                     <h1 className={style.heading}>YOUR CAR</h1>
                     <div className={style.container}>
                         <div className={style.containerPhoto}>
+                            {this.renderSliderBtn('prev')}
+                            {this.renderSliderBtn('next')}
                             {this.renderPhotos()}
                         </div>
                         <div className={style.containerInfo}>
