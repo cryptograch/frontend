@@ -88,7 +88,7 @@ export const uploadVehPhoto = (file, token) => (dispatch, getState) => {
             const data = new FormData();
             data.append('files', file);
             fetch(`${apiurl}/api/vehicles/images`, {
-                method: 'PUT',
+                method: 'POST',
                 headers: new Headers({
                     'Authorization': `Bearer ${token.auth_token}`,
                 }),
@@ -114,6 +114,7 @@ export const uploadVehPhoto = (file, token) => (dispatch, getState) => {
     }
 }
 
+
 // TODO: actionCreator get Document info 
 export const getVehicle = (tok) => (dispatch, getState) => {
     const token = (tok) ? tok : checkAndGetToken(dispatch, getState);
@@ -126,7 +127,7 @@ export const getVehicle = (tok) => (dispatch, getState) => {
             })
         })
             .then(res => {
-                if (res.status === 200 || res.status === 201 ||res.status === 204) {
+                if (res.status === 200 || res.status === 201 || res.status === 204) {
                     return res.json();
                 } else if (res.status === 401) {
                     dispatch(refreshToken(token, getVehicle));
@@ -146,4 +147,13 @@ export const getVehicle = (tok) => (dispatch, getState) => {
     } else {
         dispatch(logout());
     }
+    // dispatch(vehicleSuccess({
+    //     id: "70512059-1248-4e4f-9a17-a1527f924ced",
+    //     number: "Number",
+    //     model: "Model",
+    //     brand: "Brand",
+    //     color: "Color",
+    //     pictures: ["e89ffbc9-cd46-4ef2-a7ee-c6e97dfd4ade.jpeg", "6ddd6713-e010-4007-8524-9f6acab50d23.png", "e89ffbc9-cd46-4ef2-a7ee-c6e97dfd4ade.jpeg"],
+    //     driverId: "0e09a93f-5927-41df-8d4b-aba82da9b949",
+    // }));
 }

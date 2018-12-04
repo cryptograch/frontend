@@ -65,11 +65,11 @@ class ScrollPane extends Component {
 
     }
     mouseDownV() {
-        console.log('down');
+        // console.log('down');
         this.setState({ active: true })
     }
     mouseUpV() {
-        console.log('up');
+        // console.log('up');
         this.setState({ active: false, scroll: 0 });
     }
     mouseMoveV(e) {
@@ -79,7 +79,7 @@ class ScrollPane extends Component {
             const container = scrollRef.current;
             const view = viewRef.current;
             if (this.state.scroll !== 0 && pane && container) {
-                console.log('move');
+                // console.log('move');
                 const k = container.scrollHeight / view.offsetHeight;
                 container.scrollTop = container.scrollTop + (e.clientY - this.state.scroll)*k;
                 this.onScroll();

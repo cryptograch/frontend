@@ -88,10 +88,15 @@
 }
 
 .channelList > ul {
-   
+   height: 100%;
 }
 .channelList > ul > li {
     padding: 10px;
+}
+
+.channelList > ul > label {
+    height: 50px;
+    font-weight: bold;
 }
 
 .channelContainer {

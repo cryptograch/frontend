@@ -34,6 +34,7 @@
     position: relative;
     border-radius: 5px;
     margin: 10px 5px;
+    
 }
 .vehPhoto > img {
     position: absolute;
@@ -42,6 +43,7 @@
     min-width: 300px;
     width: 300px;
     height: auto;
+    animation: slideanim .2s ease-out ;
 }
 
 .container {
@@ -51,6 +53,7 @@
 }
 
 .containerPhoto {
+    position: relative;
     flex-grow: 1;
 }
 .containerInfo {
@@ -68,6 +71,45 @@
 .containerInfo > h3 > span {
     font-family: 'ProximaNovaBold';
     color: #faa71a;
+}
+
+.slidebtn {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto 10px;
+    z-index: 2;
+    width: 25px;
+    height: 25px;
+    padding: 5px;
+    background: white;
+    border-radius: 5px;
+}
+
+.block {
+    display: block;
+}
+
+.none {
+    display: none;
+}
+
+.dec {
+   left: 0;
+}
+
+.inc {
+    right: 0;
+}
+
+@keyframes slideanim {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }
 
 @media only screen and (max-width: 500px) {

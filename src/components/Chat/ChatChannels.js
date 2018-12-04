@@ -73,9 +73,9 @@ class ChatChannels extends Component {
                     return <li key={key} onClick={(e) => { this.openChat(channel) }}>{this.renderChannel(curruser)}</li>
                 });
             }
-            return 'No chats';
+            return <label>No chats</label>;
         }
-        return "No chats";
+        return <label>No chats</label>;
     }
     renderPhoto(id) {
         const { photosData, getPhoto } = this.props;
