@@ -36,16 +36,34 @@
     height: 32px;
     padding: 5px;
     position: absolute;
-    top: -45px;
-    right: -40px;
+    top: 0px;
+    right: -50px;
+}
+.globalDelete {
+    cursor: pointer;
+    border-radius: 50%;
+    background: rgba(255,255,255, 0.6);
+    width: 32px;
+    height: 32px;
+    padding: 5px;
+    position: absolute;
+    top: 50px;
+    right: -50px;
 }
 
 .globalClose > img {
     width: 32px;
     height: 32px;
 }
+.globalDelete > img {
+    width: 32px;
+    height: 32px;
+}
 
 .globalClose:hover {
+    opacity: 0.8;
+}
+.globalDelete:hover {
     opacity: 0.8;
 }
 

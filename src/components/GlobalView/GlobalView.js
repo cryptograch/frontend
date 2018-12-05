@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import style from './GlobalView.css';
 
 import closesvg from '../../assets/close.svg';
+import deletesvg from '../../assets/delete.svg'
 
 import GoogleMapReact from 'google-map-react';
 import { googleapikey } from '../../appconfig';
@@ -13,6 +14,8 @@ import DriverInfo from '../DriverInfo/DriverInfo'
 import { connect } from 'react-redux';
 
 import { close } from '../../actions/globalviewaction';
+
+import { deleteVehPhoto } from '../../actions/vehiclesaction'
 
 class GlobalView extends Component {
     constructor(props) {
@@ -58,12 +61,18 @@ class GlobalView extends Component {
         );
     }
     renderGlobal() {
+        console.log(this.props.global.data.id)
         if (this.props.global.show === 'map') {
             return this.renderGoogleMap();
         }
         if (this.props.global.show === 'image') {
             return (
-                <img src={this.props.global.data.url} alt='image' />
+                <div>    
+                    <div className={style.globalDelete} onClick={() => {this.props.deleteVehPhoto(this.props.global.data.id); this.props.close()}}>
+                        <img src={deletesvg} alt='delete' />
+                    </div>  
+                    <img src={this.props.global.data.url} alt='image' />
+                </div>
             );
         }
         if (this.props.global.show === 'profile') {
@@ -111,7 +120,8 @@ const RouteLabel = (props) => {
 
 GlobalView.propTypes = {
     global: PropTypes.object,
-    close: PropTypes.func
+    close: PropTypes.func,
+    deleteVehPhoto: PropTypes.func,
 }
 
 const mapStateToProps = state => ({
@@ -119,7 +129,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchtoProps = dispatch => ({
-    close: () => { dispatch(close()) }
+    close: () => { dispatch(close()) },
+    deleteVehPhoto: (id) => {dispatch(deleteVehPhoto(id)) },
 })
 
 export default connect(mapStateToProps, mapDispatchtoProps)(GlobalView);

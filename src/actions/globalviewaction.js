@@ -16,10 +16,10 @@ export const addMapRoute = (route) => ({
     route,
 });
 
-export const openImage = (url) => ({
+export const openImage = (url , id) => ({
     type: GLOBALVIEW_OPEN,
     show: 'image',
-    data: { url }
+    data: { url  , id}
 });
 
 export const close = () => ({

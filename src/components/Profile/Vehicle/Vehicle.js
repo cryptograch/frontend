@@ -38,7 +38,7 @@ class Vehicle extends Component {
         if (veh && veh.pictures && Array.isArray(veh.pictures)) {
             return veh.pictures.map((id, key) => {
                 return (
-                    <div key={key} className={style.vehPhoto}>
+                    <div key={id} className={style.vehPhoto}>
                         {this.renderPhoto(id, key)}
                     </div>
                 );
@@ -49,9 +49,9 @@ class Vehicle extends Component {
     renderPhoto(id) {
         const { photosData, getPhoto } = this.props;
         if (photosData[id]) {
-            const { loading, url, error } = photosData[id];
+            const { loading, url, error} = photosData[id];
             if (url) {
-                return <img src={url} alt='photo' onClick={() => { this.props.openImage(url) }} />;
+                return <img src={url} alt='photo' onClick={() => { this.props.openImage(url, id) }} />;
             }
             if (loading) {
                 return <Loading />
@@ -116,7 +116,7 @@ const mapDispatchtoProps = dispatch => ({
     getVehicle: () => { dispatch(getVehicle()) },
     getPhoto: (id) => { dispatch(getPhoto(id)) },
     clearErrors: () => { dispatch(clearErrors()) },
-    openImage: (url) => { dispatch(openImage(url)) },
+    openImage: (url, id) => { dispatch(openImage(url, id)) },
     deleteVehPhoto: (id) => { dispatch(deleteVehPhoto(id)) }
 })
 

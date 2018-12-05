@@ -180,7 +180,7 @@ export const deleteVehPhoto = (id) => (dispatch, getState) => {
         })
             .then(res => {
                 if (res.status === 200 || res.status === 201 || res.status === 204) {
-                    dispatch(updatesuccess('Photo is deleted'));
+                   dispatch(updatesuccess(null));
                     dispatch(deletePhotoId(id));
                     dispatch(photoClear(id));
                 } else if (res.status === 401) {
