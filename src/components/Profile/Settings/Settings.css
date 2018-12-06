@@ -228,6 +228,10 @@
   position: relative;
 }
 
+.vehpreview > .docPhotoPreload {
+  transition: transform .3s ease-out;
+}
+
 .slidebtn {
   cursor: pointer;
   position: absolute;

@@ -14,36 +14,74 @@ class ChangeVeh extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            vehphoto: null,
-            vehphotourl: null,
+            vehphoto: [],
             urls: [],
             number: "",
             model: "",
             brand: "",
             color: "",
-            fileName: "Choose file",
             slide: 0,
+            isSlide: false,
+            touch: 0,
+            transform: 0,
         }
         this.chooseVehPhoto = this.chooseVehPhoto.bind(this);
+        this.sliderRef = React.createRef();
+        this.currRef = React.createRef();
+    }
+    componentDidMount() {
+        const slider = this.sliderRef.current;
+        if (slider) {
+            slider.addEventListener('touchstart', (e) => { this.mouseDown.call(this, e) });
+            slider.addEventListener('touchmove', (e) => { this.mouseMove.call(this, e) });
+            slider.addEventListener('touchend', (e) => { this.mouseUp.call(this, e) });
+            slider.addEventListener('touchcancel', (e) => { this.mouseUp.call(this, e) });
+        }
+    }
+    mouseDown(e) {
+        const touch = e.changedTouches[0].clientX;
+        if (touch) {
+            this.setState({ isSlide: true, touch });
+        }
+    }
+    mouseMove(e) {
+        const { touch } = this.state;
+        const ctouch = e.changedTouches[0].clientX;
+        if (ctouch && touch) {
+            const slider = this.currRef.current;
+            if (slider) {
+                let dif = ctouch - touch;
+                dif = (dif > 50) ? 50 : dif;
+                dif = (dif < -50) ? -50 : dif;
+                this.setState({ transform: dif });
+            }
+        }
+    }
+    mouseUp(e) {
+        const ctouch = e.changedTouches[0].clientX;
+        const { touch } = this.state;
+        if (ctouch && touch) {
+            if (ctouch - touch < -50) {
+                this.changeSlide(-1);
+            } else if (ctouch - touch > 50) {
+                this.changeSlide(1);
+            }
+        }
+        this.setState({ isSlide: false, touch: 0 });
     }
     chooseVehPhoto(e) {
         const files = e.target.files;
         if (files) {
-            let urls = [];
             [...files].forEach(file => {
                 const reader = new FileReader();
                 reader.onloadend = () => {
-                    urls = [...urls, reader.result];
-                    this.setState({ urls });
+                    this.setState({ urls: [...this.state.urls, reader.result] });
                 };
                 reader.readAsDataURL(file);
             });
 
             this.setState({
-                vehphoto: [...files],
-                vehphotourl: urls[0],
-                fileName: files[0].name,
-                urls
+                vehphoto: [...this.state.vehphoto, ...files],
             });
         }
     }
@@ -64,9 +102,9 @@ class ChangeVeh extends Component {
             if (slide > urls.length - 1) {
                 slide = 0;
             } else if (slide < 0) {
-                slide = urls.length - 1;
+                slide = (urls.length === 0) ? 0 : urls.length - 1;
             }
-            this.setState({ slide });
+            this.setState({ slide, transform: 0 });
         }
     }
 
@@ -86,18 +124,22 @@ class ChangeVeh extends Component {
     }
 
     renderPreview() {
-        const { urls, slide } = this.state;
+        const { urls, slide, transform } = this.state;
         if (Array.isArray(urls)) {
             if (urls.length === 0) {
                 return (
                     <div className={style.docPhotoPreload}>
-                        <img src={(this.state.vehphotourl) ? this.state.vehphotourl : vehicledefault} alt='photo' />
+                        <img src={vehicledefault} alt='photo' />
                     </div>
                 )
             }
             return urls.map((url, key) => {
                 return (
-                    <div key={key} className={`${style.docPhotoPreload} ${(key === slide) ? style.block : style.none}`}>
+                    <div key={key}
+                        className={`${style.docPhotoPreload} ${(key === slide) ? style.block : style.none}`}
+                        ref={(key === slide) ? this.currRef : null}
+                        style={(key === slide) ? { transform: `translateX(${transform}px)` } : null}
+                    >
                         <img src={url} alt='photo' />
                     </div>
                 );
@@ -111,7 +153,7 @@ class ChangeVeh extends Component {
                 <div className={style.docContainer}>
                     <h2 className={style.docTitle}>Add your vehicle photo</h2>
                     <div className={style.docPhoto}>
-                        <div className={style.vehpreview}>
+                        <div className={style.vehpreview} ref={this.sliderRef}>
                             {this.renderSliderBtn('prev')}
                             {this.renderSliderBtn('next')}
                             {this.renderPreview()}
